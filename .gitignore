@@ -46,7 +46,7 @@ app.*.map.json
 /android/app/release
 
 # Dart
-.dart_tool/
+/.dart_tool/
 .packages
-build/
+/build/
 pubspec.lock # Except for application packages
