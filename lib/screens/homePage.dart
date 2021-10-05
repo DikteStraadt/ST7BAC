@@ -71,30 +71,31 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               Expanded(
-                  child: GridView(
-                physics: BouncingScrollPhysics(),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2),
-                children: menuButtons.map((title) {
-                  return GestureDetector(
-                    child: Card(
-                        margin: const EdgeInsets.all(20.0),
-                        child: getCardByTitle(title)),
-                    onTap: () {
-                      if (title == "Opskrifter")
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Navigationbar()));
-                      else
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => BlankPage()));
-                    },
-                  );
-                }).toList(),
-              )),
+                child: GridView(
+                  physics: BouncingScrollPhysics(),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2),
+                  children: menuButtons.map((title) {
+                    return GestureDetector(
+                      child: Card(
+                          margin: const EdgeInsets.all(20.0),
+                          child: getCardByTitle(title)),
+                      onTap: () {
+                        if (title == "Opskrifter")
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Navigationbar()));
+                        else
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => BlankPage()));
+                      },
+                    );
+                  }).toList(),
+                ),
+              ),
               Container(
                 width: MediaQuery.of(context).size.width * 0.9,
                 child: ElevatedButton(

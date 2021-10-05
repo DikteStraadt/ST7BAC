@@ -14,10 +14,10 @@ class TabNavigator extends StatelessWidget {
 
     Widget child;
 
-    if(tabItem == "Opskrift")
+    if(tabItem == "Opskrifter")
       child = RecipePage();
     else if(tabItem == "Madplaner")
-      child = PlanPage(data: LoginData("123", "345"));
+      child = PlanPage();
     else
       child = BlankPage();
     
