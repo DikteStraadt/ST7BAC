@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_project_1_0/navigation/navigationbar.dart';
 import '../screens/blankPage.dart';
 import 'package:flutter_project_1_0/screens/loginPage.dart';
-import 'package:flutter_project_1_0/authorization/fire_auth.dart';
 
 class HomePage extends StatefulWidget {
   final User user;
@@ -53,7 +52,7 @@ class _HomePageState extends State<HomePage> {
           //     image: AssetImage("lib/assets/background.jpg"), fit: BoxFit.cover),
         ),
         child: Container(
-          margin: const EdgeInsets.only(top: 50.0, bottom: 40.0),
+          margin: const EdgeInsets.only(top: 50.0, bottom: 20.0),
           child: Column(
             children: <Widget>[
               Padding(
@@ -85,7 +84,7 @@ class _HomePageState extends State<HomePage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => Navigationbar()));
+                                  builder: (context) => Navigationbar(user: _currentUser)));
                         else
                           Navigator.push(
                               context,
@@ -119,6 +118,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
+              Container(child: Text(_currentUser.displayName.toString()),)
             ],
           ),
         ),

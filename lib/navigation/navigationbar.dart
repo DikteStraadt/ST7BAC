@@ -1,9 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project_1_0/navigation/tab_navigator.dart';
 
 class Navigationbar extends StatefulWidget {
   @override
   State<Navigationbar> createState() => _NavigationbarState();
+  final User user;
+  const Navigationbar({required this.user});
 }
 
 class _NavigationbarState extends State<Navigationbar> {
@@ -14,7 +17,16 @@ class _NavigationbarState extends State<Navigationbar> {
     "Madplaner": GlobalKey<NavigatorState>(),
     "Favoritter": GlobalKey<NavigatorState>(),
   };
+  
   int _selectedIndex = 0;
+
+    late User _currentUser;  
+    bool _isSigningOut = false;
+
+    void initState() {
+    _currentUser = widget.user;
+    super.initState();
+  }
 
   void _selectTab(String tabItem, int index) {
     if (tabItem == _currentPage) {
@@ -81,6 +93,7 @@ class _NavigationbarState extends State<Navigationbar> {
       child: TabNavigator(
         navigatorKey: _navigatorKeys[tabItem]!,
         tabItem: tabItem,
+        user: _currentUser,
       ),
     );
   }

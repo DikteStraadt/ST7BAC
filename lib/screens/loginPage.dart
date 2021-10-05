@@ -49,7 +49,7 @@ class _LoginPageState extends State<LoginPage> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Firebase Authentication'),
+          title: Text('Lidt-en-Valdemarsro-app'),
         ),
         body: FutureBuilder(
           future: _initializeFirebase(),
