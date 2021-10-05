@@ -1,56 +1,191 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_project_1_0/screens/planPage.dart';
-import 'package:flutter_project_1_0/models/loginData.dart';
+import 'package:flutter_project_1_0/authorization/fire_auth.dart';
+import 'package:flutter_project_1_0/authorization/validator.dart';
+import 'package:flutter_project_1_0/screens/homePage.dart';
+import 'package:flutter_project_1_0/screens/registrePage.dart';
 
-class LogInPage extends StatefulWidget {
+class LoginPage extends StatefulWidget {
   @override
-  _LogInPageState createState() => _LogInPageState();
+  _LoginPageState createState() => _LoginPageState();
 }
 
-class _LogInPageState extends State<LogInPage> {
+class _LoginPageState extends State<LoginPage> {
+  final _formKey = GlobalKey<FormState>();
+
+  final _emailTextController = TextEditingController();
+  final _passwordTextController = TextEditingController();
+
+  final _focusEmail = FocusNode();
+  final _focusPassword = FocusNode();
+
+  bool _isProcessing = false;
+
+  Future<FirebaseApp> _initializeFirebase() async {
+    FirebaseApp firebaseApp = await Firebase.initializeApp();
+
+    User? user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => HomePage(
+            user: user,
+          ),
+        ),
+      );
+    }
+
+    return firebaseApp;
+  }
+
   @override
   Widget build(BuildContext context) {
-    TextEditingController controllerEmail = TextEditingController();
-    TextEditingController controllerPassword = TextEditingController();
-
-    String emailValue = "123";
-    String passwordValue = "345";
-
-    controllerEmail.addListener(() {
-      emailValue = controllerEmail.text;
-    });
-
-    controllerPassword.addListener(() {
-      passwordValue = controllerPassword.text;
-    });
-
-    return Scaffold(
+    return GestureDetector(
+      onTap: () {
+        _focusEmail.unfocus();
+        _focusPassword.unfocus();
+      },
+      child: Scaffold(
         appBar: AppBar(
-          title: Text('Lidt-en-Valdemarsro-app'),
+          title: Text('Firebase Authentication'),
         ),
-        body: Container(
-            width: MediaQuery.of(context).size.width * 0.5,
-            child: Column(children: [
-              TextField(
-                keyboardType: TextInputType.emailAddress,
-                controller: controllerEmail,
-              ),
-              TextField(
-                keyboardType: TextInputType.visiblePassword,
-                obscureText: true,
-                controller: controllerPassword,
-              ),
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => PlanPage(
-                                data: LoginData(emailValue, passwordValue),
-                              )), //HomePage()
-                    );
-                  },
-                  child: new Text("Log in"))
-            ])));
+        body: FutureBuilder(
+          future: _initializeFirebase(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              return Padding(
+                padding: const EdgeInsets.only(left: 24.0, right: 24.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 24.0),
+                      child: Text(
+                        'Log ind',
+                        style: Theme.of(context).textTheme.headline1,
+                      ),
+                    ),
+                    Form(
+                      key: _formKey,
+                      child: Column(
+                        children: <Widget>[
+                          TextFormField(
+                            controller: _emailTextController,
+                            focusNode: _focusEmail,
+                            validator: (value) => Validator.validateEmail(
+                              email: value.toString(),
+                            ),
+                            decoration: InputDecoration(
+                              hintText: "Email",
+                              errorBorder: UnderlineInputBorder(
+                                borderRadius: BorderRadius.circular(6.0),
+                                borderSide: BorderSide(
+                                  color: Colors.red,
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 8.0),
+                          TextFormField(
+                            controller: _passwordTextController,
+                            focusNode: _focusPassword,
+                            obscureText: true,
+                            validator: (value) => Validator.validatePassword(
+                              password: value.toString(),
+                            ),
+                            decoration: InputDecoration(
+                              hintText: "Kodeord",
+                              errorBorder: UnderlineInputBorder(
+                                borderRadius: BorderRadius.circular(6.0),
+                                borderSide: BorderSide(
+                                  color: Colors.red,
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 24.0),
+                          _isProcessing
+                              ? CircularProgressIndicator()
+                              : Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                      child: ElevatedButton(
+                                        onPressed: () async {
+                                          _focusEmail.unfocus();
+                                          _focusPassword.unfocus();
+
+                                          if (_formKey.currentState!
+                                              .validate()) {
+                                            setState(() {
+                                              _isProcessing = true;
+                                            });
+
+                                            User? user = await FireAuth
+                                                .signInUsingEmailPassword(
+                                              email: _emailTextController.text,
+                                              password:
+                                                  _passwordTextController.text, 
+                                              context: context,
+                                            );
+
+                                            setState(() {
+                                              _isProcessing = false;
+                                            });
+
+                                            if (user != null) {
+                                              Navigator.of(context)
+                                                  .pushReplacement(
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      HomePage(user: user),
+                                                ),
+                                              );
+                                            }
+                                          }
+                                        },
+                                        child: Text(
+                                          'Log ind',
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(width: 24.0),
+                                    Expanded(
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  RegisterPage(),
+                                            ),
+                                          );
+                                        },
+                                        child: Text(
+                                          'Registrer',
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              );
+            }
+
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          },
+        ),
+      ),
+    );
   }
 }

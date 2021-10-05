@@ -15,5 +15,9 @@ For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
-# Just a simple test 
-# Hi from Annaa
+# Kilder
+
+## Login funktionalitet
+https://blog.logrocket.com/implementing-firebase-authentication-in-a-flutter-app/
+https://github.com/sbis04/flutter-authentication
+
