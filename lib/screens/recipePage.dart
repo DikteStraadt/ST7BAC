@@ -1,99 +1,88 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_project_1_0/screens/homePage.dart';
-import 'package:flutter_project_1_0/screens/blankPage.dart';
-import 'package:english_words/english_words.dart';
+import 'package:flutter_project_1_0/screens/favoritesPage.dart';
 
 class RecipePage extends StatefulWidget {
-  
   final User user;
-  const RecipePage({ Key? key, required this.user }) : super(key: key);
+  const RecipePage({Key? key, required this.user}) : super(key: key);
 
   @override
   _RecipePageState createState() => _RecipePageState();
 }
 
 class _RecipePageState extends State<RecipePage> {
-  final _suggestions = <WordPair>[];
-  final _saved = <WordPair>{};     
-  final _biggerFont = const TextStyle(fontSize: 18.0);
-  
-  Widget _buildSuggestions() {
-    return ListView.builder(
-      padding: const EdgeInsets.all(16.0),
-      itemBuilder: (context, i) {
-        if (i.isOdd) return const Divider(); 
+  final _savedRecipies = <String>{};
 
-        final index = i ~/ 2; 
-        if (index >= _suggestions.length) {
-          _suggestions.addAll(generateWordPairs().take(10));
-        }
-        return _buildRow(_suggestions[index]);
-      });
-    }
+  Widget _buildCard(String recipeId) {
+    final alreadySaved = _savedRecipies.contains(recipeId);
+    String recipePictureAsset = "lib/assets/" + recipeId + ".jpg";
 
-  Widget _buildRow(WordPair pair) {
-    final alreadySaved = _saved.contains(pair);
-    
-    return ListTile(
-      title: Text(
-        pair.asPascalCase,
-        style: _biggerFont,
+    return Card(
+      child: Stack(
+        children: <Widget>[
+          Container(
+            decoration: new BoxDecoration(color: Colors.white),
+            alignment: Alignment.center,
+            child: Image.asset(recipePictureAsset, fit: BoxFit.fill),
+          ),
+          Align(
+            alignment: Alignment.bottomLeft,
+            child: IconButton(
+              icon: new Icon(
+                alreadySaved ? Icons.favorite : Icons.favorite_border,
+                size: 80,
+                color: Colors.red[900],
+              ),
+              onPressed: () {
+                setState(
+                  () {
+                    if (alreadySaved) {
+                      _savedRecipies.remove(recipeId);
+                    } else {
+                      _savedRecipies.add(recipeId);
+                    }
+                  },
+                );
+              },
+            ),
+          )
+        ],
       ),
-      trailing: Icon(   
-        alreadySaved ? Icons.favorite : Icons.favorite_border,
-        color: alreadySaved ? Colors.red : null,
-      ),
-      onTap: () {      
-        setState(() {
-          if (alreadySaved) {
-            _saved.remove(pair);
-          } else { 
-            _saved.add(pair); 
-          } 
-        });
-      },              
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    final String recipeId = "";
+    final alreadySaved = _savedRecipies.contains(recipeId);
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Startup Name Generator'),
+        title: const Text('Opskrifter'),
         actions: [
           IconButton(icon: Icon(Icons.list), onPressed: _pushSaved),
         ],
       ),
-      body: _buildSuggestions(),
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            _buildCard("mexicansk-risret"),
+            _buildCard("one-pot-pasta"),
+            _buildCard("vegetar-spaghetti"),
+            _buildCard("crispy-kylling"),
+            _buildCard("porretaerte"),
+            _buildCard("graeskarsuppe"),
+          ],
+        ),
+      ),
     );
   }
 
   void _pushSaved() {
-    Navigator.of(context).push(
-      MaterialPageRoute<void>(
-        builder: (BuildContext context) {
-          final tiles = _saved.map(
-            (WordPair pair) {
-              return ListTile(
-                title: Text(
-                  pair.asPascalCase,
-                  style: _biggerFont,
-                ),
-              );
-            },
-          );
-          final divided = tiles.isNotEmpty
-              ? ListTile.divideTiles(context: context, tiles: tiles).toList()
-              : <Widget>[];
-
-          return Scaffold(
-            appBar: AppBar(
-              title: Text('Saved Suggestions'),
-            ),
-            body: ListView(children: divided),
-          );
-        },
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => FavoritesPage(savedRecipies: _savedRecipies),
       ),
     );
   }

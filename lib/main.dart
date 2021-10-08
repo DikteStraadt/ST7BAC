@@ -11,9 +11,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Lidt-en-Valdemarsro-app',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.cyan,
-      ),
       home: LoginPage(),
     );
   }

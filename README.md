@@ -22,5 +22,5 @@ https://blog.logrocket.com/implementing-firebase-authentication-in-a-flutter-app
 https://github.com/sbis04/flutter-authentication
 
 ## Favorit liste
-https://flutter.dev/docs/get-started/codelab
+https://codelabs.developers.google.com/codelabs/first-flutter-app-pt2#4
 

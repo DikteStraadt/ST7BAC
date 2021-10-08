@@ -50,6 +50,13 @@ flutter:
     - lib/assets/struds.png
     - lib/assets/zebra.png
 
+    - lib/assets/crispy-kylling.jpg
+    - lib/assets/graeskarsuppe.jpg
+    - lib/assets/mexicansk-risret.jpg
+    - lib/assets/one-pot-pasta.jpg
+    - lib/assets/porretaerte.jpg
+    - lib/assets/vegetar-spaghetti.jpg
+
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

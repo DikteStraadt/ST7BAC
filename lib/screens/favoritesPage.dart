@@ -1,39 +1,78 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class OtherClass extends StatelessWidget {
-  final String image;
-  final String name;
+class FavoritesPage extends StatefulWidget {
+  
+  final Set<String> savedRecipies;
 
-  OtherClass({Key? key, required this.image, required this.name})
-      : super(key: key);
+  const FavoritesPage({Key? key, required this.savedRecipies}) : super(key: key);
+
+  @override
+  _FavoritesPageState createState() => _FavoritesPageState();
+}
+
+class _FavoritesPageState extends State<FavoritesPage> {
+  late Set<String>_savedRecipies;
+
+  @override
+  void initState() {
+    _savedRecipies = widget.savedRecipies;
+    super.initState();
+  }
+
+  Widget _buildCard(String recipeId) {
+    final alreadySaved = _savedRecipies.contains(recipeId);
+    String recipePictureAsset = "lib/assets/" + recipeId + ".jpg";
+
+    return Card(
+      child: Stack(
+        children: <Widget>[
+          Container(
+            decoration: new BoxDecoration(color: Colors.white),
+            alignment: Alignment.center,
+            child: Image.asset(recipePictureAsset, fit: BoxFit.fill),
+          ),
+          Align(
+            alignment: Alignment.bottomLeft,
+            child: IconButton(
+              icon: new Icon(
+                alreadySaved ? Icons.favorite : Icons.favorite_border,
+                size: 80,
+                color: Colors.red[900],
+              ),
+              onPressed: () {
+                setState(
+                  () {
+                    if (alreadySaved) {
+                      _savedRecipies.remove(recipeId);
+                    } else {
+                      _savedRecipies.add(recipeId);
+                    }
+                  },
+                );
+              },
+            ),
+          )
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
+    final String recipeId = "";
+    final alreadySaved = _savedRecipies.contains(recipeId);
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Screen two ✌️'),
+        title: const Text('Favoritter'),
       ),
-      body: Column(
-        children: [
-          AspectRatio(
-            aspectRatio: 1,
-            child: Container(
-              width: double.infinity,
-              child: Image(
-                image: NetworkImage(image),
-              ),
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.all(20.0),
-            child: Center(
-              child: Text(
-                name,
-                style: TextStyle(fontSize: 40),
-              ),
-            ),
-          ),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            for ( var i in _savedRecipies ) _buildCard(i)
+          ],
+        ),
       ),
     );
   }
