@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project_1_0/navigation/navigationbar.dart';
+import 'package:flutter_project_1_0/screens/recipePage.dart';
 import '../screens/blankPage.dart';
 import 'package:flutter_project_1_0/screens/loginPage.dart';
 
@@ -84,7 +85,8 @@ class _HomePageState extends State<HomePage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => Navigationbar(user: _currentUser)));
+                                  builder: (context) => RecipePage(user: _currentUser)));
+                                  //builder: (context) => Navigationbar(user: _currentUser)));
                         else
                           Navigator.push(
                               context,

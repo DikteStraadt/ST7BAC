@@ -1,40 +1,99 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project_1_0/screens/homePage.dart';
+import 'package:flutter_project_1_0/screens/blankPage.dart';
+import 'package:english_words/english_words.dart';
 
-class RecipePage extends StatelessWidget {
-    final User user;
-    const RecipePage({required this.user});
+class RecipePage extends StatefulWidget {
+  
+  final User user;
+  const RecipePage({ Key? key, required this.user }) : super(key: key);
+
+  @override
+  _RecipePageState createState() => _RecipePageState();
+}
+
+class _RecipePageState extends State<RecipePage> {
+  final _suggestions = <WordPair>[];
+  final _saved = <WordPair>{};     
+  final _biggerFont = const TextStyle(fontSize: 18.0);
+  
+  Widget _buildSuggestions() {
+    return ListView.builder(
+      padding: const EdgeInsets.all(16.0),
+      itemBuilder: (context, i) {
+        if (i.isOdd) return const Divider(); 
+
+        final index = i ~/ 2; 
+        if (index >= _suggestions.length) {
+          _suggestions.addAll(generateWordPairs().take(10));
+        }
+        return _buildRow(_suggestions[index]);
+      });
+    }
+
+  Widget _buildRow(WordPair pair) {
+    final alreadySaved = _saved.contains(pair);
+    
+    return ListTile(
+      title: Text(
+        pair.asPascalCase,
+        style: _biggerFont,
+      ),
+      trailing: Icon(   
+        alreadySaved ? Icons.favorite : Icons.favorite_border,
+        color: alreadySaved ? Colors.red : null,
+      ),
+      onTap: () {      
+        setState(() {
+          if (alreadySaved) {
+            _saved.remove(pair);
+          } else { 
+            _saved.add(pair); 
+          } 
+        });
+      },              
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    // late User _currentUser;  
-    // bool _isSigningOut = false;
-
     return Scaffold(
       appBar: AppBar(
-        title: Text("Opskrifter"),
-        leading: GestureDetector(
-          onTap: () {Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => HomePage(user: user)));},
-          child: Icon(
-            Icons.home_outlined,
-            size: 30,
-          ),
-        ),
-        actions: <Widget>[
-          Padding(
-              padding: EdgeInsets.only(right: 20.0),
-              child: GestureDetector(
-                onTap: () {/* Write listener code here */},
-                child: Icon(
-                  Icons.search,
-                  size: 26.0,
-                ),
-              )),
+        title: const Text('Startup Name Generator'),
+        actions: [
+          IconButton(icon: Icon(Icons.list), onPressed: _pushSaved),
         ],
+      ),
+      body: _buildSuggestions(),
+    );
+  }
+
+  void _pushSaved() {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (BuildContext context) {
+          final tiles = _saved.map(
+            (WordPair pair) {
+              return ListTile(
+                title: Text(
+                  pair.asPascalCase,
+                  style: _biggerFont,
+                ),
+              );
+            },
+          );
+          final divided = tiles.isNotEmpty
+              ? ListTile.divideTiles(context: context, tiles: tiles).toList()
+              : <Widget>[];
+
+          return Scaffold(
+            appBar: AppBar(
+              title: Text('Saved Suggestions'),
+            ),
+            body: ListView(children: divided),
+          );
+        },
       ),
     );
   }
