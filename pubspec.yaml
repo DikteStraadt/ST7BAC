@@ -29,7 +29,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   firebase_auth: ^3.1.0
   firebase_core: ^1.0.4
-  english_words: ^4.0.0
+  firebase_database: ^8.0.0
 
 
 dev_dependencies:

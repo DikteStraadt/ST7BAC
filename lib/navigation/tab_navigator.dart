@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_project_1_0/models/loginData.dart';
 import 'package:flutter_project_1_0/screens/blankPage.dart';
 import 'package:flutter_project_1_0/screens/planPage.dart';
 import 'package:flutter_project_1_0/screens/recipePage.dart';

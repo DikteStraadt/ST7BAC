@@ -128,7 +128,7 @@ class _LoginPageState extends State<LoginPage> {
                                                 .signInUsingEmailPassword(
                                               email: _emailTextController.text,
                                               password:
-                                                  _passwordTextController.text, 
+                                                  _passwordTextController.text,
                                               context: context,
                                             );
 
@@ -146,6 +146,12 @@ class _LoginPageState extends State<LoginPage> {
                                               );
                                             }
                                           }
+
+                                          // Write a message to the database
+                                          //FirebaseDatabase database = FirebaseDatabase.getInstance();
+                                          //DatabaseReference myRef = database.getReference("message");
+
+                                          //myRef.setValue("Hello, World!");
                                         },
                                         child: Text(
                                           'Log ind',

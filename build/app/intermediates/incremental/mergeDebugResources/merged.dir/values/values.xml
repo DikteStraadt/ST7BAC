@@ -110,6 +110,7 @@
     <string name="common_signin_button_text">Sign in</string>
     <string name="common_signin_button_text_long">Sign in with Google</string>
     <string name="default_web_client_id" translatable="false">488254304513-310mane6glpqlo3ben8il8gd5da0ocjn.apps.googleusercontent.com</string>
+    <string name="firebase_database_url" translatable="false">https://myapp-16dc9-default-rtdb.europe-west1.firebasedatabase.app</string>
     <string name="gcm_defaultSenderId" translatable="false">488254304513</string>
     <string name="google_api_key" translatable="false">AIzaSyBD48PRg49rLUo_fov-BH1YJpOC69YreEw</string>
     <string name="google_app_id" translatable="false">1:488254304513:android:791ada5a2c87d2d5c5eb00</string>

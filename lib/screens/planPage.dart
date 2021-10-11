@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project_1_0/models/loginData.dart';
 
 class PlanPage extends StatefulWidget {
   // final LoginData data;
