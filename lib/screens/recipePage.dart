@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_project_1_0/screens/favoritesPage.dart';
 
 class RecipePage extends StatefulWidget {
-  final User user;
-  const RecipePage({Key? key, required this.user}) : super(key: key);
+  const RecipePage({Key? key}) : super(key: key);
 
   @override
   _RecipePageState createState() => _RecipePageState();

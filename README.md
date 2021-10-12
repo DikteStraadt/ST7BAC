@@ -24,3 +24,6 @@ https://github.com/sbis04/flutter-authentication
 ## Favorit liste
 https://codelabs.developers.google.com/codelabs/first-flutter-app-pt2#4
 
+## Hul igennem til databasen
+https://medium.com/firebase-tips-tricks/how-to-use-firebase-realtime-database-with-flutter-ebd98aba2c91
+

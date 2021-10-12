@@ -92,8 +92,7 @@ class _NavigationbarState extends State<Navigationbar> {
       offstage: _currentPage != tabItem,
       child: TabNavigator(
         navigatorKey: _navigatorKeys[tabItem]!,
-        tabItem: tabItem,
-        user: _currentUser,
+        tabItem: tabItem
       ),
     );
   }

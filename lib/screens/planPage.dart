@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 
 class PlanPage extends StatefulWidget {
-  // final LoginData data;
-
-  // PlanPage({required this.data});
-
   @override
   State<PlanPage> createState() => _PlanPageState();
 }

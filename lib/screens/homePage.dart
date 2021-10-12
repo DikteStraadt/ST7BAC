@@ -2,27 +2,22 @@ import 'dart:ui';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_project_1_0/navigation/navigationbar.dart';
+import 'package:flutter_project_1_0/database/repository.dart';
 import 'package:flutter_project_1_0/screens/recipePage.dart';
 import '../screens/blankPage.dart';
 import 'package:flutter_project_1_0/screens/loginPage.dart';
 
 class HomePage extends StatefulWidget {
-  final User user;
-
-  const HomePage({required this.user});
-
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  late User _currentUser;
+  final _repository = new Repository();
   bool _isSigningOut = false;
 
   @override
   void initState() {
-    _currentUser = widget.user;
     super.initState();
   }
 
@@ -63,13 +58,13 @@ class _HomePageState extends State<HomePage> {
                   style: Theme.of(context).textTheme.headline4,
                 ),
               ),
-              Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage("lib/assets/zebra.png"),
-                      fit: BoxFit.cover),
-                ),
-              ),
+              // Container(
+              //   decoration: BoxDecoration(
+              //     image: DecorationImage(
+              //         image: AssetImage("lib/assets/zebra.png"),
+              //         fit: BoxFit.cover),
+              //   ),
+              // ),
               Expanded(
                 child: GridView(
                   physics: BouncingScrollPhysics(),
@@ -85,8 +80,8 @@ class _HomePageState extends State<HomePage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => RecipePage(user: _currentUser)));
-                                  //builder: (context) => Navigationbar(user: _currentUser)));
+                                  builder: (context) => RecipePage()));
+                                  //builder: (context) => Navigationbar()));
                         else
                           Navigator.push(
                               context,
@@ -113,6 +108,7 @@ class _HomePageState extends State<HomePage> {
                         builder: (context) => LoginPage(),
                       ),
                     );
+                    _repository.setCurrentUser("");
                   },
                   child: Text(
                     'Log ud',
@@ -120,7 +116,6 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
-              Container(child: Text(_currentUser.displayName.toString()),)
             ],
           ),
         ),

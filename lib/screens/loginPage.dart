@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project_1_0/authorization/fire_auth.dart';
 import 'package:flutter_project_1_0/authorization/validator.dart';
+import 'package:flutter_project_1_0/database/repository.dart';
 import 'package:flutter_project_1_0/screens/homePage.dart';
 import 'package:flutter_project_1_0/screens/registrePage.dart';
 
@@ -12,6 +13,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final _repository = new Repository();
   final _formKey = GlobalKey<FormState>();
 
   final _emailTextController = TextEditingController();
@@ -30,11 +32,10 @@ class _LoginPageState extends State<LoginPage> {
     if (user != null) {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (context) => HomePage(
-            user: user,
-          ),
+          builder: (context) => HomePage(),
         ),
       );
+      _repository.setCurrentUser(user.uid);
     }
 
     return firebaseApp;
@@ -137,21 +138,17 @@ class _LoginPageState extends State<LoginPage> {
                                             });
 
                                             if (user != null) {
+                                              _repository.setCurrentUser(user.uid);
+
                                               Navigator.of(context)
                                                   .pushReplacement(
                                                 MaterialPageRoute(
                                                   builder: (context) =>
-                                                      HomePage(user: user),
+                                                      HomePage(),
                                                 ),
                                               );
                                             }
                                           }
-
-                                          // Write a message to the database
-                                          //FirebaseDatabase database = FirebaseDatabase.getInstance();
-                                          //DatabaseReference myRef = database.getReference("message");
-
-                                          //myRef.setValue("Hello, World!");
                                         },
                                         child: Text(
                                           'Log ind',

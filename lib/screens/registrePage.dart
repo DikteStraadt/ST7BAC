@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_project_1_0/database/repository.dart';
 import 'package:flutter_project_1_0/screens/homePage.dart';
 import 'package:flutter_project_1_0/authorization/fire_auth.dart';
 import 'package:flutter_project_1_0/authorization/validator.dart';
@@ -10,6 +11,7 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  final _repository = new Repository();
   final _registerFormKey = GlobalKey<FormState>();
 
   final _nameTextController = TextEditingController();
@@ -122,11 +124,13 @@ class _RegisterPageState extends State<RegisterPage> {
                                         });
 
                                         if (user != null) {
+                                          _repository.setCurrentUser(user.uid);
+
                                           Navigator.of(context)
                                               .pushAndRemoveUntil(
                                             MaterialPageRoute(
                                               builder: (context) =>
-                                                  HomePage(user: user),
+                                                  HomePage(),
                                             ),
                                             ModalRoute.withName('/'),
                                           );
