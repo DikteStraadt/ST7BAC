@@ -7,6 +7,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
+
+    
   final fb = FirebaseDatabase.instance;
   final myController = TextEditingController();
   final name = "Name";
@@ -14,6 +17,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    
     final ref = fb.reference();
     return Scaffold(
         appBar: AppBar(

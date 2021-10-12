@@ -1,8 +1,10 @@
+import 'dart:async';
 import 'dart:ui';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project_1_0/database/repository.dart';
+import 'package:flutter_project_1_0/navigation/navigationbar.dart';
 import 'package:flutter_project_1_0/screens/recipePage.dart';
 import '../screens/blankPage.dart';
 import 'package:flutter_project_1_0/screens/loginPage.dart';
@@ -13,7 +15,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final _repository = new Repository();
   bool _isSigningOut = false;
 
   @override
@@ -76,12 +77,16 @@ class _HomePageState extends State<HomePage> {
                           margin: const EdgeInsets.all(20.0),
                           child: getCardByTitle(title)),
                       onTap: () {
+
+                        // Noget her!!!!!
+                        Repository.getCurrentUser().then((value){print(value);});
+
                         if (title == "Opskrifter")
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => RecipePage()));
-                                  //builder: (context) => Navigationbar()));
+                                  //builder: (context) => RecipePage()));
+                                  builder: (context) => Navigationbar()));
                         else
                           Navigator.push(
                               context,
@@ -108,7 +113,7 @@ class _HomePageState extends State<HomePage> {
                         builder: (context) => LoginPage(),
                       ),
                     );
-                    _repository.setCurrentUser("");
+                    Repository.setCurrentUser("");
                   },
                   child: Text(
                     'Log ud',

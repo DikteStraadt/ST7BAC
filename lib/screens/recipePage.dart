@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_project_1_0/database/repository.dart';
 import 'package:flutter_project_1_0/screens/favoritesPage.dart';
 
 class RecipePage extends StatefulWidget {
@@ -10,6 +11,7 @@ class RecipePage extends StatefulWidget {
 }
 
 class _RecipePageState extends State<RecipePage> {
+  final _repository = new Repository();
   final _savedRecipies = <String>{};
 
   Widget _buildCard(String recipeId) {
@@ -39,6 +41,7 @@ class _RecipePageState extends State<RecipePage> {
                       _savedRecipies.remove(recipeId);
                     } else {
                       _savedRecipies.add(recipeId);
+                      //_repository.addFavoriteRecipe(recipeId);
                     }
                   },
                 );

@@ -11,7 +11,6 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  final _repository = new Repository();
   final _registerFormKey = GlobalKey<FormState>();
 
   final _nameTextController = TextEditingController();
@@ -124,7 +123,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                         });
 
                                         if (user != null) {
-                                          _repository.setCurrentUser(user.uid);
+                                          Repository.setCurrentUser(user.uid);
 
                                           Navigator.of(context)
                                               .pushAndRemoveUntil(

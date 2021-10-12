@@ -13,7 +13,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final _repository = new Repository();
   final _formKey = GlobalKey<FormState>();
 
   final _emailTextController = TextEditingController();
@@ -35,7 +34,7 @@ class _LoginPageState extends State<LoginPage> {
           builder: (context) => HomePage(),
         ),
       );
-      _repository.setCurrentUser(user.uid);
+      Repository.setCurrentUser(user.uid);
     }
 
     return firebaseApp;
@@ -138,7 +137,7 @@ class _LoginPageState extends State<LoginPage> {
                                             });
 
                                             if (user != null) {
-                                              _repository.setCurrentUser(user.uid);
+                                              Repository.setCurrentUser(user.uid);
 
                                               Navigator.of(context)
                                                   .pushReplacement(
