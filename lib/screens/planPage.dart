@@ -8,11 +8,13 @@ class PlanPage extends StatefulWidget {
 class _PlanPageState extends State<PlanPage> {
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
         appBar: AppBar(
-
           title: Text("Madplaner"),
+          leading: Icon(
+            Icons.home_outlined,
+            size: 28,
+          ),
         ),
         body: Center(
             child: Column(

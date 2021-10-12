@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project_1_0/database/repository.dart';
+import 'package:flutter_project_1_0/navigation/navigationbar.dart';
 import 'package:flutter_project_1_0/screens/favoritesPage.dart';
+import 'package:flutter_project_1_0/screens/homePage.dart';
 
 class RecipePage extends StatefulWidget {
   const RecipePage({Key? key}) : super(key: key);
@@ -57,13 +59,29 @@ class _RecipePageState extends State<RecipePage> {
   Widget build(BuildContext context) {
     final String recipeId = "";
     final alreadySaved = _savedRecipies.contains(recipeId);
+    PageController _controller = PageController(initialPage: 0);
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Opskrifter'),
-        actions: [
-          IconButton(icon: Icon(Icons.list), onPressed: _pushSaved),
-        ],
+        // actions: [
+        //   IconButton(icon: Icon(Icons.list), onPressed: _pushSaved),
+        // ],
+        leading: GestureDetector(
+          onTap: () {
+            // Navigator.pushReplacement<void, void>(
+            //   context,
+            //   MaterialPageRoute<void>(
+            //     builder: (BuildContext context) => HomePage(),
+            //   ),
+            // );
+            Navigator.of(context).pop(true);
+          },
+          child: Icon(
+            Icons.home_outlined,
+            size: 28,
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -84,7 +102,7 @@ class _RecipePageState extends State<RecipePage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => FavoritesPage(savedRecipies: _savedRecipies),
+        builder: (context) => FavoritesPage(),
       ),
     );
   }

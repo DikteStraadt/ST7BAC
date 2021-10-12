@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project_1_0/database/repository.dart';
 import 'package:flutter_project_1_0/navigation/navigationbar.dart';
+import 'package:flutter_project_1_0/navigation/pageView.dart';
 import 'package:flutter_project_1_0/screens/recipePage.dart';
 import '../screens/blankPage.dart';
 import 'package:flutter_project_1_0/screens/loginPage.dart';
@@ -85,8 +86,9 @@ class _HomePageState extends State<HomePage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
+                                builder: (context) => PageViewController()));
                                   //builder: (context) => RecipePage()));
-                                  builder: (context) => Navigationbar()));
+                                  //builder: (context) => Navigationbar()));
                         else
                           Navigator.push(
                               context,

@@ -1,22 +1,20 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class FavoritesPage extends StatefulWidget {
-  
-  final Set<String> savedRecipies;
 
-  const FavoritesPage({Key? key, required this.savedRecipies}) : super(key: key);
+  const FavoritesPage({Key? key})
+      : super(key: key);
 
   @override
   _FavoritesPageState createState() => _FavoritesPageState();
 }
 
 class _FavoritesPageState extends State<FavoritesPage> {
-  late Set<String>_savedRecipies;
+  late Set<String> _savedRecipies;
 
   @override
   void initState() {
-    _savedRecipies = widget.savedRecipies;
+    _savedRecipies = <String>{"mexicansk-risret","one-pot-pasta"};
     super.initState();
   }
 
@@ -66,12 +64,14 @@ class _FavoritesPageState extends State<FavoritesPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Favoritter'),
+        leading: Icon(
+          Icons.home_outlined,
+          size: 28,
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
-          children: <Widget>[
-            for ( var i in _savedRecipies ) _buildCard(i)
-          ],
+          children: <Widget>[for (var i in _savedRecipies) _buildCard(i)],
         ),
       ),
     );
