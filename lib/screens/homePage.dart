@@ -16,6 +16,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final _repository = new Repository();
   bool _isSigningOut = false;
 
   @override
@@ -79,8 +80,20 @@ class _HomePageState extends State<HomePage> {
                           child: getCardByTitle(title)),
                       onTap: () {
 
+                        // Repository.getCurrentUserFuture();
+
+                        // var username = "123";
+
+                        // Repository.getCurrentUserFuture().then((value) =>  username = "value");
+
+                        // print("Noget andet: " + username);
+
                         // Noget her!!!!!
-                        Repository.getCurrentUser().then((value){print(value);});
+                        //Repository.getCurrentUser().then((value){print("Måske noget: " + value);});
+                        //var username;
+                        // Repository.getCurrentUser().then((user) {
+                        //  username = user.getName;
+                        // });
 
                         if (title == "Opskrifter")
                           Navigator.push(

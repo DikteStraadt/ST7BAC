@@ -64,17 +64,14 @@ class _RecipePageState extends State<RecipePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Opskrifter'),
-        // actions: [
-        //   IconButton(icon: Icon(Icons.list), onPressed: _pushSaved),
-        // ],
         leading: GestureDetector(
           onTap: () {
-            // Navigator.pushReplacement<void, void>(
-            //   context,
-            //   MaterialPageRoute<void>(
-            //     builder: (BuildContext context) => HomePage(),
-            //   ),
-            // );
+            Navigator.pushReplacement<void, void>(
+              context,
+              MaterialPageRoute<void>(
+                builder: (BuildContext context) => HomePage(),
+              ),
+            );
             Navigator.of(context).pop(true);
           },
           child: Icon(
@@ -82,6 +79,26 @@ class _RecipePageState extends State<RecipePage> {
             size: 28,
           ),
         ),
+        actions: <Widget>[
+          Padding(
+              padding: EdgeInsets.only(right: 20.0),
+              child: GestureDetector(
+                onTap: () {},
+                child: Icon(
+                  Icons.filter_alt_outlined,
+                  size: 28,
+                ),
+              )),
+          Padding(
+              padding: EdgeInsets.only(right: 20.0),
+              child: GestureDetector(
+                onTap: () {},
+                child: Icon(
+                  Icons.search,
+                  size: 28,
+                ),
+              )),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
