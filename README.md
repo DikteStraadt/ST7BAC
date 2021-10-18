@@ -27,3 +27,12 @@ https://codelabs.developers.google.com/codelabs/first-flutter-app-pt2#4
 ## Hul igennem til databasen
 https://medium.com/firebase-tips-tricks/how-to-use-firebase-realtime-database-with-flutter-ebd98aba2c91
 
+## Returnere data fra en side til en anden
+https://flutter.dev/docs/cookbook/navigation/returning-data
+
+# Eventuelle kilder
+## Gemme værdi fra textfelt i variabel
+https://flutter.dev/docs/cookbook/forms/retrieve-input
+
+# Dropdown i madplaner
+https://blog.bajarangisoft.com/blog/how-to-change-icon-color-popup-menu-button-in-flutter-app

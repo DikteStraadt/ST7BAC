@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project_1_0/screens/homePage.dart';
-import 'package:flutter_project_1_0/screens/newPlan.dart';
+import 'package:flutter_project_1_0/screens/newPlanPage.dart';
 import 'package:flutter_project_1_0/models/plan.dart';
 
 class PlanPage extends StatefulWidget {
@@ -10,7 +10,6 @@ class PlanPage extends StatefulWidget {
 
 class _PlanPageState extends State<PlanPage> {
   List<Plan> plans = [];
-
 
   @override
   Widget build(BuildContext context) {
@@ -59,18 +58,68 @@ class _PlanPageState extends State<PlanPage> {
     return new Column(
       children: <Widget>[
         Padding(
-          padding: EdgeInsets.all(8),
+          padding: EdgeInsets.all(7),
         ),
         Container(
           alignment: Alignment.topCenter,
           child: SizedBox(
-            height: 125,
-            width: MediaQuery.of(context).size.width * 0.95,
-            child: ListTile(
-              tileColor: Colors.green[200],
-              title: Text(title),
-            ),
-          ),
+              width: MediaQuery.of(context).size.width * 0.94,
+              child: Column(
+                children: [
+                  ListTile(
+                    leading: Image.asset("lib/assets/vegetar-spaghetti.jpg",
+                        fit: BoxFit.fill),
+                    tileColor: Colors.lightGreenAccent[100],
+                    title: Text(title),
+                    trailing: PopupMenuButton(
+                      itemBuilder: (context) => [
+                        PopupMenuItem(
+                          child: Row(
+                            children: <Widget>[
+                              Icon(
+                                Icons.edit_rounded,
+                              ),
+                              SizedBox(width: 10.0),
+                              Text("Rediger madplan"),
+                            ],
+                          ),
+                          onTap: () {editPlan();},
+                          // value: 1,
+                        ),
+                        PopupMenuItem(
+                          child: Row(
+                            children: <Widget>[
+                              Icon(
+                                Icons.format_list_bulleted_rounded,
+                              ),
+                              SizedBox(width: 10.0),
+                              Text("Se indkøbsliste"),
+                            ],
+                          ),
+                          onTap: () {goToViewList();},
+                          // value: 2,
+                        ),
+                        PopupMenuItem(
+                          child: Row(
+                            children: <Widget>[
+                              Icon(
+                                Icons.delete,
+                              ),
+                              SizedBox(width: 10.0),
+                              Text("Slet madplan"),
+                            ],
+                          ),
+                          onTap: () {deletePlan("Uge 31");},
+                          // value: 3,
+                        ),
+                      ],
+                    ),
+                    subtitle: Text(
+                        'A sufficiently long subtitle warrants three lines.'),
+                    isThreeLine: true,
+                  ),
+                ],
+              )),
         ),
       ],
     );
@@ -79,7 +128,7 @@ class _PlanPageState extends State<PlanPage> {
   void addNewPlan() async {
     final result = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => NewPlan()),
+      MaterialPageRoute(builder: (context) => NewPlanPage()),
     );
 
     Plan p = new Plan(result);
@@ -88,5 +137,18 @@ class _PlanPageState extends State<PlanPage> {
     setState(() {
       buildContainer(p.title);
     });
+  }
+
+  void goToViewList() {
+
+  }
+
+  void deletePlan(String title) {
+    setState(() {
+      plans.removeWhere((item) => item.title == title);
+    });
+  }
+
+  void editPlan() {
   }
 }

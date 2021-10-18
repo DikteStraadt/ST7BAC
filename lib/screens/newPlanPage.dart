@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class NewPlan extends StatelessWidget {
-  NewPlan({Key? key}) : super(key: key);
+class NewPlanPage extends StatelessWidget {
+  NewPlanPage({Key? key}) : super(key: key);
   
   final _textController = TextEditingController();
 
@@ -22,7 +22,7 @@ class NewPlan extends StatelessWidget {
               onPressed: () {
                 Navigator.pop(context, _textController.text);
               },
-              child: Text('Tilbage'),
+              child: Text('Opret madplan'),
             ),
           ],
         ),
