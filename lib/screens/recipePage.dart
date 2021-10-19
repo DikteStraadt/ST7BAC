@@ -1,7 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_project_1_0/database/recipes.dart';
 import 'package:flutter_project_1_0/database/repository.dart';
-import 'package:flutter_project_1_0/navigation/navigationbar.dart';
+import 'package:flutter_project_1_0/models/ingredient.dart';
+import 'package:flutter_project_1_0/models/recipe.dart';
 import 'package:flutter_project_1_0/screens/favoritesPage.dart';
 import 'package:flutter_project_1_0/screens/homePage.dart';
 
@@ -13,52 +15,20 @@ class RecipePage extends StatefulWidget {
 }
 
 class _RecipePageState extends State<RecipePage> {
-  final _repository = new Repository();
-  final _savedRecipies = <String>{};
+  //Recipes _r = new Recipes();     //For loading recipes from recipes class.
+  List<Recipe> _recipies = [];
+  final List<Recipe> _savedRecipies = [];
 
-  Widget _buildCard(String recipeId) {
-    final alreadySaved = _savedRecipies.contains(recipeId);
-    String recipePictureAsset = "lib/assets/" + recipeId + ".jpg";
-
-    return Card(
-      child: Stack(
-        children: <Widget>[
-          Container(
-            decoration: new BoxDecoration(color: Colors.white),
-            alignment: Alignment.center,
-            child: Image.asset(recipePictureAsset, fit: BoxFit.fill),
-          ),
-          Align(
-            alignment: Alignment.bottomLeft,
-            child: IconButton(
-              icon: new Icon(
-                alreadySaved ? Icons.favorite : Icons.favorite_border,
-                size: 80,
-                color: Colors.red[900],
-              ),
-              onPressed: () {
-                setState(
-                  () {
-                    if (alreadySaved) {
-                      _savedRecipies.remove(recipeId);
-                    } else {
-                      _savedRecipies.add(recipeId);
-                      //_repository.addFavoriteRecipe(recipeId);
-                    }
-                  },
-                );
-              },
-            ),
-          )
-        ],
-      ),
-    );
+  @override
+  void initState() {
+    //_recipies = _r.loadRecipes();     // Loading recipes from recipes class. Shall only be used the first time, to write data to database
+    Repository.getRecipes().then(updateRecipes); // Loading recipes from database
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final String recipeId = "";
-    final alreadySaved = _savedRecipies.contains(recipeId);
+    //final alreadySaved = _savedRecipies.contains(recipeId);
     PageController _controller = PageController(initialPage: 0);
 
     return Scaffold(
@@ -101,16 +71,47 @@ class _RecipePageState extends State<RecipePage> {
         ],
       ),
       body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            _buildCard("mexicansk-risret"),
-            _buildCard("one-pot-pasta"),
-            _buildCard("vegetar-spaghetti"),
-            _buildCard("crispy-kylling"),
-            _buildCard("porretaerte"),
-            _buildCard("graeskarsuppe"),
-          ],
-        ),
+        child: Column(children: <Widget>[
+          for (var recipe in _recipies) _buildCard(recipe),
+        ]),
+      ),
+    );
+  }
+
+  Widget _buildCard(Recipe recipe) {
+    final alreadySaved = _savedRecipies.contains(recipe);
+    //Repository.setRecipe(recipe);    // Writing new recipes to database
+
+    return Card(
+      child: Stack(
+        children: <Widget>[
+          Container(
+            decoration: new BoxDecoration(color: Colors.white),
+            alignment: Alignment.center,
+            child: Image.asset(recipe.picture, fit: BoxFit.fill),
+          ),
+          Align(
+            alignment: Alignment.bottomLeft,
+            child: IconButton(
+              icon: new Icon(
+                alreadySaved ? Icons.favorite : Icons.favorite_border,
+                size: 80,
+                color: Colors.red[900],
+              ),
+              onPressed: () {
+                setState(
+                  () {
+                    if (alreadySaved) {
+                      _savedRecipies.remove(recipe);
+                    } else {
+                      _savedRecipies.add(recipe);
+                    }
+                  },
+                );
+              },
+            ),
+          )
+        ],
       ),
     );
   }
@@ -121,6 +122,42 @@ class _RecipePageState extends State<RecipePage> {
       MaterialPageRoute(
         builder: (context) => FavoritesPage(),
       ),
+    );
+  }
+
+  updateRecipes(Map<dynamic, dynamic> recipes) {
+    List<Recipe> recipeList = [];
+    List<Ingredient> ingredientList = [];
+    int i = 0;
+
+    setState(
+      () {
+        recipes.forEach(
+          (key, value) {
+            recipes.forEach(
+              (key, value) {
+                ingredientList.add(
+                  new Ingredient(
+                    value['ingredientList'][1]['name'].toString(),
+                    (value['ingredientList'][1]['amount']).toDouble(),
+                    value['ingredientList'][1]['unit'].toString(),
+                  ),
+                );
+                i++;
+              },
+            );
+
+            recipeList.add(
+              new Recipe(key, value["name"], value["picture"], value["numberOfingredients"], ingredientList),
+            );
+
+            ingredientList.clear();
+            i = 0;
+          },
+        );
+
+        _recipies = recipeList;
+      },
     );
   }
 }

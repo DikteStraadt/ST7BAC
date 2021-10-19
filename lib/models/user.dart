@@ -1,12 +1,5 @@
 class User {
-  
-  final String? id;
-  String? name;
+  final String id;
 
-  User.fromJson(this.id, Map data){
-    name = data['name'];
-    if(name == null){
-      name = '';
-    }
-  }
+  User(this.id);
 }

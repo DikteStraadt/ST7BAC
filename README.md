@@ -27,6 +27,10 @@ https://codelabs.developers.google.com/codelabs/first-flutter-app-pt2#4
 ## Hul igennem til databasen
 https://medium.com/firebase-tips-tricks/how-to-use-firebase-realtime-database-with-flutter-ebd98aba2c91
 
+## Læse og skrive til database
+https://www.youtube.com/watch?v=Bper2K92bd8&ab_channel=BrandonDonnelson
+https://stackoverflow.com/questions/52072948/flutter-get-firebase-database-reference-child-all-data
+
 ## Returnere data fra en side til en anden
 https://flutter.dev/docs/cookbook/navigation/returning-data
 
