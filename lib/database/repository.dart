@@ -1,10 +1,9 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter_project_1_0/models/user.dart';
 
 class Repository {
-  //final mDatabase = FirebaseDatabase.instance.reference();
   static final FirebaseDatabase firebaseDatabase = new FirebaseDatabase();
 
   static Future<void> setCurrentUser(String userId) async {
@@ -14,19 +13,32 @@ class Repository {
         .set(userId);
   }
 
-  // static Future<String> getCurrentUserFuture() async {
-//     final String result =
-//         (await firebaseDatabase.reference().child("CurrentUserId").once())
-//             .value
-//             .toString();
-//     print("result: $result");
-//     return result;
-//   }
+  static Future<StreamSubscription<Event>> getCurrentUserStream(
+      void onData(User user)) async {
+    StreamSubscription<Event> subscription = FirebaseDatabase.instance
+        .reference()
+        .child("CurrentUserId")
+        .onValue
+        .listen((Event event) {
+      var user = new User.fromJson(event.snapshot.key, event.snapshot.value);
+      onData(user);
+    });
 
-//   static Future<String> getCurrentUser() async {
-//     String news = await getCurrentUserFuture();
-//     print("Something: " + news);
-//     return news;
-// }
+    return subscription;
+  }
+
+  static Future<User> getCurrentUser() async {
+    Completer<User> completer = new Completer<User>();
+
+    FirebaseDatabase.instance
+        .reference()
+        .child("CurrentUserId")
+        .once()
+        .then((DataSnapshot snapshot) {
+      var user = new User.fromJson(snapshot.key, snapshot.value);
+      completer.complete(user);
+    });
+
+    return completer.future;
+  }
 }
-

@@ -4,11 +4,13 @@ import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project_1_0/database/repository.dart';
+import 'package:flutter_project_1_0/models/user.dart';
 import 'package:flutter_project_1_0/navigation/navigationbar.dart';
 import 'package:flutter_project_1_0/navigation/pageView.dart';
 import 'package:flutter_project_1_0/screens/recipePage.dart';
 import '../screens/blankPage.dart';
 import 'package:flutter_project_1_0/screens/loginPage.dart';
+import 'package:flutter_project_1_0/models/user.dart' as user;
 
 class HomePage extends StatefulWidget {
   @override
@@ -16,8 +18,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final _repository = new Repository();
   bool _isSigningOut = false;
+  String _currentUser = "";
 
   @override
   void initState() {
@@ -79,29 +81,17 @@ class _HomePageState extends State<HomePage> {
                           margin: const EdgeInsets.all(20.0),
                           child: getCardByTitle(title)),
                       onTap: () {
-
-                        // Repository.getCurrentUserFuture();
-
-                        // var username = "123";
-
-                        // Repository.getCurrentUserFuture().then((value) =>  username = "value");
-
-                        // print("Noget andet: " + username);
-
-                        // Noget her!!!!!
-                        //Repository.getCurrentUser().then((value){print("Måske noget: " + value);});
-                        //var username;
-                        // Repository.getCurrentUser().then((user) {
-                        //  username = user.getName;
-                        // });
+                        // Noget her!!!!
+                        //print("CurrentUser før:" + _currentUser);
+                        Repository.getCurrentUser().then(_printUser);
+                        //print("CurrentUser efter:" + _currentUser);
 
                         if (title == "Opskrifter")
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => PageViewController()));
-                                  //builder: (context) => RecipePage()));
-                                  //builder: (context) => Navigationbar()));
+                                  builder: (context) => PageViewController()));
+                        //builder: (context) => Navigationbar()));
                         else
                           Navigator.push(
                               context,
@@ -180,5 +170,12 @@ class _HomePageState extends State<HomePage> {
         )
       ],
     );
+  }
+
+  _printUser(user.User value) {
+    setState(() {
+      print("Method: " + value.id.toString());
+      _currentUser = value.id.toString();
+    });
   }
 }
