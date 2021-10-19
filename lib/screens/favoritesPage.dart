@@ -58,8 +58,6 @@ class _FavoritesPageState extends State<FavoritesPage> {
 
   @override
   Widget build(BuildContext context) {
-    final String recipeId = "";
-    final alreadySaved = _savedRecipies.contains(recipeId);
 
     return Scaffold(
       appBar: AppBar(

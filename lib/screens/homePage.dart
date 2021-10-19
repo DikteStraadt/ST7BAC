@@ -6,7 +6,7 @@ import 'package:flutter_project_1_0/database/repository.dart';
 import 'package:flutter_project_1_0/navigation/pageView.dart';
 import '../screens/blankPage.dart';
 import 'package:flutter_project_1_0/screens/loginPage.dart';
-import 'package:flutter_project_1_0/models/user.dart' as user;
+//import 'package:flutter_project_1_0/models/user.dart' as user;
 
 class HomePage extends StatefulWidget {
   @override
@@ -14,8 +14,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  // ignore: unused_field
   bool _isSigningOut = false;
-  String _currentUser = "";
+  //String _currentUser = "";
 
   @override
   void initState() {

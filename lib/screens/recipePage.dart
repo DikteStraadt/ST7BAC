@@ -1,10 +1,7 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_project_1_0/database/recipes.dart';
 import 'package:flutter_project_1_0/database/repository.dart';
 import 'package:flutter_project_1_0/models/ingredient.dart';
 import 'package:flutter_project_1_0/models/recipe.dart';
-import 'package:flutter_project_1_0/screens/favoritesPage.dart';
 import 'package:flutter_project_1_0/screens/homePage.dart';
 
 class RecipePage extends StatefulWidget {
@@ -22,14 +19,14 @@ class _RecipePageState extends State<RecipePage> {
   @override
   void initState() {
     //_recipies = _r.loadRecipes();     // Loading recipes from recipes class. Shall only be used the first time, to write data to database
-    Repository.getRecipes().then(updateRecipes); // Loading recipes from database
+    Repository.getRecipes()
+        .then(updateRecipes); // Loading recipes from database
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     //final alreadySaved = _savedRecipies.contains(recipeId);
-    PageController _controller = PageController(initialPage: 0);
 
     return Scaffold(
       appBar: AppBar(
@@ -116,43 +113,41 @@ class _RecipePageState extends State<RecipePage> {
     );
   }
 
-  void _pushSaved() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => FavoritesPage(),
-      ),
-    );
-  }
+  // void _pushSaved() {
+  //   Navigator.push(
+  //     context,
+  //     MaterialPageRoute(
+  //       builder: (context) => FavoritesPage(),
+  //     ),
+  //   );
+  // }
 
   updateRecipes(Map<dynamic, dynamic> recipes) {
     List<Recipe> recipeList = [];
     List<Ingredient> ingredientList = [];
-    int i = 0;
+    int j = 0;
 
     setState(
       () {
         recipes.forEach(
           (key, value) {
-            recipes.forEach(
-              (key, value) {
-                ingredientList.add(
-                  new Ingredient(
-                    value['ingredientList'][1]['name'].toString(),
-                    (value['ingredientList'][1]['amount']).toDouble(),
-                    value['ingredientList'][1]['unit'].toString(),
-                  ),
-                );
-                i++;
-              },
-            );
+            ingredientList.clear();
+            j = value["numberOfingredients"];
+
+            for (var i = 0; i < j; i++) {
+              ingredientList.add(
+                new Ingredient(
+                  value['ingredientList'][i]['name'].toString(),
+                  (value['ingredientList'][i]['amount']).toDouble(),
+                  value['ingredientList'][i]['unit'].toString(),
+                ),
+              );
+            }
 
             recipeList.add(
-              new Recipe(key, value["name"], value["picture"], value["numberOfingredients"], ingredientList),
+              new Recipe(key, value["name"], value["picture"],
+                  value["numberOfingredients"], ingredientList),
             );
-
-            ingredientList.clear();
-            i = 0;
           },
         );
 
