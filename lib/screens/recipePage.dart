@@ -1,7 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_project_1_0/database/repository.dart';
+import 'package:flutter_project_1_0/models/favorite.dart';
 import 'package:flutter_project_1_0/models/ingredient.dart';
 import 'package:flutter_project_1_0/models/recipe.dart';
+import 'package:flutter_project_1_0/models/user.dart';
 import 'package:flutter_project_1_0/screens/homePage.dart';
 
 class RecipePage extends StatefulWidget {
@@ -13,21 +17,23 @@ class RecipePage extends StatefulWidget {
 
 class _RecipePageState extends State<RecipePage> {
   //Recipes _r = new Recipes();     //For loading recipes from recipes class.
-  List<Recipe> _recipies = [];
-  final List<Recipe> _savedRecipies = [];
+  late List<Recipe> _recipies = [];
+  late List<Favorite> _favoriteRecipies = [];
+  String _currentUser = "9xNt9mjHGjMPeWx54dutlamCzRC2";
 
   @override
   void initState() {
     //_recipies = _r.loadRecipes();     // Loading recipes from recipes class. Shall only be used the first time, to write data to database
+    Repository.getCurrentUser()
+        .then(setCurrentUser); // Get current user from database
     Repository.getRecipes()
         .then(updateRecipes); // Loading recipes from database
+    Repository.getFavorites(_currentUser).then(updateFavorites);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    //final alreadySaved = _savedRecipies.contains(recipeId);
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Opskrifter'),
@@ -76,7 +82,7 @@ class _RecipePageState extends State<RecipePage> {
   }
 
   Widget _buildCard(Recipe recipe) {
-    final alreadySaved = _savedRecipies.contains(recipe);
+    bool alreadySaved = contains(recipe.id);
     //Repository.setRecipe(recipe);    // Writing new recipes to database
 
     return Card(
@@ -98,10 +104,30 @@ class _RecipePageState extends State<RecipePage> {
               onPressed: () {
                 setState(
                   () {
+                    Favorite favorite = new Favorite(
+                        _currentUser,
+                        recipe.id,
+                        recipe.name,
+                        recipe.picture,
+                        recipe.numberOfingredients,
+                        recipe.ingredientList);
                     if (alreadySaved) {
-                      _savedRecipies.remove(recipe);
+                      setState(
+                        () {
+                          Repository.removeavorite(
+                              favorite); // Remove recipe as favorite in database
+                          Repository.getFavorites(_currentUser)
+                              .then(updateFavorites);
+                        },
+                      );
+                      _favoriteRecipies.remove(favorite);
                     } else {
-                      _savedRecipies.add(recipe);
+                      setState(() {
+                        Repository.setFavorite(
+                            favorite); // Set recipe as favorite in database
+                        Repository.getFavorites(_currentUser)
+                            .then(updateFavorites);
+                      });
                     }
                   },
                 );
@@ -127,32 +153,79 @@ class _RecipePageState extends State<RecipePage> {
     List<Ingredient> ingredientList = [];
     int j = 0;
 
+    recipes.forEach(
+      (key, value) {
+        ingredientList.clear();
+        j = value["numberOfingredients"];
+
+        for (var i = 0; i < j; i++) {
+          ingredientList.add(
+            new Ingredient(
+              value['ingredientList'][i]['name'].toString(),
+              (value['ingredientList'][i]['amount']).toDouble(),
+              value['ingredientList'][i]['unit'].toString(),
+            ),
+          );
+        }
+
+        recipeList.add(
+          new Recipe(key, value["name"], value["picture"],
+              value["numberOfingredients"], ingredientList),
+        );
+      },
+    );
+
     setState(
       () {
-        recipes.forEach(
-          (key, value) {
-            ingredientList.clear();
-            j = value["numberOfingredients"];
-
-            for (var i = 0; i < j; i++) {
-              ingredientList.add(
-                new Ingredient(
-                  value['ingredientList'][i]['name'].toString(),
-                  (value['ingredientList'][i]['amount']).toDouble(),
-                  value['ingredientList'][i]['unit'].toString(),
-                ),
-              );
-            }
-
-            recipeList.add(
-              new Recipe(key, value["name"], value["picture"],
-                  value["numberOfingredients"], ingredientList),
-            );
-          },
-        );
-
         _recipies = recipeList;
       },
     );
+  }
+
+  void setCurrentUser(User value) {
+    setState(() {
+      _currentUser = value.id;
+    });
+  }
+
+  updateFavorites(Map<dynamic, dynamic> favorites) {
+    List<Favorite> favoriteList = [];
+    List<Ingredient> ingredientList = [];
+    int j = 0;
+
+    favorites.forEach(
+      (key, value) {
+        ingredientList.clear();
+        j = value["numberOfingredients"];
+
+        for (var i = 0; i < j; i++) {
+          ingredientList.add(
+            new Ingredient(
+              value['ingredientList'][i]['name'].toString(),
+              (value['ingredientList'][i]['amount']).toDouble(),
+              value['ingredientList'][i]['unit'].toString(),
+            ),
+          );
+        }
+
+        favoriteList.add(
+          new Favorite(_currentUser, key, value["name"], value["picture"],
+              value["numberOfingredients"], ingredientList),
+        );
+      },
+    );
+
+    setState(
+      () {
+        _favoriteRecipies = favoriteList;
+      },
+    );
+  }
+
+  bool contains(String recipeId) {
+    for (var f in _favoriteRecipies) {
+      if (f.id == recipeId) return true;
+    }
+    return false;
   }
 }
