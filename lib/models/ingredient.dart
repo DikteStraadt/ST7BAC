@@ -16,7 +16,4 @@ class Ingredient {
         'amount': amount,
         'unit': unit,
       };
-
-  factory Ingredient.fromJson(Map<dynamic, dynamic> json) => Ingredient.json(
-      name: json['name'], amount: json['amount'], unit: json['unit']);
 }

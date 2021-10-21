@@ -114,7 +114,7 @@ class _RecipePageState extends State<RecipePage> {
                     if (alreadySaved) {
                       setState(
                         () {
-                          Repository.removeavorite(
+                          Repository.removeFavorite(
                               favorite); // Remove recipe as favorite in database
                           Repository.getFavorites(_currentUser)
                               .then(updateFavorites);

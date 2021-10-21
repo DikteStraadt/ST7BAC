@@ -50,7 +50,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                         setState(
                           () {
                             print("REMOVE!");
-                            Repository.removeavorite(
+                            Repository.removeFavorite(
                                 favorite); // Remove recipe as favorite in database
                             Repository.getFavorites(_currentUser)
                                 .then(updateFavorites);
@@ -90,8 +90,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            if (_favoriteRecipies.isNotEmpty)
-              for (var i in _favoriteRecipies) _buildCard(i),
+            for (var i in _favoriteRecipies) _buildCard(i),
           ],
         ),
       ),
