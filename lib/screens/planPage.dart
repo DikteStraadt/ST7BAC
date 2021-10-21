@@ -150,7 +150,7 @@ class _PlanPageState extends State<PlanPage> {
           ),
         ],
       ),
-      //subtitle: Text("Her kan der laves en beskrivelse af madplanen!"),
+      subtitle: Text(""),
       isThreeLine: true,
     );
   }
