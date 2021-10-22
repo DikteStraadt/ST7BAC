@@ -6,7 +6,7 @@ import 'package:flutter_project_1_0/models/favorite.dart';
 import 'package:flutter_project_1_0/models/ingredient.dart';
 import 'package:flutter_project_1_0/models/recipe.dart';
 import 'package:flutter_project_1_0/models/user.dart';
-import 'package:flutter_project_1_0/screens/homePage.dart';
+import 'package:flutter_project_1_0/pages/home_page.dart';
 
 class RecipePage extends StatefulWidget {
   const RecipePage({Key? key}) : super(key: key);

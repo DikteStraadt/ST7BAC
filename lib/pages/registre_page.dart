@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_project_1_0/database/repository.dart';
-import 'package:flutter_project_1_0/screens/homePage.dart';
+import 'package:flutter_project_1_0/pages/home_page.dart';
 import 'package:flutter_project_1_0/authorization/fire_auth.dart';
 import 'package:flutter_project_1_0/authorization/validator.dart';
 

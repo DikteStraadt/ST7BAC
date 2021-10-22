@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project_1_0/screens/favoritesPage.dart';
-import 'package:flutter_project_1_0/screens/planPage.dart';
-import 'package:flutter_project_1_0/screens/recipePage.dart';
+import 'package:flutter_project_1_0/pages/favorites_page.dart';
+import 'package:flutter_project_1_0/pages/plan_page.dart';
+import 'package:flutter_project_1_0/pages/recipe_page.dart';
 
 class PageViewController extends StatefulWidget {
   @override

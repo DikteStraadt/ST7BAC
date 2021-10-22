@@ -42,20 +42,19 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
   assets:
-    - lib/assets/aesel.png
-    - lib/assets/baever.png
-    - lib/assets/gepard.png
-    - lib/assets/giraf.png
-    - lib/assets/koala.png
-    - lib/assets/struds.png
-    - lib/assets/zebra.png
+    - lib/assets/recipes/crispy-kylling.jpg
+    - lib/assets/recipes/graeskarsuppe.jpg
+    - lib/assets/recipes/mexicansk-risret.jpg
+    - lib/assets/recipes/one-pot-pasta.jpg
+    - lib/assets/recipes/porretaerte.jpg
+    - lib/assets/recipes/vegetar-spaghetti.jpg
 
-    - lib/assets/crispy-kylling.jpg
-    - lib/assets/graeskarsuppe.jpg
-    - lib/assets/mexicansk-risret.jpg
-    - lib/assets/one-pot-pasta.jpg
-    - lib/assets/porretaerte.jpg
-    - lib/assets/vegetar-spaghetti.jpg
+    - lib/assets/home/aktiviteter.JPG
+    - lib/assets/home/events.JPG
+    - lib/assets/home/forum.JPG
+    - lib/assets/home/medier.JPG
+    - lib/assets/home/opskrifter.JPG
+    - lib/assets/home/vejledning.JPG
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

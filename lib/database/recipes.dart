@@ -11,7 +11,7 @@ class Recipes {
       new Ingredient("Hakkede tomater", 1, "dåse")
     ];
     Recipe mexicansk_risret =
-        new Recipe("mexicansk-risret", "Mexikansk risret", "lib/assets/mexicansk-risret.jpg", 2, mexicansk_risret_i);
+        new Recipe("mexicansk-risret", "Mexikansk risret", "lib/assets/recipes/mexicansk-risret.jpg", 2, mexicansk_risret_i);
     _recipes.add(mexicansk_risret);
 
     // Mexikansk risret
@@ -20,7 +20,7 @@ class Recipes {
       new Ingredient("Squash", 0.5, "stk.")
     ];
     Recipe one_pot_pasta =
-        new Recipe("one-pot-pasta", "One pot pasta", "lib/assets/one-pot-pasta.jpg", 2, one_pot_pasta_i);
+        new Recipe("one-pot-pasta", "One pot pasta", "lib/assets/recipes/one-pot-pasta.jpg", 2, one_pot_pasta_i);
     _recipes.add(one_pot_pasta);
 
     // Vegetar spaghetti
@@ -29,7 +29,7 @@ class Recipes {
       new Ingredient("Squash", 0.5, "stk.")
     ];
     Recipe vegetar_spaghetti =
-        new Recipe("vegetar-spaghetti", "Vegetar Spaghetti", "lib/assets/vegetar-spaghetti.jpg", 2, vegetar_spaghetti_i);
+        new Recipe("vegetar-spaghetti", "Vegetar Spaghetti", "lib/assets/recipes/vegetar-spaghetti.jpg", 2, vegetar_spaghetti_i);
     _recipes.add(vegetar_spaghetti);
 
     return _recipes;   

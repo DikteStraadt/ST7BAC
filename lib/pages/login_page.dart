@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_project_1_0/authorization/fire_auth.dart';
 import 'package:flutter_project_1_0/authorization/validator.dart';
 import 'package:flutter_project_1_0/database/repository.dart';
-import 'package:flutter_project_1_0/screens/homePage.dart';
-import 'package:flutter_project_1_0/screens/registrePage.dart';
+import 'package:flutter_project_1_0/pages/home_page.dart';
+import 'package:flutter_project_1_0/pages/registre_page.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -49,7 +49,7 @@ class _LoginPageState extends State<LoginPage> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Lidt-en-Valdemarsro-app'),
+          title: Text('Hånd i hånd'),
         ),
         body: FutureBuilder(
           future: _initializeFirebase(),

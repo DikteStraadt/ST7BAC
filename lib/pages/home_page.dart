@@ -3,9 +3,9 @@ import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project_1_0/database/repository.dart';
-import 'package:flutter_project_1_0/navigation/pageView.dart';
-import '../screens/blankPage.dart';
-import 'package:flutter_project_1_0/screens/loginPage.dart';
+import 'package:flutter_project_1_0/navigation/page_view.dart';
+import 'blank_page.dart';
+import 'package:flutter_project_1_0/pages/login_page.dart';
 //import 'package:flutter_project_1_0/models/user.dart' as user;
 
 class HomePage extends StatefulWidget {
@@ -14,12 +14,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // ignore: unused_field
   bool _isSigningOut = false;
-  //String _currentUser = "";
+  ScrollController _scrollController = new ScrollController();
 
   @override
   void initState() {
+    WidgetsBinding.instance!.addPostFrameCallback((_) => _scrollController.jumpTo(_scrollController.position.maxScrollExtent));
     super.initState();
   }
 
@@ -34,6 +34,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -50,14 +51,14 @@ class _HomePageState extends State<HomePage> {
           //     image: AssetImage("lib/assets/background.jpg"), fit: BoxFit.cover),
         ),
         child: Container(
-          margin: const EdgeInsets.only(top: 50.0, bottom: 20.0),
+          margin: const EdgeInsets.only(top: 50.0, bottom: 10.0),
           child: Column(
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(bottom: 24.0),
+                padding: const EdgeInsets.only(bottom: 2),
                 child: Text(
-                  'Lidt-en-Valdemarsro-app',
-                  style: Theme.of(context).textTheme.headline4,
+                  'Hånd i hånd',
+                  style: Theme.of(context).textTheme.headline3,
                 ),
               ),
               // Container(
@@ -69,13 +70,14 @@ class _HomePageState extends State<HomePage> {
               // ),
               Expanded(
                 child: GridView(
-                  physics: BouncingScrollPhysics(),
+                  controller: _scrollController,
+                  //physics: NeverScrollableScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2),
                   children: menuButtons.map((title) {
                     return GestureDetector(
                       child: Card(
-                          margin: const EdgeInsets.all(20.0),
+                          margin: const EdgeInsets.all(15.0),
                           child: getCardByTitle(title)),
                       onTap: () {
                         //Repository.getCurrentUser().then(setCurrentUser);
@@ -100,23 +102,23 @@ class _HomePageState extends State<HomePage> {
                 width: MediaQuery.of(context).size.width * 0.9,
                 child: ElevatedButton(
                   onPressed: () async {
-                    setState(() {
-                      _isSigningOut = true;
-                    });
-                    await FirebaseAuth.instance.signOut();
-                    setState(() {
-                      _isSigningOut = false;
-                    });
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                        builder: (context) => LoginPage(),
-                      ),
-                    );
-                    Repository.setCurrentUser("");
+                    // setState(() {
+                    //   _isSigningOut = true;
+                    // });
+                    // await FirebaseAuth.instance.signOut();
+                    // setState(() {
+                    //   _isSigningOut = false;
+                    // });
+                    // Navigator.of(context).pushReplacement(
+                    //   MaterialPageRoute(
+                    //     builder: (context) => LoginPage(),
+                    //   ),
+                    // );
+                    // Repository.setCurrentUser("");
                   },
                   child: Text(
                     'Log ud',
-                    style: TextStyle(color: Colors.white, fontSize: 20),
+                    style: TextStyle(color: Colors.white, fontSize: 25),
                   ),
                 ),
               ),
@@ -130,17 +132,17 @@ class _HomePageState extends State<HomePage> {
   Column getCardByTitle(String title) {
     String img = "";
     if (title == "Opskrifter")
-      img = "lib/assets/aesel.png";
+      img = "lib/assets/home/opskrifter.JPG";
     else if (title == "Aktiviteter")
-      img = "lib/assets/gepard.png";
+      img = "lib/assets/home/aktiviteter.JPG";
     else if (title == "Medier")
-      img = "lib/assets/baever.png";
+      img = "lib/assets/home/medier.JPG";
     else if (title == "Forum")
-      img = "lib/assets/koala.png";
+      img = "lib/assets/home/forum.JPG";
     else if (title == "Vejledning")
-      img = "lib/assets/struds.png";
+      img = "lib/assets/home/vejledning.JPG";
     else
-      img = "lib/assets/giraf.png";
+      img = "lib/assets/home/events.JPG";
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -151,15 +153,15 @@ class _HomePageState extends State<HomePage> {
             children: <Widget>[
               new Image.asset(
                 img,
-                width: 80.0,
-                height: 80.0,
+                width: MediaQuery.of(context).size.width * 0.35,
+                height: MediaQuery.of(context).size.width * 0.35,
               )
             ],
           )),
         ),
         Text(
           title,
-          style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
           textAlign: TextAlign.center,
         )
       ],
