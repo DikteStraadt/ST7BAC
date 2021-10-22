@@ -88,10 +88,17 @@ class _FavoritesPageState extends State<FavoritesPage> {
           size: 28,
         ),
       ),
-      body: SingleChildScrollView(
+      body: Container(
+        decoration: BoxDecoration(color: Colors.teal[100]),
         child: Column(
-          children: <Widget>[
-            for (var i in _favoriteRecipies) _buildCard(i),
+          children: [
+            SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  for (var i in _favoriteRecipies) _buildCard(i),
+                ],
+              ),
+            ),
           ],
         ),
       ),

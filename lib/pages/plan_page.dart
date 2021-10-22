@@ -66,12 +66,17 @@ class _PlanPageState extends State<PlanPage> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
+      body:
+      Container(
         child: Column(
-          children: <Widget>[for (var p in _plans) buildContainer(p)],
+          children: [
+        SingleChildScrollView(
+          child: Column(
+            children: <Widget>[for (var p in _plans) buildContainer(p)],
+          ),
         ),
-      ),
-    );
+          ],),
+    ),);
   }
 
   Column buildContainer(Plan plan) {
@@ -97,9 +102,9 @@ class _PlanPageState extends State<PlanPage> {
       leading: Image.asset(
           plan.recipesList.isNotEmpty
               ? plan.recipesList[0].picture
-              : "lib/assets/aesel.jpg",
+              : "lib/assets/recipe/opskrifter.JPG",
           fit: BoxFit.fill),
-      tileColor: Colors.lightGreenAccent[100],
+      tileColor: Colors.teal[300],
       title: Text(plan.title),
       trailing: PopupMenuButton(
         itemBuilder: (context) => [
@@ -162,28 +167,6 @@ class _PlanPageState extends State<PlanPage> {
     });
   }
 
-  // void addNewPlan() async {
-  //   final result = await Navigator.push(
-  //     context,
-  //     MaterialPageRoute(builder: (context) => NewPlanPage()),
-  //   );
-
-  //   Plan p = new Plan(result);
-  //   plans.add(new Plan(result));
-
-  //   setState(() {
-  //     buildContainer(p.title);
-  //   });
-  // }
-
-  // void goToViewList() {}
-
-  // void deletePlan(String title) {
-  //   // setState(() {
-  //   //   plans.removeWhere((item) => item.title == title);
-  //   // });
-  // }
-
   // void editPlan() {}
 
   updatePlans(Map plans) {
@@ -192,8 +175,8 @@ class _PlanPageState extends State<PlanPage> {
     List<Ingredient> l = [];
     List<Recipe> r = [];
     l.add(new Ingredient("name", 3.0, "unit"));
-    r.add(new Recipe(
-        "Por-rer-r", "Mecikansk", "lib/assets/mexicansk-risret.jpg", 2, l));
+    r.add(new Recipe("Por-rer-r", "Mecikansk",
+        "lib/assets/recipes/mexicansk-risret.jpg", 2, l));
 
     plans.forEach(
       (key, value) {

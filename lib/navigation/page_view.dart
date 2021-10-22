@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project_1_0/pages/favorites_page.dart';
 import 'package:flutter_project_1_0/pages/plan_page.dart';
-import 'package:flutter_project_1_0/pages/recipe_page.dart';
+import 'package:flutter_project_1_0/pages/recipes_page.dart';
 
 class PageViewController extends StatefulWidget {
   @override
@@ -24,7 +24,7 @@ class _PageViewControllerState extends State<PageViewController> {
     return PageView(
       controller: _controller,
       children: [
-        RecipePage(),
+        RecipesPage(),
         PlanPage(),
         FavoritesPage(),
       ],

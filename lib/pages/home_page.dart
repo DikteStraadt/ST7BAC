@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project_1_0/database/repository.dart';
 import 'package:flutter_project_1_0/navigation/page_view.dart';
@@ -27,13 +28,12 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-
     WidgetsBinding.instance!.addPostFrameCallback((_) =>
         _scrollController.jumpTo(_scrollController.position.maxScrollExtent));
 
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(color: Colors.teal[100]
+        //decoration: BoxDecoration(color: Colors.teal[100]
             // gradient: LinearGradient(
             //   begin: Alignment.topCenter,
             //   end: Alignment.bottomCenter,
@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage> {
             // ),
             // image: DecorationImage(
             //     image: AssetImage("lib/assets/background.jpg"), fit: BoxFit.cover),
-            ),
+            // ),
         child: Container(
           margin: const EdgeInsets.only(top: 40, bottom: 20),
           child: Column(
@@ -76,8 +76,6 @@ class _HomePageState extends State<HomePage> {
                           margin: const EdgeInsets.all(15.0),
                           child: getCardByTitle(title)),
                       onTap: () {
-                        //Repository.getCurrentUser().then(setCurrentUser);
-
                         if (title == "Opskrifter")
                           Navigator.push(
                               context,
@@ -98,23 +96,23 @@ class _HomePageState extends State<HomePage> {
                 width: MediaQuery.of(context).size.width * 0.9,
                 child: ElevatedButton(
                   onPressed: () async {
-                    // setState(() {
-                    //   _isSigningOut = true;
-                    // });
-                    // await FirebaseAuth.instance.signOut();
-                    // setState(() {
-                    //   _isSigningOut = false;
-                    // });
-                    // Navigator.of(context).pushReplacement(
-                    //   MaterialPageRoute(
-                    //     builder: (context) => LoginPage(),
-                    //   ),
-                    // );
-                    // Repository.setCurrentUser("");
+                    setState(() {
+                      _isSigningOut = true;
+                    });
+                    await FirebaseAuth.instance.signOut();
+                    setState(() {
+                      _isSigningOut = false;
+                    });
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (context) => LoginPage(),
+                      ),
+                    );
+                    Repository.setCurrentUser("");
                   },
                   child: Text(
                     'Log ud',
-                    style: TextStyle(color: Colors.white, fontSize: 25),
+                    style: TextStyle(fontFamily: 'Margarine', fontSize: 25),
                   ),
                   style: ElevatedButton.styleFrom(
                     primary: Colors.teal[600],
@@ -154,15 +152,15 @@ class _HomePageState extends State<HomePage> {
                 img,
                 width: MediaQuery.of(context).size.width * 0.35,
                 height: MediaQuery.of(context).size.width * 0.35,
-              )
+              ),
             ],
-          )),
+          ),),
         ),
         Text(
           title,
-          style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.05, fontWeight: FontWeight.bold, fontFamily: 'Margarine'),
           textAlign: TextAlign.center,
-        )
+        ),
       ],
     );
   }

@@ -18,9 +18,9 @@ class Validator {
         r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$");
 
     if (email.isEmpty) {
-      return 'Email can\'t be empty';
+      return 'Du skal angive din e-mail';
     } else if (!emailRegExp.hasMatch(email)) {
-      return 'Enter a correct email';
+      return 'Du skal angive en korrekt e-mail';
     }
 
     return null;
@@ -31,9 +31,9 @@ class Validator {
     //   return null;
     // }
     if (password.isEmpty) {
-      return 'Password can\'t be empty';
+      return 'Du skal angive dit kodeord';
     } else if (password.length < 6) {
-      return 'Enter a password with length at least 6';
+      return 'Indtast et kodeord med en længde på mindst 6';
     }
 
     return null;

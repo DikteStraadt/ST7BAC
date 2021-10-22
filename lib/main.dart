@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Hånd i hånd',
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(fontFamily: 'Roboto', scaffoldBackgroundColor: Colors.teal[100]),
       home: LoginPage(),
     );
   }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project_1_0/pages/blank_page.dart';
 import 'package:flutter_project_1_0/pages/plan_page.dart';
-import 'package:flutter_project_1_0/pages/recipe_page.dart';
+import 'package:flutter_project_1_0/pages/recipes_page.dart';
 
 class TabNavigator extends StatelessWidget {
   TabNavigator({required this.navigatorKey, required this.tabItem});
@@ -14,7 +14,7 @@ class TabNavigator extends StatelessWidget {
     Widget child;
 
     if(tabItem == "Opskrifter")
-      child = RecipePage();
+      child = RecipesPage();
     else if(tabItem == "Madplaner")
       child = PlanPage();
     else
