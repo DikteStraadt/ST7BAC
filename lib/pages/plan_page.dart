@@ -31,6 +31,7 @@ class _PlanPageState extends State<PlanPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Madplaner'),
+        backgroundColor: Colors.teal[600],
         leading: GestureDetector(
           onTap: () {
             Navigator.pushReplacement<void, void>(

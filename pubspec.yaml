@@ -56,6 +56,11 @@ flutter:
     - lib/assets/home/opskrifter.JPG
     - lib/assets/home/vejledning.JPG
 
+  fonts:
+    - family: Margarine
+      fonts:
+        - asset: lib/assets/fonts/Margarine-Regular.ttf
+
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

@@ -16,6 +16,7 @@ class NewPlanPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Opret ny maplan"),
+        backgroundColor: Colors.teal[600],
       ),
       body: Center(
         child: Column(

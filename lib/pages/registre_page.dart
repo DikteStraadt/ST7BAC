@@ -34,6 +34,7 @@ class _RegisterPageState extends State<RegisterPage> {
       child: Scaffold(
         appBar: AppBar(
           title: Text('Register'),
+          backgroundColor: Colors.teal[600],
         ),
         body: Padding(
           padding: const EdgeInsets.all(24.0),

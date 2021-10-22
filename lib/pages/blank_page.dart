@@ -8,6 +8,7 @@ class BlankPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Funktionalitet ikke implementeret"),
+        backgroundColor: Colors.teal[600],
       ),
       
       body: Center(

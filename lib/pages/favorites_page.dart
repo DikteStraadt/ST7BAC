@@ -82,6 +82,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Favoritter'),
+        backgroundColor: Colors.teal[600],
         leading: Icon(
           Icons.home_outlined,
           size: 28,

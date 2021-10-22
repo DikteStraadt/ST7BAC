@@ -50,6 +50,7 @@ class _LoginPageState extends State<LoginPage> {
       child: Scaffold(
         appBar: AppBar(
           title: Text('Hånd i hånd'),
+          backgroundColor: Colors.teal[600],
         ),
         body: FutureBuilder(
           future: _initializeFirebase(),

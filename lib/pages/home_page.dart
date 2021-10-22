@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project_1_0/database/repository.dart';
 import 'package:flutter_project_1_0/navigation/page_view.dart';
@@ -17,12 +16,6 @@ class _HomePageState extends State<HomePage> {
   bool _isSigningOut = false;
   ScrollController _scrollController = new ScrollController();
 
-  @override
-  void initState() {
-    WidgetsBinding.instance!.addPostFrameCallback((_) => _scrollController.jumpTo(_scrollController.position.maxScrollExtent));
-    super.initState();
-  }
-
   final List<String> menuButtons = [
     "Opskrifter",
     "Aktiviteter",
@@ -34,31 +27,34 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    
+
+    WidgetsBinding.instance!.addPostFrameCallback((_) =>
+        _scrollController.jumpTo(_scrollController.position.maxScrollExtent));
+
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: <Color>[
-              Colors.black.withAlpha(0),
-              Colors.black12,
-              Colors.black45
-            ],
-          ),
-          // image: DecorationImage(
-          //     image: AssetImage("lib/assets/background.jpg"), fit: BoxFit.cover),
-        ),
+        decoration: BoxDecoration(color: Colors.teal[100]
+            // gradient: LinearGradient(
+            //   begin: Alignment.topCenter,
+            //   end: Alignment.bottomCenter,
+            //   colors: <Color>[
+            //     Colors.black.withAlpha(0),
+            //     Colors.black12,
+            //     Colors.black45
+            //   ],
+            // ),
+            // image: DecorationImage(
+            //     image: AssetImage("lib/assets/background.jpg"), fit: BoxFit.cover),
+            ),
         child: Container(
-          margin: const EdgeInsets.only(top: 50.0, bottom: 10.0),
+          margin: const EdgeInsets.only(top: 40, bottom: 20),
           child: Column(
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.only(bottom: 2),
                 child: Text(
                   'Hånd i hånd',
-                  style: Theme.of(context).textTheme.headline3,
+                  style: TextStyle(fontFamily: 'Margarine', fontSize: 50),
                 ),
               ),
               // Container(
@@ -71,7 +67,7 @@ class _HomePageState extends State<HomePage> {
               Expanded(
                 child: GridView(
                   controller: _scrollController,
-                  //physics: NeverScrollableScrollPhysics(),
+                  physics: NeverScrollableScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2),
                   children: menuButtons.map((title) {
@@ -119,6 +115,9 @@ class _HomePageState extends State<HomePage> {
                   child: Text(
                     'Log ud',
                     style: TextStyle(color: Colors.white, fontSize: 25),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.teal[600],
                   ),
                 ),
               ),

@@ -37,6 +37,7 @@ class _RecipePageState extends State<RecipePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Opskrifter'),
+        backgroundColor: Colors.teal[600],
         leading: GestureDetector(
           onTap: () {
             Navigator.pushReplacement<void, void>(
