@@ -8,6 +8,7 @@ import 'package:flutter_project_1_0/models/recipe.dart';
 import 'package:flutter_project_1_0/models/user.dart';
 import 'package:flutter_project_1_0/pages/home_page.dart';
 import 'package:flutter_project_1_0/pages/recipe_page.dart';
+import 'package:flutter_project_1_0/utilities/snack_bar.dart';
 
 class RecipesPage extends StatefulWidget {
   const RecipesPage({Key? key}) : super(key: key);
@@ -58,7 +59,10 @@ class _RecipesPageState extends State<RecipesPage> {
           Padding(
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  mySnackbar snackbar = new mySnackbar();
+                  snackbar.showSnackBar(context);
+                },
                 child: Icon(
                   Icons.filter_alt_outlined,
                   size: 28,
@@ -67,7 +71,10 @@ class _RecipesPageState extends State<RecipesPage> {
           Padding(
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  mySnackbar snackbar = new mySnackbar();
+                  snackbar.showSnackBar(context);
+                },
                 child: Icon(
                   Icons.search,
                   size: 28,

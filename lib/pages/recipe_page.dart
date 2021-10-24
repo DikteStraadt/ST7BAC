@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project_1_0/models/recipe.dart';
+import 'package:flutter_project_1_0/utilities/snack_bar.dart';
 
 class RecipePage extends StatefulWidget {
   @override
@@ -198,7 +199,10 @@ class _RecipePageState extends State<RecipePage> {
               Container(
                 width: MediaQuery.of(context).size.width * 0.9,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    mySnackbar snackbar = new mySnackbar();
+                    snackbar.showSnackBar(context);
+                  },
                   child: Text(
                     'Tilføj til madplan',
                     style: TextStyle(
@@ -213,7 +217,10 @@ class _RecipePageState extends State<RecipePage> {
               Container(
                 width: MediaQuery.of(context).size.width * 0.9,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    mySnackbar snackbar = new mySnackbar();
+                    snackbar.showSnackBar(context);
+                  },
                   child: Text(
                     'Udskriv indkøbsliste',
                     style: TextStyle(
@@ -228,7 +235,10 @@ class _RecipePageState extends State<RecipePage> {
               Container(
                 width: MediaQuery.of(context).size.width * 0.9,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    mySnackbar snackbar = new mySnackbar();
+                    snackbar.showSnackBar(context);
+                  },
                   child: Text(
                     'Tilføj til favoritter',
                     style: TextStyle(

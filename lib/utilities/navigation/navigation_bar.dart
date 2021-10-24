@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project_1_0/navigation/tab_navigator.dart';
+import 'package:flutter_project_1_0/utilities/navigation/tab_navigator.dart';
 
 class Navigationbar extends StatefulWidget {
   @override

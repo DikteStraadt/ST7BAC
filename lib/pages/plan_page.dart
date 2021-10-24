@@ -8,6 +8,7 @@ import 'package:flutter_project_1_0/models/user.dart';
 import 'package:flutter_project_1_0/pages/home_page.dart';
 import 'package:flutter_project_1_0/pages/new_plan_page.dart';
 import 'package:flutter_project_1_0/models/plan.dart';
+import 'package:flutter_project_1_0/utilities/snack_bar.dart';
 
 class PlanPage extends StatefulWidget {
   @override
@@ -66,17 +67,18 @@ class _PlanPageState extends State<PlanPage> {
           ),
         ],
       ),
-      body:
-      Container(
+      body: Container(
         child: Column(
           children: [
-        SingleChildScrollView(
-          child: Column(
-            children: <Widget>[for (var p in _plans) buildContainer(p)],
-          ),
+            SingleChildScrollView(
+              child: Column(
+                children: <Widget>[for (var p in _plans) buildContainer(p)],
+              ),
+            ),
+          ],
         ),
-          ],),
-    ),);
+      ),
+    );
   }
 
   Column buildContainer(Plan plan) {
@@ -119,7 +121,8 @@ class _PlanPageState extends State<PlanPage> {
               ],
             ),
             onTap: () {
-              //editPlan();
+              mySnackbar snackbar = new mySnackbar();
+              snackbar.showSnackBar(context);
             },
             // value: 1,
           ),
@@ -134,7 +137,8 @@ class _PlanPageState extends State<PlanPage> {
               ],
             ),
             onTap: () {
-              //goToViewList();
+              mySnackbar snackbar = new mySnackbar();
+              snackbar.showSnackBar(context);
             },
             // value: 2,
           ),
@@ -166,8 +170,6 @@ class _PlanPageState extends State<PlanPage> {
       _currentUser = value.id;
     });
   }
-
-  // void editPlan() {}
 
   updatePlans(Map plans) {
     List<Plan> planList = [];

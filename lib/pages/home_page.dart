@@ -3,9 +3,10 @@ import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project_1_0/database/repository.dart';
-import 'package:flutter_project_1_0/navigation/page_view.dart';
-import 'blank_page.dart';
+import 'package:flutter_project_1_0/utilities/navigation/page_view.dart';
 import 'package:flutter_project_1_0/pages/login_page.dart';
+import 'package:flutter_project_1_0/utilities/snack_bar.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 //import 'package:flutter_project_1_0/models/user.dart' as user;
 
 class HomePage extends StatefulWidget {
@@ -33,19 +34,6 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       body: Container(
-        //decoration: BoxDecoration(color: Colors.teal[100]
-            // gradient: LinearGradient(
-            //   begin: Alignment.topCenter,
-            //   end: Alignment.bottomCenter,
-            //   colors: <Color>[
-            //     Colors.black.withAlpha(0),
-            //     Colors.black12,
-            //     Colors.black45
-            //   ],
-            // ),
-            // image: DecorationImage(
-            //     image: AssetImage("lib/assets/background.jpg"), fit: BoxFit.cover),
-            // ),
         child: Container(
           margin: const EdgeInsets.only(top: 40, bottom: 20),
           child: Column(
@@ -57,13 +45,6 @@ class _HomePageState extends State<HomePage> {
                   style: TextStyle(fontFamily: 'Margarine', fontSize: 50),
                 ),
               ),
-              // Container(
-              //   decoration: BoxDecoration(
-              //     image: DecorationImage(
-              //         image: AssetImage("lib/assets/zebra.png"),
-              //         fit: BoxFit.cover),
-              //   ),
-              // ),
               Expanded(
                 child: GridView(
                   controller: _scrollController,
@@ -82,11 +63,10 @@ class _HomePageState extends State<HomePage> {
                               MaterialPageRoute(
                                   builder: (context) => PageViewController()));
                         //builder: (context) => Navigationbar()));
-                        else
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => BlankPage()));
+                        else {
+                          mySnackbar snackbar = new mySnackbar();
+                          snackbar.showSnackBar(context);
+                        }
                       },
                     );
                   }).toList(),
@@ -146,19 +126,23 @@ class _HomePageState extends State<HomePage> {
       children: <Widget>[
         new Center(
           child: Container(
-              child: new Stack(
-            children: <Widget>[
-              new Image.asset(
-                img,
-                width: MediaQuery.of(context).size.width * 0.35,
-                height: MediaQuery.of(context).size.width * 0.35,
-              ),
-            ],
-          ),),
+            child: new Stack(
+              children: <Widget>[
+                new Image.asset(
+                  img,
+                  width: MediaQuery.of(context).size.width * 0.35,
+                  height: MediaQuery.of(context).size.width * 0.35,
+                ),
+              ],
+            ),
+          ),
         ),
         Text(
           title,
-          style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.05, fontWeight: FontWeight.bold, fontFamily: 'Margarine'),
+          style: TextStyle(
+              fontSize: MediaQuery.of(context).size.width * 0.05,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'Margarine'),
           textAlign: TextAlign.center,
         ),
       ],
