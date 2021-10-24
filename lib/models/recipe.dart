@@ -17,11 +17,11 @@ class Recipe {
     required this.ingredientList,
   });
 
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'name': name,
-        'picture': picture,
-        'numberOfIngredients': numberOfingredients,
-        'ingredientList': ingredientList
-      };
+  // Map<String, dynamic> toJson() => {
+  //       'id': id,
+  //       'name': name,
+  //       'picture': picture,
+  //       'numberOfIngredients': numberOfingredients,
+  //       'ingredientList': ingredientList
+  //     };
 }

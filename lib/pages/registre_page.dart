@@ -40,8 +40,15 @@ class _RegisterPageState extends State<RegisterPage> {
           padding: const EdgeInsets.all(24.0),
           child: Center(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
+                Text(
+                  'Opret en ny bruger',
+                  style: TextStyle(
+                      fontFamily: 'Margarine',
+                      fontSize: MediaQuery.of(context).size.width * 0.08),
+                  textAlign: TextAlign.center,
+                ),
                 Form(
                   key: _registerFormKey,
                   child: Column(
@@ -129,25 +136,29 @@ class _RegisterPageState extends State<RegisterPage> {
                                           Navigator.of(context)
                                               .pushAndRemoveUntil(
                                             MaterialPageRoute(
-                                              builder: (context) =>
-                                                  HomePage(),
+                                              builder: (context) => HomePage(),
                                             ),
                                             ModalRoute.withName('/'),
                                           );
                                         }
                                       }
                                     },
-                                    child: Text(
-                                      'Sign up',
-                                      style: TextStyle(color: Colors.white),
+                                    child: Text('Registrer',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 18,
+                                            fontFamily: 'Margarine')),
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Colors.teal[600],
                                     ),
                                   ),
                                 ),
                               ],
-                            )
+                            ),
                     ],
                   ),
-                )
+                ),
+                SizedBox(height: 50)
               ],
             ),
           ),

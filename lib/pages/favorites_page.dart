@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_project_1_0/database/repository.dart';
 import 'package:flutter_project_1_0/models/favorite.dart';
 import 'package:flutter_project_1_0/models/ingredient.dart';
+import 'package:flutter_project_1_0/models/recipe.dart';
 import 'package:flutter_project_1_0/models/user.dart';
+import 'package:flutter_project_1_0/pages/recipe_page.dart';
 
 class FavoritesPage extends StatefulWidget {
   const FavoritesPage({Key? key}) : super(key: key);
@@ -21,60 +23,6 @@ class _FavoritesPageState extends State<FavoritesPage> {
         .then(setCurrentUser); // Get current user from database
     Repository.getFavorites(_currentUser).then(updateFavorites);
     super.initState();
-  }
-
-  Widget _buildCard(Favorite favorite) {
-    bool alreadySaved = _favoriteRecipies.contains(favorite);
-
-    if (_favoriteRecipies.isNotEmpty) {
-      return Card(
-        child: Stack(
-          children: <Widget>[
-            Container(
-              decoration: new BoxDecoration(color: Colors.white),
-              alignment: Alignment.center,
-              child: Image.asset(favorite.picture, fit: BoxFit.fill),
-            ),
-            Align(
-              alignment: Alignment.bottomLeft,
-              child: IconButton(
-                icon: new Icon(
-                  alreadySaved ? Icons.favorite : Icons.favorite_border,
-                  size: 80,
-                  color: Colors.red[900],
-                ),
-                onPressed: () {
-                  setState(
-                    () {
-                      if (alreadySaved) {
-                        setState(
-                          () {
-                            print("REMOVE!");
-                            Repository.removeFavorite(
-                                favorite); // Remove recipe as favorite in database
-                            Repository.getFavorites(_currentUser)
-                                .then(updateFavorites);
-                          },
-                        );
-                      } else {
-                        setState(() {
-                          Repository.setFavorite(
-                              favorite); // Set recipe as favorite in database
-                          Repository.getFavorites(_currentUser)
-                              .then(updateFavorites);
-                        });
-                      }
-                    },
-                  );
-                },
-              ),
-            )
-          ],
-        ),
-      );
-    } else {
-      return new Card();
-    }
   }
 
   @override
@@ -103,6 +51,77 @@ class _FavoritesPageState extends State<FavoritesPage> {
         ),
       ),
     );
+  }
+
+  Widget _buildCard(Favorite favorite) {
+    bool alreadySaved = _favoriteRecipies.contains(favorite);
+
+    if (_favoriteRecipies.isNotEmpty) {
+      return Card(
+        child: InkWell(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => RecipePage(
+                  recipe: new Recipe(
+                      favorite.id,
+                      favorite.name,
+                      favorite.picture,
+                      favorite.numberOfingredients,
+                      favorite.ingredientList),
+                ),
+              ),
+            );
+          },
+          child: Stack(
+            children: <Widget>[
+              Container(
+                decoration: new BoxDecoration(color: Colors.white),
+                alignment: Alignment.center,
+                child: Image.asset(favorite.picture, fit: BoxFit.fill),
+              ),
+              Align(
+                alignment: Alignment.bottomLeft,
+                child: IconButton(
+                  icon: new Icon(
+                    alreadySaved ? Icons.favorite : Icons.favorite_border,
+                    size: 80,
+                    color: Colors.red[900],
+                  ),
+                  onPressed: () {
+                    setState(
+                      () {
+                        if (alreadySaved) {
+                          setState(
+                            () {
+                              print("REMOVE!");
+                              Repository.removeFavorite(
+                                  favorite); // Remove recipe as favorite in database
+                              Repository.getFavorites(_currentUser)
+                                  .then(updateFavorites);
+                            },
+                          );
+                        } else {
+                          setState(() {
+                            Repository.setFavorite(
+                                favorite); // Set recipe as favorite in database
+                            Repository.getFavorites(_currentUser)
+                                .then(updateFavorites);
+                          });
+                        }
+                      },
+                    );
+                  },
+                ),
+              )
+            ],
+          ),
+        ),
+      );
+    } else {
+      return new Card();
+    }
   }
 
   void setCurrentUser(User value) {
