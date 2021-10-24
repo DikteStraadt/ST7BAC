@@ -1,4 +1,4 @@
-#Tue Oct 12 12:23:39 CEST 2021
+#Mon Oct 25 01:23:55 CEST 2021
 base.0=C\:\\Users\\User\\OneDrive\\Sundhedsteknologi\\7. semester\\BAC\\ST7BAC\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
 path.1=classes2.dex
 renamed.1=classes2.dex
