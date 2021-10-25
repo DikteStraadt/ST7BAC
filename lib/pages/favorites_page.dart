@@ -38,8 +38,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
       ),
       body: Container(
         decoration: BoxDecoration(color: Colors.teal[100]),
-        child: Column(
-          children: [
+        child: 
             SingleChildScrollView(
               child: Column(
                 children: <Widget>[
@@ -47,8 +46,6 @@ class _FavoritesPageState extends State<FavoritesPage> {
                 ],
               ),
             ),
-          ],
-        ),
       ),
     );
   }
@@ -136,17 +133,16 @@ class _FavoritesPageState extends State<FavoritesPage> {
 
   updateFavorites(Map<dynamic, dynamic> favorites) {
     List<Favorite> favoriteList = [];
-    List<Ingredient> ingredientList = [];
     int j = 0;
 
     setState(
       () {
         favorites.forEach(
           (key, value) {
-            ingredientList.clear();
+            List<Ingredient> ingredientList = [];
             j = value["numberOfingredients"];
 
-            for (var i = 0; i < j; i++) {
+            for (var i = 0; i < j; i++) { 
               ingredientList.add(
                 new Ingredient(
                   value['ingredientList'][i]['name'].toString(),
@@ -163,7 +159,6 @@ class _FavoritesPageState extends State<FavoritesPage> {
           },
         );
 
-        print("FAVORITE!");
         _favoriteRecipies = favoriteList;
       },
     );

@@ -51,17 +51,17 @@ class NewPlanPage extends StatelessWidget {
                   onPressed: () {
                     List<Ingredient> l = [];
                     List<Recipe> r = [];
-                    l.add(new Ingredient("name", 3.0, "unit"));
+                    l.add(new Ingredient("", 0, ""));
                     r.add(new Recipe(
-                        "Por-rer-r",
-                        "Mecikansk",
-                        "lib/assets/home/opskrifter.JPG",
-                        "prep",
-                        "total",
-                        2,
-                        2,
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        0,
+                        0,
                         l,
-                        "rnelfnonero"));
+                        ""));
                     Repository.setPlan(
                       new Plan(_currentUser, _textController.text, r),
                     ); // Writing new plan to database

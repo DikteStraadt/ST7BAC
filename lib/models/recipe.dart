@@ -24,4 +24,8 @@ class Recipe {
     required this.ingredientList,
     required this.method
   });
+
+    Map<String, dynamic> toJson() => {
+        'name': name,
+      };
 }

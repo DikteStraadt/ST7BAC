@@ -19,18 +19,18 @@ class RecipesPage extends StatefulWidget {
 }
 
 class _RecipesPageState extends State<RecipesPage> {
-  Recipes _r = new Recipes();     //For loading recipes from recipes class.
+  //Recipes _r = new Recipes();     //For loading recipes from recipes class.
   late List<Recipe> _recipies = [];
   late List<Favorite> _favoriteRecipies = [];
   String _currentUser = "9xNt9mjHGjMPeWx54dutlamCzRC2";
 
   @override
   void initState() {
-    _recipies = _r.loadRecipes();     // Loading recipes from recipes class. Shall only be used the first time, to write data to database
+    //_recipies = _r.loadRecipes();     // Loading recipes from recipes class. Shall only be used the first time, to write data to database
     Repository.getCurrentUser()
         .then(setCurrentUser); // Get current user from database
-    //Repository.getRecipes()
-        // .then(updateRecipes); // Loading recipes from database
+    Repository.getRecipes()
+        .then(updateRecipes); // Loading recipes from database
     Repository.getFavorites(_currentUser).then(updateFavorites);
     super.initState();
   }
@@ -86,6 +86,7 @@ class _RecipesPageState extends State<RecipesPage> {
       body: Container(
         decoration: BoxDecoration(color: Colors.teal[100]),
         child: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
           child: Column(children: <Widget>[
             for (var recipe in _recipies) _buildCard(recipe),
           ]),
@@ -96,7 +97,7 @@ class _RecipesPageState extends State<RecipesPage> {
 
   Widget _buildCard(Recipe recipe) {
     bool alreadySaved = contains(recipe.id);
-    Repository.setRecipe(recipe);    // Writing new recipes to database
+    //Repository.setRecipe(recipe);    // Writing new recipes to database
 
     return Card(
       child: InkWell(
@@ -168,33 +169,40 @@ class _RecipesPageState extends State<RecipesPage> {
 
   updateRecipes(Map<dynamic, dynamic> recipes) {
     List<Recipe> recipeList = [];
-    List<Ingredient> ingredientList = [];
     int j = 0;
-
-    recipes.forEach(
-      (key, value) {
-        ingredientList.clear();
-        j = value["numberOfingredients"];
-
-        for (var i = 0; i < j; i++) {
-          ingredientList.add(
-            new Ingredient(
-              value['ingredientList'][i]['name'].toString(),
-              (value['ingredientList'][i]['amount']).toDouble(),
-              value['ingredientList'][i]['unit'].toString(),
-            ),
-          );
-        }
-
-        recipeList.add(
-          new Recipe(key, value["name"], value["picture"], value["prepTime"], value["totalTime"], value["servings"],
-                  value["numberOfingredients"], ingredientList, value["method"]),
-        );
-      },
-    );
 
     setState(
       () {
+        recipes.forEach(
+          (key, value) {
+            List<Ingredient> ingredientList = [];
+            j = value["numberOfingredients"];
+
+            for (var i = 0; i < j; i++) {
+              ingredientList.add(
+                new Ingredient(
+                  value['ingredientList'][i]['name'].toString(),
+                  (value['ingredientList'][i]['amount']).toDouble(),
+                  value['ingredientList'][i]['unit'].toString(),
+                ),
+              );
+            }
+
+            recipeList.add(
+              new Recipe(
+                  key,
+                  value["name"],
+                  value["picture"],
+                  value["prepTime"],
+                  value["totalTime"],
+                  value["servings"],
+                  value["numberOfingredients"],
+                  ingredientList,
+                  value["method"]),
+            );
+          },
+        );
+
         _recipies = recipeList;
       },
     );
@@ -227,8 +235,17 @@ class _RecipesPageState extends State<RecipesPage> {
         }
 
         favoriteList.add(
-          new Favorite(_currentUser, key, value["name"], value["picture"], value["prepTime"], value["totalTime"], value["servings"],
-                  value["numberOfingredients"], ingredientList, value["method"]),
+          new Favorite(
+              _currentUser,
+              key,
+              value["name"],
+              value["picture"],
+              value["prepTime"],
+              value["totalTime"],
+              value["servings"],
+              value["numberOfingredients"],
+              ingredientList,
+              value["method"]),
         );
       },
     );

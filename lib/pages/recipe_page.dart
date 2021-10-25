@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_project_1_0/database/repository.dart';
 import 'package:flutter_project_1_0/models/ingredient.dart';
+import 'package:flutter_project_1_0/models/plan.dart';
 import 'package:flutter_project_1_0/models/recipe.dart';
 import 'package:flutter_project_1_0/utilities/snack_bar.dart';
 
@@ -13,6 +15,7 @@ class RecipePage extends StatefulWidget {
 }
 
 class _RecipePageState extends State<RecipePage> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -207,8 +210,7 @@ class _RecipePageState extends State<RecipePage> {
                 width: MediaQuery.of(context).size.width * 0.9,
                 child: ElevatedButton(
                   onPressed: () {
-                    mySnackbar snackbar = new mySnackbar();
-                    snackbar.showSnackBar(context);
+                    Repository.addRecipeToPlan(new Plan("9xNt9mjHGjMPeWx54dutlamCzRC2", "Uge 34", []), widget.recipe);
                   },
                   child: Text(
                     'Tilføj til madplan',
