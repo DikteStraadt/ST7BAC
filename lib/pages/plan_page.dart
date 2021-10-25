@@ -177,8 +177,8 @@ class _PlanPageState extends State<PlanPage> {
     List<Ingredient> l = [];
     List<Recipe> r = [];
     l.add(new Ingredient("name", 3.0, "unit"));
-    r.add(new Recipe("Por-rer-r", "Mecikansk",
-        "lib/assets/recipes/mexicansk-risret.jpg", 2, l));
+    r.add(new Recipe("Por-rer-r", "Mecikansk", "lib/assets/home/opskrifter.JPG", "prep", "total",
+        2, 2, l, "rnelfnonero"));
 
     plans.forEach(
       (key, value) {

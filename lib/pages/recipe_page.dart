@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_project_1_0/models/ingredient.dart';
 import 'package:flutter_project_1_0/models/recipe.dart';
 import 'package:flutter_project_1_0/utilities/snack_bar.dart';
 
@@ -51,7 +52,8 @@ class _RecipePageState extends State<RecipePage> {
                         Row(
                           children: [
                             Expanded(
-                              child: Text("Tid i alt: 45 min.",
+                              child: Text(
+                                  "Tid i alt: " + widget.recipe.totalTime,
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontFamily: 'Margarine',
@@ -61,7 +63,10 @@ class _RecipePageState extends State<RecipePage> {
                                   textAlign: TextAlign.center),
                             ),
                             Expanded(
-                              child: Text("Antal: 4 pers.",
+                              child: Text(
+                                  "Antal: " +
+                                      widget.recipe.servings.toString() +
+                                      " pers.",
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontFamily: 'Margarine',
@@ -71,7 +76,8 @@ class _RecipePageState extends State<RecipePage> {
                                   textAlign: TextAlign.center),
                             ),
                             Expanded(
-                              child: Text("Arbejdstid: 30 min.",
+                              child: Text(
+                                  "Arbejdstid: " + widget.recipe.prepTime,
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontFamily: 'Margarine',
@@ -150,7 +156,8 @@ class _RecipePageState extends State<RecipePage> {
                                           MediaQuery.of(context).size.width *
                                               0.025),
                                   Text(
-                                    "2 løg, finthakket\n\n4 fed hvidløg, finthakket\n\n2 gulerod, skåret i små tern\n\n1 squash, groftrevet\n\n0,50 rød chili, uden kernehus og finthakker (tilføj mere efter smag)\n\n2 tsk stødt spidskommen\n\n",
+                                    printIngrdients(
+                                        widget.recipe.ingredientList),
                                     style: TextStyle(
                                         fontFamily: 'Roboto',
                                         fontWeight: FontWeight.w600,
@@ -173,7 +180,7 @@ class _RecipePageState extends State<RecipePage> {
                                           MediaQuery.of(context).size.width *
                                               0.025),
                                   Text(
-                                    "Kom løg, hvidløg og gulerødder i en gryde med olie og sauter ved middelvarme, til løgene er bløde og klare. Tilsæt squash, rød chili, spidskommen, koriander, kanel, røget paprika og rør godt sammen.\n\nKom basmatirisene i en sigte og skyl dem meget grundigt. Rør dem derefter i gryden sammen med grøntsagsboullion og hakkede tomater. Bring i kog under omrøring, skru ned for varmen og lad det simre under låg i 15 minutter.\n\nTilsæt bønner, majskerner og rød peberfrugt og varm igen op til kogepunktet. Læg låg på og sluk for varmen. Lad retten trække smag og risene blive møre i 15 minutter.\n\nSmag til med salt og peber. Rør tomaterne i og anret risretten på et fad med tilbehøret til servering.\n",
+                                    widget.recipe.method,
                                     style: TextStyle(
                                         fontFamily: 'Roboto',
                                         fontWeight: FontWeight.w600,
@@ -187,7 +194,7 @@ class _RecipePageState extends State<RecipePage> {
                             ),
                             SizedBox(
                                 width:
-                                    MediaQuery.of(context).size.width * 0.025)
+                                    MediaQuery.of(context).size.width * 0.04)
                           ],
                         ),
                       ],
@@ -256,5 +263,21 @@ class _RecipePageState extends State<RecipePage> {
         ),
       ),
     );
+  }
+
+  String printIngrdients(List<Ingredient> ingredients) {
+    String string = "";
+
+    for (Ingredient i in ingredients) {
+      List<String> amount_arr = i.amount.toString().split('.');
+      string += amount_arr[0].toString() +
+          " " +
+          i.unit.toString() +
+          " " +
+          i.name.toString() +
+          "\n\n";
+    }
+
+    return string;
   }
 }

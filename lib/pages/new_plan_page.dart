@@ -53,7 +53,15 @@ class NewPlanPage extends StatelessWidget {
                     List<Recipe> r = [];
                     l.add(new Ingredient("name", 3.0, "unit"));
                     r.add(new Recipe(
-                        "Por-rer-r", "Mecikansk", "picture.jpg", 2, l));
+                        "Por-rer-r",
+                        "Mecikansk",
+                        "lib/assets/home/opskrifter.JPG",
+                        "prep",
+                        "total",
+                        2,
+                        2,
+                        l,
+                        "rnelfnonero"));
                     Repository.setPlan(
                       new Plan(_currentUser, _textController.text, r),
                     ); // Writing new plan to database
@@ -61,7 +69,9 @@ class NewPlanPage extends StatelessWidget {
                   },
                   child: Text(
                     'Opret madplan',
-                    style: TextStyle(color: Colors.white, fontSize: 18),
+                    style: TextStyle(
+                        fontFamily: 'Margarine',
+                        fontSize: MediaQuery.of(context).size.width * 0.05),
                   ),
                   style: ElevatedButton.styleFrom(
                     primary: Colors.teal[600],

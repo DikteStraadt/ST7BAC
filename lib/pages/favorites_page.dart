@@ -68,8 +68,12 @@ class _FavoritesPageState extends State<FavoritesPage> {
                       favorite.id,
                       favorite.name,
                       favorite.picture,
+                      favorite.prepTime,
+                      favorite.totalTime,
+                      favorite.servings,
                       favorite.numberOfingredients,
-                      favorite.ingredientList),
+                      favorite.ingredientList,
+                      favorite.method),
                 ),
               ),
             );
@@ -153,8 +157,8 @@ class _FavoritesPageState extends State<FavoritesPage> {
             }
 
             favoriteList.add(
-              new Favorite(_currentUser, key, value["name"], value["picture"],
-                  value["numberOfingredients"], ingredientList),
+              new Favorite(_currentUser, key, value["name"], value["picture"], value["prepTime"], value["totalTime"], value["servings"],
+                  value["numberOfingredients"], ingredientList, value["method"]),
             );
           },
         );

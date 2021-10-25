@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_project_1_0/database/recipes.dart';
 import 'package:flutter_project_1_0/database/repository.dart';
 import 'package:flutter_project_1_0/models/favorite.dart';
 import 'package:flutter_project_1_0/models/ingredient.dart';
@@ -18,18 +19,18 @@ class RecipesPage extends StatefulWidget {
 }
 
 class _RecipesPageState extends State<RecipesPage> {
-  //Recipes _r = new Recipes();     //For loading recipes from recipes class.
+  Recipes _r = new Recipes();     //For loading recipes from recipes class.
   late List<Recipe> _recipies = [];
   late List<Favorite> _favoriteRecipies = [];
   String _currentUser = "9xNt9mjHGjMPeWx54dutlamCzRC2";
 
   @override
   void initState() {
-    //_recipies = _r.loadRecipes();     // Loading recipes from recipes class. Shall only be used the first time, to write data to database
+    _recipies = _r.loadRecipes();     // Loading recipes from recipes class. Shall only be used the first time, to write data to database
     Repository.getCurrentUser()
         .then(setCurrentUser); // Get current user from database
-    Repository.getRecipes()
-        .then(updateRecipes); // Loading recipes from database
+    //Repository.getRecipes()
+        // .then(updateRecipes); // Loading recipes from database
     Repository.getFavorites(_currentUser).then(updateFavorites);
     super.initState();
   }
@@ -95,7 +96,7 @@ class _RecipesPageState extends State<RecipesPage> {
 
   Widget _buildCard(Recipe recipe) {
     bool alreadySaved = contains(recipe.id);
-    //Repository.setRecipe(recipe);    // Writing new recipes to database
+    Repository.setRecipe(recipe);    // Writing new recipes to database
 
     return Card(
       child: InkWell(
@@ -130,8 +131,12 @@ class _RecipesPageState extends State<RecipesPage> {
                           recipe.id,
                           recipe.name,
                           recipe.picture,
+                          recipe.prepTime,
+                          recipe.totalTime,
+                          recipe.servings,
                           recipe.numberOfingredients,
-                          recipe.ingredientList);
+                          recipe.ingredientList,
+                          recipe.method);
                       if (alreadySaved) {
                         setState(
                           () {
@@ -161,15 +166,6 @@ class _RecipesPageState extends State<RecipesPage> {
     );
   }
 
-  // void _pushSaved() {
-  //   Navigator.push(
-  //     context,
-  //     MaterialPageRoute(
-  //       builder: (context) => FavoritesPage(),
-  //     ),
-  //   );
-  // }
-
   updateRecipes(Map<dynamic, dynamic> recipes) {
     List<Recipe> recipeList = [];
     List<Ingredient> ingredientList = [];
@@ -191,8 +187,8 @@ class _RecipesPageState extends State<RecipesPage> {
         }
 
         recipeList.add(
-          new Recipe(key, value["name"], value["picture"],
-              value["numberOfingredients"], ingredientList),
+          new Recipe(key, value["name"], value["picture"], value["prepTime"], value["totalTime"], value["servings"],
+                  value["numberOfingredients"], ingredientList, value["method"]),
         );
       },
     );
@@ -231,8 +227,8 @@ class _RecipesPageState extends State<RecipesPage> {
         }
 
         favoriteList.add(
-          new Favorite(_currentUser, key, value["name"], value["picture"],
-              value["numberOfingredients"], ingredientList),
+          new Favorite(_currentUser, key, value["name"], value["picture"], value["prepTime"], value["totalTime"], value["servings"],
+                  value["numberOfingredients"], ingredientList, value["method"]),
         );
       },
     );

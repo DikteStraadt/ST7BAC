@@ -29,8 +29,12 @@ class Repository {
         .set({
       "name": recipe.name,
       "picture": recipe.picture,
+      "prepTime":recipe.prepTime,
+      "totalTime":recipe.totalTime,
+      "servings":recipe.servings,
       "numberOfingredients": recipe.numberOfingredients,
       "ingredientList": result,
+      "method":recipe.method,
     });
   }
 
@@ -48,8 +52,12 @@ class Repository {
         .set({
       "name": favorite.name,
       "picture": favorite.picture,
+      "prepTime":favorite.prepTime,
+      "totalTime":favorite.totalTime,
+      "servings":favorite.servings,
       "numberOfingredients": favorite.numberOfingredients,
       "ingredientList": result,
+      "method":favorite.method,
     });
   }
 
