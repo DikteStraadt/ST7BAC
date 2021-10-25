@@ -1,15 +1,15 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project_1_0/database/repository.dart';
 import 'package:flutter_project_1_0/models/ingredient.dart';
 import 'package:flutter_project_1_0/models/plan.dart';
 import 'package:flutter_project_1_0/models/recipe.dart';
-import 'package:flutter_project_1_0/models/user.dart';
 
 class NewPlanPage extends StatelessWidget {
   NewPlanPage({Key? key}) : super(key: key);
 
   final _textController = TextEditingController();
-  String _currentUser = "9xNt9mjHGjMPeWx54dutlamCzRC2";
+  User? _currentUser = FirebaseAuth.instance.currentUser;
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +63,7 @@ class NewPlanPage extends StatelessWidget {
                         l,
                         ""));
                     Repository.setPlan(
-                      new Plan(_currentUser, _textController.text, r),
+                      new Plan(_currentUser!.uid.toString(), _textController.text, r),
                     ); // Writing new plan to database
                     Navigator.pop(context);
                   },
@@ -83,9 +83,5 @@ class NewPlanPage extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  void setCurrentUser(User value) {
-    _currentUser = value.id;
   }
 }

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project_1_0/database/repository.dart';
@@ -15,6 +16,7 @@ class RecipePage extends StatefulWidget {
 }
 
 class _RecipePageState extends State<RecipePage> {
+    User? _currentUser = FirebaseAuth.instance.currentUser;
 
   @override
   Widget build(BuildContext context) {
@@ -196,8 +198,7 @@ class _RecipePageState extends State<RecipePage> {
                               ),
                             ),
                             SizedBox(
-                                width:
-                                    MediaQuery.of(context).size.width * 0.04)
+                                width: MediaQuery.of(context).size.width * 0.04)
                           ],
                         ),
                       ],
@@ -210,7 +211,9 @@ class _RecipePageState extends State<RecipePage> {
                 width: MediaQuery.of(context).size.width * 0.9,
                 child: ElevatedButton(
                   onPressed: () {
-                    Repository.addRecipeToPlan(new Plan("9xNt9mjHGjMPeWx54dutlamCzRC2", "Uge 34", []), widget.recipe);
+                    Repository.addRecipeToPlan(
+                        new Plan(_currentUser!.uid.toString(), "Uge 34", []),
+                        widget.recipe);
                   },
                   child: Text(
                     'Tilføj til madplan',

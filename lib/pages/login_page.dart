@@ -34,7 +34,6 @@ class _LoginPageState extends State<LoginPage> {
           builder: (context) => HomePage(),
         ),
       );
-      Repository.setCurrentUser(user.uid);
     }
 
     return firebaseApp;
@@ -140,9 +139,6 @@ class _LoginPageState extends State<LoginPage> {
                                               });
 
                                               if (user != null) {
-                                                Repository.setCurrentUser(
-                                                    user.uid);
-
                                                 Navigator.of(context)
                                                     .pushReplacement(
                                                   MaterialPageRoute(

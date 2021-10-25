@@ -1,10 +1,10 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project_1_0/database/repository.dart';
 import 'package:flutter_project_1_0/models/ingredient.dart';
 import 'package:flutter_project_1_0/models/recipe.dart';
-import 'package:flutter_project_1_0/models/user.dart';
 import 'package:flutter_project_1_0/pages/home_page.dart';
 import 'package:flutter_project_1_0/pages/new_plan_page.dart';
 import 'package:flutter_project_1_0/models/plan.dart';
@@ -17,13 +17,11 @@ class PlanPage extends StatefulWidget {
 
 class _PlanPageState extends State<PlanPage> {
   List<Plan> _plans = [];
-  String _currentUser = "9xNt9mjHGjMPeWx54dutlamCzRC2";
+  User? _currentUser = FirebaseAuth.instance.currentUser;
 
   @override
   void initState() {
-    Repository.getCurrentUser()
-        .then(setCurrentUser); // Get current user from database
-    Repository.getPlans(_currentUser).then(updatePlans);
+    Repository.getPlans(_currentUser!.uid.toString()).then(updatePlans);
     super.initState();
   }
 
@@ -56,7 +54,7 @@ class _PlanPageState extends State<PlanPage> {
                 Navigator.push(context,
                         MaterialPageRoute(builder: (_) => NewPlanPage()))
                     .then((value) {
-                  Repository.getPlans(_currentUser).then(updatePlans);
+                  Repository.getPlans(_currentUser!.uid.toString()).then(updatePlans);
                 });
               },
               child: Icon(
@@ -154,7 +152,7 @@ class _PlanPageState extends State<PlanPage> {
             ),
             onTap: () {
               Repository.removePlan(plan); // Removes plan from database
-              Repository.getPlans(_currentUser).then(updatePlans);
+              Repository.getPlans(_currentUser!.uid.toString()).then(updatePlans);
             },
             // value: 3,
           ),
@@ -163,12 +161,6 @@ class _PlanPageState extends State<PlanPage> {
       subtitle: Text(""),
       isThreeLine: true,
     );
-  }
-
-  void setCurrentUser(User value) {
-    setState(() {
-      _currentUser = value.id;
-    });
   }
 
   updatePlans(Map plans) {
@@ -183,7 +175,7 @@ class _PlanPageState extends State<PlanPage> {
     plans.forEach(
       (key, value) {
         planList.add(
-          new Plan(_currentUser, key, r),
+          new Plan(_currentUser!.uid.toString(), key, r),
         );
       },
     );

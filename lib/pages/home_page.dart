@@ -88,7 +88,6 @@ class _HomePageState extends State<HomePage> {
                         builder: (context) => LoginPage(),
                       ),
                     );
-                    Repository.setCurrentUser("");
                   },
                   child: Text(
                     'Log ud',

@@ -1,12 +1,12 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project_1_0/database/recipes.dart';
 import 'package:flutter_project_1_0/database/repository.dart';
 import 'package:flutter_project_1_0/models/favorite.dart';
 import 'package:flutter_project_1_0/models/ingredient.dart';
 import 'package:flutter_project_1_0/models/recipe.dart';
-import 'package:flutter_project_1_0/models/user.dart';
 import 'package:flutter_project_1_0/pages/home_page.dart';
 import 'package:flutter_project_1_0/pages/recipe_page.dart';
 import 'package:flutter_project_1_0/utilities/snack_bar.dart';
@@ -22,21 +22,22 @@ class _RecipesPageState extends State<RecipesPage> {
   //Recipes _r = new Recipes();     //For loading recipes from recipes class.
   late List<Recipe> _recipies = [];
   late List<Favorite> _favoriteRecipies = [];
-  String _currentUser = "9xNt9mjHGjMPeWx54dutlamCzRC2";
+  User? _currentUser = FirebaseAuth.instance.currentUser;
+
 
   @override
   void initState() {
     //_recipies = _r.loadRecipes();     // Loading recipes from recipes class. Shall only be used the first time, to write data to database
-    Repository.getCurrentUser()
-        .then(setCurrentUser); // Get current user from database
     Repository.getRecipes()
         .then(updateRecipes); // Loading recipes from database
-    Repository.getFavorites(_currentUser).then(updateFavorites);
+    Repository.getFavorites(_currentUser!.uid.toString()).then(updateFavorites);
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Opskrifter'),
@@ -128,7 +129,7 @@ class _RecipesPageState extends State<RecipesPage> {
                   setState(
                     () {
                       Favorite favorite = new Favorite(
-                          _currentUser,
+                          _currentUser!.uid.toString(),
                           recipe.id,
                           recipe.name,
                           recipe.picture,
@@ -143,7 +144,7 @@ class _RecipesPageState extends State<RecipesPage> {
                           () {
                             Repository.removeFavorite(
                                 favorite); // Remove recipe as favorite in database
-                            Repository.getFavorites(_currentUser)
+                            Repository.getFavorites(_currentUser!.uid.toString())
                                 .then(updateFavorites);
                           },
                         );
@@ -152,7 +153,7 @@ class _RecipesPageState extends State<RecipesPage> {
                         setState(() {
                           Repository.setFavorite(
                               favorite); // Set recipe as favorite in database
-                          Repository.getFavorites(_currentUser)
+                          Repository.getFavorites(_currentUser!.uid.toString())
                               .then(updateFavorites);
                         });
                       }
@@ -208,12 +209,6 @@ class _RecipesPageState extends State<RecipesPage> {
     );
   }
 
-  void setCurrentUser(User value) {
-    setState(() {
-      _currentUser = value.id;
-    });
-  }
-
   updateFavorites(Map<dynamic, dynamic> favorites) {
     List<Favorite> favoriteList = [];
     List<Ingredient> ingredientList = [];
@@ -236,7 +231,7 @@ class _RecipesPageState extends State<RecipesPage> {
 
         favoriteList.add(
           new Favorite(
-              _currentUser,
+              _currentUser!.uid.toString(),
               key,
               value["name"],
               value["picture"],

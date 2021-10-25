@@ -131,8 +131,6 @@ class _RegisterPageState extends State<RegisterPage> {
                                         });
 
                                         if (user != null) {
-                                          Repository.setCurrentUser(user.uid);
-
                                           Navigator.of(context)
                                               .pushAndRemoveUntil(
                                             MaterialPageRoute(

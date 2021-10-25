@@ -1,9 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project_1_0/database/repository.dart';
 import 'package:flutter_project_1_0/models/favorite.dart';
 import 'package:flutter_project_1_0/models/ingredient.dart';
 import 'package:flutter_project_1_0/models/recipe.dart';
-import 'package:flutter_project_1_0/models/user.dart';
+import 'package:flutter_project_1_0/pages/home_page.dart';
 import 'package:flutter_project_1_0/pages/recipe_page.dart';
 
 class FavoritesPage extends StatefulWidget {
@@ -15,13 +16,11 @@ class FavoritesPage extends StatefulWidget {
 
 class _FavoritesPageState extends State<FavoritesPage> {
   late List<Favorite> _favoriteRecipies = [];
-  String _currentUser = "9xNt9mjHGjMPeWx54dutlamCzRC2";
+  User? _currentUser = FirebaseAuth.instance.currentUser;
 
   @override
   void initState() {
-    Repository.getCurrentUser()
-        .then(setCurrentUser); // Get current user from database
-    Repository.getFavorites(_currentUser).then(updateFavorites);
+    Repository.getFavorites(_currentUser!.uid.toString()).then(updateFavorites);
     super.initState();
   }
 
@@ -31,21 +30,31 @@ class _FavoritesPageState extends State<FavoritesPage> {
       appBar: AppBar(
         title: const Text('Favoritter'),
         backgroundColor: Colors.teal[600],
-        leading: Icon(
-          Icons.home_outlined,
-          size: 28,
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.pushReplacement<void, void>(
+              context,
+              MaterialPageRoute<void>(
+                builder: (BuildContext context) => HomePage(),
+              ),
+            );
+            Navigator.of(context).pop(true);
+          },
+          child: Icon(
+            Icons.home_outlined,
+            size: 28,
+          ),
         ),
       ),
       body: Container(
         decoration: BoxDecoration(color: Colors.teal[100]),
-        child: 
-            SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  for (var i in _favoriteRecipies) _buildCard(i),
-                ],
-              ),
-            ),
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              for (var i in _favoriteRecipies) _buildCard(i),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -99,7 +108,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                               print("REMOVE!");
                               Repository.removeFavorite(
                                   favorite); // Remove recipe as favorite in database
-                              Repository.getFavorites(_currentUser)
+                              Repository.getFavorites(_currentUser!.uid.toString())
                                   .then(updateFavorites);
                             },
                           );
@@ -107,7 +116,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                           setState(() {
                             Repository.setFavorite(
                                 favorite); // Set recipe as favorite in database
-                            Repository.getFavorites(_currentUser)
+                            Repository.getFavorites(_currentUser!.uid.toString())
                                 .then(updateFavorites);
                           });
                         }
@@ -125,12 +134,6 @@ class _FavoritesPageState extends State<FavoritesPage> {
     }
   }
 
-  void setCurrentUser(User value) {
-    setState(() {
-      _currentUser = value.id;
-    });
-  }
-
   updateFavorites(Map<dynamic, dynamic> favorites) {
     List<Favorite> favoriteList = [];
     int j = 0;
@@ -142,7 +145,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
             List<Ingredient> ingredientList = [];
             j = value["numberOfingredients"];
 
-            for (var i = 0; i < j; i++) { 
+            for (var i = 0; i < j; i++) {
               ingredientList.add(
                 new Ingredient(
                   value['ingredientList'][i]['name'].toString(),
@@ -153,8 +156,17 @@ class _FavoritesPageState extends State<FavoritesPage> {
             }
 
             favoriteList.add(
-              new Favorite(_currentUser, key, value["name"], value["picture"], value["prepTime"], value["totalTime"], value["servings"],
-                  value["numberOfingredients"], ingredientList, value["method"]),
+              new Favorite(
+                  _currentUser!.uid.toString(),
+                  key,
+                  value["name"],
+                  value["picture"],
+                  value["prepTime"],
+                  value["totalTime"],
+                  value["servings"],
+                  value["numberOfingredients"],
+                  ingredientList,
+                  value["method"]),
             );
           },
         );
