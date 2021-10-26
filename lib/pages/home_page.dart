@@ -65,7 +65,7 @@ class _HomePageState extends State<HomePage> {
                         //builder: (context) => Navigationbar()));
                         else {
                           mySnackbar snackbar = new mySnackbar();
-                          snackbar.showSnackBar(context);
+                          snackbar.notImplementedSnackBar(context);
                         }
                       },
                     );

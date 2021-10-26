@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_project_1_0/models/favorite.dart';
 import 'package:flutter_project_1_0/models/plan.dart';
@@ -53,28 +54,15 @@ class Repository {
   }
 
   static Future<void> setPlan(Plan plan) async {
-    List<Map<String, dynamic>> result = [];
-    if (plan.recipesList[0].name != "") {
-      plan.recipesList.forEach((item) {
-        result.add(item.toJson());
-      });
-      return FirebaseDatabase.instance
-          .reference()
-          .child("Plan")
-          .child(plan.user)
-          .child(plan.title)
-          .set({
-        "recipe": result,
-      });
-    } else {
-      return FirebaseDatabase.instance
-          .reference()
-          .child("Plan")
-          .child(plan.user)
-          .child(plan.title)
-          .child("path")
-          .set({"id": "Denne madplan er endnu tom"});
-    }
+    //List<Map<String, dynamic>> result = [];
+    String string = plan.title.toString();
+
+    return FirebaseDatabase.instance
+        .reference()
+        .child("Plan")
+        .child(plan.user)
+        .push()
+        .set({"title": plan.title});
   }
 
   // Get
@@ -119,6 +107,7 @@ class Repository {
         .reference()
         .child("Plan")
         .child(userId)
+        .orderByChild("recipeId")
         .once()
         .then((DataSnapshot snapshot) {
       Map<dynamic, dynamic> values = snapshot.value;
@@ -129,15 +118,14 @@ class Repository {
   }
 
   // Add
-    static Future<void> addRecipeToPlan(Plan plan, Recipe recipe) async {
-
+  static Future<void> addRecipeToPlan(Plan plan, Recipe recipe) async {
     return FirebaseDatabase.instance
         .reference()
         .child("Plan")
         .child(plan.user)
         .child(plan.title)
-        .child(recipe.id)
-        .set("");
+        .push()
+        .set({"recipeId": recipe.id});
   }
 
   // Remove
@@ -157,5 +145,21 @@ class Repository {
         .child(plan.user)
         .child(plan.title)
         .remove();
+  }
+
+  // Check
+  static Future<bool> favoritesNotNull(String user) async {
+    DataSnapshot snapshot = await FirebaseDatabase.instance
+        .reference()
+        .child("UserFavorite")
+        .orderByChild(user)
+        .equalTo("U1EL5623")
+        .once();
+    if (snapshot == null) {
+      print("Item doesn't exist in the db");
+    } else {
+      print("Item exists in the db");
+    }
+    return snapshot != null;
   }
 }

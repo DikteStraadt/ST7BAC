@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project_1_0/pages/favorites_page.dart';
-import 'package:flutter_project_1_0/pages/plan_page.dart';
+import 'package:flutter_project_1_0/pages/plans_page.dart';
 import 'package:flutter_project_1_0/pages/recipes_page.dart';
 
 class PageViewController extends StatefulWidget {

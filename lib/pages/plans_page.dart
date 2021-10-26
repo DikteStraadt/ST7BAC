@@ -27,6 +27,7 @@ class _PlanPageState extends State<PlanPage> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Madplaner'),
@@ -54,7 +55,8 @@ class _PlanPageState extends State<PlanPage> {
                 Navigator.push(context,
                         MaterialPageRoute(builder: (_) => NewPlanPage()))
                     .then((value) {
-                  Repository.getPlans(_currentUser!.uid.toString()).then(updatePlans);
+                  Repository.getPlans(_currentUser!.uid.toString())
+                      .then(updatePlans);
                 });
               },
               child: Icon(
@@ -120,7 +122,7 @@ class _PlanPageState extends State<PlanPage> {
             ),
             onTap: () {
               mySnackbar snackbar = new mySnackbar();
-              snackbar.showSnackBar(context);
+              snackbar.notImplementedSnackBar(context);
             },
             // value: 1,
           ),
@@ -136,7 +138,7 @@ class _PlanPageState extends State<PlanPage> {
             ),
             onTap: () {
               mySnackbar snackbar = new mySnackbar();
-              snackbar.showSnackBar(context);
+              snackbar.notImplementedSnackBar(context);
             },
             // value: 2,
           ),
@@ -152,13 +154,14 @@ class _PlanPageState extends State<PlanPage> {
             ),
             onTap: () {
               Repository.removePlan(plan); // Removes plan from database
-              Repository.getPlans(_currentUser!.uid.toString()).then(updatePlans);
+              Repository.getPlans(_currentUser!.uid.toString())
+                  .then(updatePlans);
             },
             // value: 3,
           ),
         ],
       ),
-      subtitle: Text(""),
+      subtitle: Text(printContent(plan)),
       isThreeLine: true,
     );
   }
@@ -185,5 +188,15 @@ class _PlanPageState extends State<PlanPage> {
         _plans = planList;
       },
     );
+  }
+
+  String printContent(Plan plan) {
+    String string = "";
+
+    for (Recipe r in plan.recipesList) {
+      string += r.name + "\n\n";
+    }
+
+    return string;
   }
 }

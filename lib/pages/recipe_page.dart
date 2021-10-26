@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +7,8 @@ import 'package:flutter_project_1_0/database/repository.dart';
 import 'package:flutter_project_1_0/models/ingredient.dart';
 import 'package:flutter_project_1_0/models/plan.dart';
 import 'package:flutter_project_1_0/models/recipe.dart';
+import 'package:flutter_project_1_0/pages/recipes_page.dart';
+import 'package:flutter_project_1_0/pages/select_plan_page.dart';
 import 'package:flutter_project_1_0/utilities/snack_bar.dart';
 
 class RecipePage extends StatefulWidget {
@@ -16,7 +20,7 @@ class RecipePage extends StatefulWidget {
 }
 
 class _RecipePageState extends State<RecipePage> {
-    User? _currentUser = FirebaseAuth.instance.currentUser;
+  User? _currentUser = FirebaseAuth.instance.currentUser;
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +28,17 @@ class _RecipePageState extends State<RecipePage> {
       appBar: AppBar(
         title: Text(widget.recipe.name),
         backgroundColor: Colors.teal[600],
+        // leading: IconButton(
+        //   icon: Icon(Icons.arrow_back, color: Colors.black),
+        //   onPressed: () {
+        //     Navigator.push(
+        //       context,
+        //       MaterialPageRoute(
+        //         builder: (context) => RecipesPage(),
+        //       ),
+        //     );
+        //   },
+        // ),
       ),
       body: SingleChildScrollView(
         child: Center(
@@ -211,9 +226,16 @@ class _RecipePageState extends State<RecipePage> {
                 width: MediaQuery.of(context).size.width * 0.9,
                 child: ElevatedButton(
                   onPressed: () {
-                    Repository.addRecipeToPlan(
-                        new Plan(_currentUser!.uid.toString(), "Uge 34", []),
-                        widget.recipe);
+                    // Repository.addRecipeToPlan(
+                    //     new Plan(_currentUser!.uid.toString(), "Uge 34", []),
+                    //     widget.recipe);
+                    Navigator.pushReplacement<void, void>(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (BuildContext context) =>
+                            SelectPlanPage(recipe: widget.recipe),
+                      ),
+                    );
                   },
                   child: Text(
                     'Tilføj til madplan',
@@ -231,7 +253,7 @@ class _RecipePageState extends State<RecipePage> {
                 child: ElevatedButton(
                   onPressed: () {
                     mySnackbar snackbar = new mySnackbar();
-                    snackbar.showSnackBar(context);
+                    snackbar.notImplementedSnackBar(context);
                   },
                   child: Text(
                     'Udskriv indkøbsliste',
@@ -249,7 +271,7 @@ class _RecipePageState extends State<RecipePage> {
                 child: ElevatedButton(
                   onPressed: () {
                     mySnackbar snackbar = new mySnackbar();
-                    snackbar.showSnackBar(context);
+                    snackbar.notImplementedSnackBar(context);
                   },
                   child: Text(
                     'Tilføj til favoritter',

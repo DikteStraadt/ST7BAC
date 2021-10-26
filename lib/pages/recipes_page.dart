@@ -24,14 +24,12 @@ class _RecipesPageState extends State<RecipesPage> {
   late List<Favorite> _favoriteRecipies = [];
   User? _currentUser = FirebaseAuth.instance.currentUser;
 
-
   @override
   void initState() {
     //_recipies = _r.loadRecipes();     // Loading recipes from recipes class. Shall only be used the first time, to write data to database
     Repository.getRecipes()
         .then(updateRecipes); // Loading recipes from database
     Repository.getFavorites(_currentUser!.uid.toString()).then(updateFavorites);
-
     super.initState();
   }
 
@@ -63,7 +61,7 @@ class _RecipesPageState extends State<RecipesPage> {
               child: GestureDetector(
                 onTap: () {
                   mySnackbar snackbar = new mySnackbar();
-                  snackbar.showSnackBar(context);
+                  snackbar.notImplementedSnackBar(context);
                 },
                 child: Icon(
                   Icons.filter_alt_outlined,
@@ -75,7 +73,7 @@ class _RecipesPageState extends State<RecipesPage> {
               child: GestureDetector(
                 onTap: () {
                   mySnackbar snackbar = new mySnackbar();
-                  snackbar.showSnackBar(context);
+                  snackbar.notImplementedSnackBar(context);
                 },
                 child: Icon(
                   Icons.search,

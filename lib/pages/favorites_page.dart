@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project_1_0/database/repository.dart';
@@ -20,12 +22,14 @@ class _FavoritesPageState extends State<FavoritesPage> {
 
   @override
   void initState() {
+    //Repository.favoritesNotNull(_currentUser!.uid.toString()).then(isListEmpty);
     Repository.getFavorites(_currentUser!.uid.toString()).then(updateFavorites);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Favoritter'),
@@ -105,10 +109,10 @@ class _FavoritesPageState extends State<FavoritesPage> {
                         if (alreadySaved) {
                           setState(
                             () {
-                              print("REMOVE!");
                               Repository.removeFavorite(
                                   favorite); // Remove recipe as favorite in database
-                              Repository.getFavorites(_currentUser!.uid.toString())
+                              Repository.getFavorites(
+                                      _currentUser!.uid.toString())
                                   .then(updateFavorites);
                             },
                           );
@@ -116,7 +120,8 @@ class _FavoritesPageState extends State<FavoritesPage> {
                           setState(() {
                             Repository.setFavorite(
                                 favorite); // Set recipe as favorite in database
-                            Repository.getFavorites(_currentUser!.uid.toString())
+                            Repository.getFavorites(
+                                    _currentUser!.uid.toString())
                                 .then(updateFavorites);
                           });
                         }
@@ -174,5 +179,12 @@ class _FavoritesPageState extends State<FavoritesPage> {
         _favoriteRecipies = favoriteList;
       },
     );
+  }
+
+  isListEmpty(bool exists) {
+    if (exists == true) {
+      Repository.getFavorites(_currentUser!.uid.toString())
+          .then(updateFavorites);
+    }
   }
 }
