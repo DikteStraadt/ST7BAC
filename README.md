@@ -34,9 +34,13 @@ https://stackoverflow.com/questions/52072948/flutter-get-firebase-database-refer
 ## Returnere data fra en side til en anden
 https://flutter.dev/docs/cookbook/navigation/returning-data
 
-# Eventuelle kilder
+## Forum funktionalitet
+https://flutterappworld.com/flutter-forum-application/
+https://github.com/ArunBalajiR/Flutter-Chat-Application
+
+## Dropdown i madplaner
+https://blog.bajarangisoft.com/blog/how-to-change-icon-color-popup-menu-button-in-flutter-app
+
 ## Gemme værdi fra textfelt i variabel
 https://flutter.dev/docs/cookbook/forms/retrieve-input
 
-# Dropdown i madplaner
-https://blog.bajarangisoft.com/blog/how-to-change-icon-color-popup-menu-button-in-flutter-app

@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project_1_0/database/repository.dart';
+import 'package:flutter_project_1_0/pages/forum_page.dart';
 import 'package:flutter_project_1_0/utilities/navigation/page_view.dart';
 import 'package:flutter_project_1_0/pages/login_page.dart';
 import 'package:flutter_project_1_0/utilities/snack_bar.dart';
@@ -63,6 +64,12 @@ class _HomePageState extends State<HomePage> {
                               MaterialPageRoute(
                                   builder: (context) => PageViewController()));
                         //builder: (context) => Navigationbar()));
+                        else if(title == "Forum"){
+Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ForumPage()));
+                        }
                         else {
                           mySnackbar snackbar = new mySnackbar();
                           snackbar.notImplementedSnackBar(context);
