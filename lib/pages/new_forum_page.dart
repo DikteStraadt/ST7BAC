@@ -2,14 +2,17 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project_1_0/database/repository.dart';
 import 'package:flutter_project_1_0/models/ingredient.dart';
+import 'package:flutter_project_1_0/models/list_entry.dart';
 import 'package:flutter_project_1_0/models/plan.dart';
 import 'package:flutter_project_1_0/models/recipe.dart';
 
 class NewForumPage extends StatelessWidget {
   NewForumPage({Key? key}) : super(key: key);
 
-  final _textController = TextEditingController();
-  // User? _currentUser = FirebaseAuth.instance.currentUser;
+  final _textTitleController = TextEditingController();
+  final _textQuestionController = TextEditingController();
+
+  User? _currentUser = FirebaseAuth.instance.currentUser;
 
   @override
   Widget build(BuildContext context) {
@@ -38,9 +41,9 @@ class NewForumPage extends StatelessWidget {
                       child: TextField(
                         decoration: InputDecoration(
                           border: InputBorder.none,
-                          labelText: "Giv foraet et navn",
+                          labelText: "Giv forummet et navn",
                         ),
-                        controller: _textController,
+                        controller: _textTitleController,
                       ),
                     ),
                     SizedBox(height: MediaQuery.of(context).size.width * 0.05),
@@ -57,7 +60,7 @@ class NewForumPage extends StatelessWidget {
                           border: InputBorder.none,
                           labelText: "Skriv dit spørgsmål",
                         ),
-                        controller: _textController,
+                        controller: _textQuestionController,
                       ),
                     ),
                   ],
@@ -70,9 +73,14 @@ class NewForumPage extends StatelessWidget {
                 width: MediaQuery.of(context).size.width * 0.45,
                 child: ElevatedButton(
                   onPressed: () {
-                    // Repository.setPlan(
-                    //   new Plan(_currentUser!.uid.toString(), _textController.text, r),
-                    // ); // Writing new plan to database
+                    Repository.setForum(
+                      new ListEntry(
+                          _textTitleController.text,
+                          _textQuestionController.text,
+                          _currentUser!,
+                          0,
+                          0, []),
+                    ); // Writing new plan to database
                     Navigator.pop(context);
                   },
                   child: Text(

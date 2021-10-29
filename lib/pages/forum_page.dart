@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project_1_0/models/list_entry.dart';
 import 'package:flutter_project_1_0/pages/forum_details_page.dart';
@@ -12,9 +14,9 @@ class ForumPage extends StatefulWidget {
 
 class _ForumPageState extends State<ForumPage> {
   static final listItemsData = [
-    new ListEntry("Forum 1", "test", "description 1", 54, 2, true),
-    new ListEntry("Forum 2", "test", "description 2", 154, 3, false),
-    new ListEntry("Forum 3", "test", "description 3", 971, 0, false),
+    // new ListEntry("Forum 1", "test", new User(), 54, 2, []),
+    // new ListEntry("Forum 2", "test", 154, 3, []),
+    // new ListEntry("Forum 3", "test", 971, 0, []),
   ];
 
   // ###############################################################################################
@@ -62,7 +64,33 @@ class _ForumPageState extends State<ForumPage> {
           child: new Column(
             children: <Widget>[
               SizedBox(height: MediaQuery.of(context).size.width * 0.015),
-              for (var entry in listItemsData) _buildListView(entry, context),
+              // StreamBuilder(
+              //   stream: FirebaseDatabase.instance
+              //       .reference()
+              //       .child("Forum")
+              //       .orderByKey()
+              //       .onValue,
+              //   builder: (context, snapshot) {
+              //     final tilesList = <ListTile>[];
+              //     if (snapshot.hasData) {
+              //       final myForums = Map<String, dynamic>.from(
+              //           (snapshot.data! as Event).snapshot.value);
+              //       myForums.forEach(
+              //         (key, value) {
+              //           final nextForum = Map<String, dynamic>.from(value);
+              //           final forumTile = ListTile(
+              //               leading: new Icon(Icons.add),
+              //               title: Text(nextForum['title']),
+              //               subtitle: Text(nextForum['createdBy']));
+              //           tilesList.add(forumTile);
+              //         },
+              //       );
+              //     }
+
+              //     return ListView(children: tilesList);
+              //   },
+              // )
+              // for (var entry in listItemsData) _buildListView(entry, context), ////////////////////////////////
             ],
           ),
         ),
@@ -89,7 +117,6 @@ Widget _buildListView(ListEntry entry, BuildContext context) {
     ),
     child: new ListTile(
       title: new Text(entry.title),
-      subtitle: new Text(entry.description),
       leading: new Icon(
         Icons.forum_rounded,
         size: MediaQuery.of(context).size.width * 0.08,
