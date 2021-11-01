@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_project_1_0/models/favorite.dart';
 import 'package:flutter_project_1_0/models/form_post_entry.dart';
@@ -94,7 +93,6 @@ class Repository {
 
   static Future<void> setPlan(Plan plan) async {
     //List<Map<String, dynamic>> result = [];
-    String string = plan.title.toString();
 
     return FirebaseDatabase.instance
         .reference()
@@ -184,21 +182,5 @@ class Repository {
         .child(plan.user)
         .child(plan.title)
         .remove();
-  }
-
-  // Check
-  static Future<bool> favoritesNotNull(String user) async {
-    DataSnapshot snapshot = await FirebaseDatabase.instance
-        .reference()
-        .child("UserFavorite")
-        .orderByChild(user)
-        .equalTo("U1EL5623")
-        .once();
-    if (snapshot == null) {
-      print("Item doesn't exist in the db");
-    } else {
-      print("Item exists in the db");
-    }
-    return snapshot != null;
   }
 }

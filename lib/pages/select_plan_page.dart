@@ -86,7 +86,7 @@ class _SelectPlanPageState extends State<SelectPlanPage> {
       title: Text(plan.title),
       trailing: GestureDetector(
         onTap: () {
-                    mySnackbar snackbar = new mySnackbar();
+          MySnackbar snackbar = new MySnackbar();
           snackbar.addToPlanSnackBar(context);
           Repository.addRecipeToPlan(plan, widget.recipe);
           Navigator.push(
@@ -94,7 +94,6 @@ class _SelectPlanPageState extends State<SelectPlanPage> {
                   MaterialPageRoute(
                       builder: (_) => RecipePage(recipe: widget.recipe)))
               .then((value) {});
-
         },
         child: Icon(
           Icons.add_outlined,

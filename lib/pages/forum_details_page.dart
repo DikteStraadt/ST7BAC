@@ -1,6 +1,4 @@
 import 'dart:ui';
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project_1_0/models/form_post_entry.dart';
@@ -157,7 +155,7 @@ class _ForumDetailPageState extends State<ForumDetailPage> {
 
 Container _buildListView(Map<String, dynamic> entry, BuildContext context) {
   DateTimeConverter _converter = new DateTimeConverter();
-  mySnackbar snackbar = new mySnackbar();
+  MySnackbar snackbar = new MySnackbar();
 
   return new Container(
     margin: const EdgeInsets.all(5.0),

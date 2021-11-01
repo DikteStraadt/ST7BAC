@@ -9,7 +9,7 @@ class NewPlanPage extends StatelessWidget {
   NewPlanPage({Key? key}) : super(key: key);
 
   final _textController = TextEditingController();
-  User? _currentUser = FirebaseAuth.instance.currentUser;
+  final User? _currentUser = FirebaseAuth.instance.currentUser;
 
   @override
   Widget build(BuildContext context) {

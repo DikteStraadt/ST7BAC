@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class mySnackbar{
+class MySnackbar{
 
   ScaffoldFeatureController<SnackBar, SnackBarClosedReason> notImplementedSnackBar(BuildContext c){
     final snackBar = SnackBar(behavior: SnackBarBehavior.floating, content: Text('Funktionaliteten er endnu ikke implementeret'), backgroundColor: Colors.yellow[700], duration: Duration(seconds: 1));

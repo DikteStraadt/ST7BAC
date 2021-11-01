@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project_1_0/database/repository.dart';
@@ -121,7 +119,7 @@ class _PlanPageState extends State<PlanPage> {
               ],
             ),
             onTap: () {
-              mySnackbar snackbar = new mySnackbar();
+              MySnackbar snackbar = new MySnackbar();
               snackbar.notImplementedSnackBar(context);
             },
             // value: 1,
@@ -137,7 +135,7 @@ class _PlanPageState extends State<PlanPage> {
               ],
             ),
             onTap: () {
-              mySnackbar snackbar = new mySnackbar();
+              MySnackbar snackbar = new MySnackbar();
               snackbar.notImplementedSnackBar(context);
             },
             // value: 2,

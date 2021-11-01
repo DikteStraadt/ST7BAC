@@ -1,6 +1,3 @@
-
-import 'package:flutter_project_1_0/models/list_entry.dart';
-
 class ForumPostEntry{
   final String listEntryId;
   final String? username;

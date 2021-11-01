@@ -1,13 +1,8 @@
-import 'dart:async';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_project_1_0/database/repository.dart';
 import 'package:flutter_project_1_0/models/ingredient.dart';
-import 'package:flutter_project_1_0/models/plan.dart';
 import 'package:flutter_project_1_0/models/recipe.dart';
-import 'package:flutter_project_1_0/pages/recipes_page.dart';
 import 'package:flutter_project_1_0/pages/select_plan_page.dart';
 import 'package:flutter_project_1_0/utilities/snack_bar.dart';
 
@@ -252,7 +247,7 @@ class _RecipePageState extends State<RecipePage> {
                 width: MediaQuery.of(context).size.width * 0.9,
                 child: ElevatedButton(
                   onPressed: () {
-                    mySnackbar snackbar = new mySnackbar();
+                    MySnackbar snackbar = new MySnackbar();
                     snackbar.notImplementedSnackBar(context);
                   },
                   child: Text(
@@ -270,7 +265,7 @@ class _RecipePageState extends State<RecipePage> {
                 width: MediaQuery.of(context).size.width * 0.9,
                 child: ElevatedButton(
                   onPressed: () {
-                    mySnackbar snackbar = new mySnackbar();
+                    MySnackbar snackbar = new MySnackbar();
                     snackbar.notImplementedSnackBar(context);
                   },
                   child: Text(
@@ -296,8 +291,8 @@ class _RecipePageState extends State<RecipePage> {
     String string = "";
 
     for (Ingredient i in ingredients) {
-      List<String> amount_arr = i.amount.toString().split('.');
-      string += amount_arr[0].toString() +
+      List<String> amountArr = i.amount.toString().split('.');
+      string += amountArr[0].toString() +
           " " +
           i.unit.toString() +
           " " +

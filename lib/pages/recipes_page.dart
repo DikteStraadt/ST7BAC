@@ -1,8 +1,5 @@
-import 'dart:async';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_project_1_0/database/recipes.dart';
 import 'package:flutter_project_1_0/database/repository.dart';
 import 'package:flutter_project_1_0/models/favorite.dart';
 import 'package:flutter_project_1_0/models/ingredient.dart';
@@ -60,7 +57,7 @@ class _RecipesPageState extends State<RecipesPage> {
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(
                 onTap: () {
-                  mySnackbar snackbar = new mySnackbar();
+                  MySnackbar snackbar = new MySnackbar();
                   snackbar.notImplementedSnackBar(context);
                 },
                 child: Icon(
@@ -72,7 +69,7 @@ class _RecipesPageState extends State<RecipesPage> {
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(
                 onTap: () {
-                  mySnackbar snackbar = new mySnackbar();
+                  MySnackbar snackbar = new MySnackbar();
                   snackbar.notImplementedSnackBar(context);
                 },
                 child: Icon(

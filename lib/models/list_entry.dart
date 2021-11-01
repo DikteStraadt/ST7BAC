@@ -1,5 +1,3 @@
-import 'package:flutter_project_1_0/models/form_post_entry.dart';
-
 class ListEntry {
   final String id;
   final String title;

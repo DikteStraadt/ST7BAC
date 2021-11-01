@@ -1,13 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_project_1_0/database/repository.dart';
-import 'package:flutter_project_1_0/models/list_entry.dart';
 import 'package:flutter_project_1_0/pages/forum_details_page.dart';
 import 'package:flutter_project_1_0/pages/home_page.dart';
 import 'package:flutter_project_1_0/pages/new_forum_page.dart';
 import 'package:flutter_project_1_0/utilities/snack_bar.dart';
-import 'package:uuid/uuid.dart';
 
 
 class ForumPage extends StatefulWidget {
@@ -44,7 +40,7 @@ class _ForumPageState extends State<ForumPage> {
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(
                 onTap: () {
-                  mySnackbar snackbar = new mySnackbar();
+                  MySnackbar snackbar = new MySnackbar();
                   snackbar.notImplementedSnackBar(context);
                 },
                 child: Icon(

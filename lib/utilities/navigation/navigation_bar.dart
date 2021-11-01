@@ -18,12 +18,6 @@ class _NavigationbarState extends State<Navigationbar> {
   
   int _selectedIndex = 0;
 
-    bool _isSigningOut = false;
-
-    void initState() {
-    super.initState();
-  }
-
   void _selectTab(String tabItem, int index) {
     if (tabItem == _currentPage) {
       _navigatorKeys[tabItem]!.currentState!.popUntil((route) => route.isFirst);
@@ -66,15 +60,15 @@ class _NavigationbarState extends State<Navigationbar> {
           items: [
             BottomNavigationBarItem(
               icon: new Icon(Icons.food_bank_outlined),
-              title: new Text('Opskrifter'),
+              label: 'Opskrifter',
             ),
             BottomNavigationBarItem(
               icon: new Icon(Icons.format_list_bulleted_outlined),
-              title: new Text('Madplaner'),
+              label: 'Madplaner'
             ),
             BottomNavigationBarItem(
               icon: new Icon(Icons.favorite_border),
-              title: new Text('Favoritter'),
+              label: 'Favoritter',
             ),
           ],
           type: BottomNavigationBarType.fixed,

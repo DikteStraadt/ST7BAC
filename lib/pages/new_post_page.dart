@@ -7,7 +7,7 @@ class NewPostPage extends StatelessWidget {
   NewPostPage({Key? key, required this.id}) : super(key: key);
 
   final _textAnswerController = TextEditingController();
-  User? _currentUser = FirebaseAuth.instance.currentUser;
+  final User? _currentUser = FirebaseAuth.instance.currentUser;
   final String id;
 
   @override
