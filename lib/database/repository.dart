@@ -3,11 +3,13 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_project_1_0/models/favorite.dart';
+import 'package:flutter_project_1_0/models/form_post_entry.dart';
 import 'package:flutter_project_1_0/models/list_entry.dart';
 import 'package:flutter_project_1_0/models/plan.dart';
 import 'package:flutter_project_1_0/models/recipe.dart';
 
 class Repository {
+  
   // Set
   static Future<void> setRecipe(Recipe recipe) async {
     List<Map<String, dynamic>> result = [];
@@ -54,19 +56,39 @@ class Repository {
     });
   }
 
-    static Future<void> setForum(ListEntry listEntry) async {
+  static Future<void> setForum(ListEntry listEntry) async {
+    final newForum = <String, dynamic>{
+      'id': listEntry.id,
+      'title': listEntry.title,
+      'question': listEntry.question,
+      'user': listEntry.createdBy,
+      'responses': listEntry.responses,
+      'views': listEntry.views,
+      'postEntries': [],
+    };
 
-    return FirebaseDatabase.instance
+    FirebaseDatabase.instance
         .reference()
-        .child("Forum")
-        .child(listEntry.title)
-        .set({
-      "question": listEntry.question,
-      "user": listEntry.createdBy.displayName,
-      "responses": listEntry.responses,
-      "views": listEntry.views,
-      "postEntries": [],
-    });
+        .child('Forum')
+        .push()
+        .set(newForum);
+  }
+
+   static Future<void> setPost(ForumPostEntry post) async {
+    final newPost = <String, dynamic>{
+      'listEntryId': post.listEntryId,
+      'username': post.username,
+      'text': post.text,
+      'hours': post.date,
+      'likes': post.likes,
+      'dislikes': post.dislikes,
+    };
+
+    FirebaseDatabase.instance
+        .reference()
+        .child('Posts')
+        .push()
+        .set(newPost);
   }
 
   static Future<void> setPlan(Plan plan) async {
