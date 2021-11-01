@@ -2,11 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project_1_0/database/repository.dart';
 import 'package:flutter_project_1_0/models/form_post_entry.dart';
-import 'package:flutter_project_1_0/models/ingredient.dart';
-import 'package:flutter_project_1_0/models/list_entry.dart';
-import 'package:flutter_project_1_0/models/plan.dart';
-import 'package:flutter_project_1_0/models/recipe.dart';
-import 'package:flutter_project_1_0/pages/forum_details_page.dart';
 
 class NewPostPage extends StatelessWidget {
   NewPostPage({Key? key, required this.id}) : super(key: key);
@@ -60,7 +55,7 @@ class NewPostPage extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () {
                     Repository.setPost(new ForumPostEntry(id, _currentUser!.displayName, DateTime.now().toString(), 0,0, _textAnswerController.text),); // Writing new post to database
-                    //Navigator.pop(context);
+                    Navigator.pop(context);
                   },
                   child: Text(
                     'Send svar',

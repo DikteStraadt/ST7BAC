@@ -74,13 +74,16 @@ class NewForumPage extends StatelessWidget {
                 width: MediaQuery.of(context).size.width * 0.45,
                 child: ElevatedButton(
                   onPressed: () {
-                    Repository.setForum(new ListEntry(
-                        Uuid().v4(),
-                        _textTitleController.text,
-                        _textQuestionController.text,
-                        _currentUser!.displayName,
-                        0,
-                        0, [])); // Writing new plan to database
+                    Repository.setForum(
+                      new ListEntry(
+                          Uuid().v4(),
+                          _textTitleController.text,
+                          _textQuestionController.text,
+                          DateTime.now().toString(),
+                          _currentUser!.displayName,
+                          0,
+                          0),
+                    ); // Writing new plan to database
                     Navigator.pop(context);
                   },
                   child: Text(

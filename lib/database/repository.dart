@@ -9,7 +9,7 @@ import 'package:flutter_project_1_0/models/plan.dart';
 import 'package:flutter_project_1_0/models/recipe.dart';
 
 class Repository {
-  
+
   // Set
   static Future<void> setRecipe(Recipe recipe) async {
     List<Map<String, dynamic>> result = [];
@@ -61,6 +61,7 @@ class Repository {
       'id': listEntry.id,
       'title': listEntry.title,
       'question': listEntry.question,
+      'date': listEntry.date,
       'user': listEntry.createdBy,
       'responses': listEntry.responses,
       'views': listEntry.views,

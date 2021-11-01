@@ -3,12 +3,11 @@ import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project_1_0/database/repository.dart';
-import 'package:flutter_project_1_0/pages/forum_page.dart';
+import 'package:flutter_project_1_0/pages/forums_page.dart';
 import 'package:flutter_project_1_0/utilities/navigation/page_view.dart';
 import 'package:flutter_project_1_0/pages/login_page.dart';
 import 'package:flutter_project_1_0/utilities/snack_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-//import 'package:flutter_project_1_0/models/user.dart' as user;
 
 class HomePage extends StatefulWidget {
   @override
