@@ -77,7 +77,11 @@ class _ForumDetailPageState extends State<ForumDetailPage> {
                       borderRadius: const BorderRadius.only(
                           bottomLeft: const Radius.circular(20.0),
                           bottomRight: const Radius.circular(20.0))),
-                  child: new Text(widget.forum['question']),
+                  child: new Text(
+                    widget.forum['question'],
+                    style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width * 0.04),
+                  ),
                 ),
               ],
             ),
@@ -89,7 +93,12 @@ class _ForumDetailPageState extends State<ForumDetailPage> {
     var responses = new Container(
       padding: const EdgeInsets.all(8.0),
       child: StreamBuilder(
-        stream: FirebaseDatabase.instance.reference().child('Posts').orderByChild('listEntryId').equalTo(widget.forum['id']).onValue,
+        stream: FirebaseDatabase.instance
+            .reference()
+            .child('Posts')
+            .orderByChild('listEntryId')
+            .equalTo(widget.forum['id'])
+            .onValue,
         builder: (context, snapshot) {
           final tilesList = <Container>[];
           if (snapshot.hasData) {
@@ -115,12 +124,6 @@ class _ForumDetailPageState extends State<ForumDetailPage> {
           }
         },
       ),
-      // child:
-      // new ListView.builder(
-      // itemBuilder: (BuildContext context, int index) =>
-      //     new ForumPost(ForumPostArr[index]),
-      // itemCount: ForumPostArr.length,
-      // ));
     );
 
     return new Scaffold(
@@ -231,115 +234,11 @@ Container _buildListView(Map<String, dynamic> entry, BuildContext context) {
               borderRadius: const BorderRadius.only(
                   bottomLeft: const Radius.circular(20.0),
                   bottomRight: const Radius.circular(20.0))),
-          child: new Text(entry['text']),
+          child: new Text(entry['text'],
+              style: TextStyle(
+                  fontSize: MediaQuery.of(context).size.width * 0.04)),
         ),
       ],
     ),
   );
 }
-
-// ********************************************************************************************
-
-class ForumPost extends StatelessWidget {
-  final ForumPostEntry entry;
-
-  ForumPost(this.entry);
-
-  @override
-  Widget build(BuildContext context) {
-    DateTimeConverter _converter = new DateTimeConverter();
-
-    return new Container(
-      decoration: new BoxDecoration(
-        borderRadius: const BorderRadius.all(const Radius.circular(20.0)),
-      ),
-      child: new Column(
-        children: <Widget>[
-          new Container(
-            decoration: new BoxDecoration(
-              color: Colors.teal[300],
-              borderRadius: const BorderRadius.only(
-                  topLeft: const Radius.circular(20.0),
-                  topRight: const Radius.circular(20.0)),
-            ),
-            child: new Row(
-              children: <Widget>[
-                SizedBox(width: MediaQuery.of(context).size.width * 0.01),
-                new Icon(
-                  Icons.person,
-                  size: 50.0,
-                ),
-                new Expanded(
-                  child: new Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      new Text(entry.username.toString()),
-                      new Text(_converter
-                          .convertDateTimeToString(entry.date)
-                          .toString()),
-                    ],
-                  ),
-                ),
-                new Row(
-                  children: <Widget>[
-                    new Padding(
-                      padding: const EdgeInsets.all(2.0),
-                      child: new Icon(Icons.thumb_up),
-                    ),
-                    new Padding(
-                      padding: const EdgeInsets.all(2.0),
-                      child: new Text(entry.likes.toString()),
-                    ),
-                    new Padding(
-                      padding: const EdgeInsets.all(2.0),
-                      child: new Icon(Icons.thumb_down),
-                    ),
-                    new Padding(
-                      padding: const EdgeInsets.only(right: 8.0, left: 2.0),
-                      child: new Text(entry.dislikes.toString()),
-                    ),
-                  ],
-                )
-              ],
-            ),
-          ),
-          new Container(
-            margin: const EdgeInsets.only(left: 2.0, right: 2.0, bottom: 2.0),
-            padding: const EdgeInsets.all(8.0),
-            decoration: new BoxDecoration(
-                color: Colors.grey[200],
-                borderRadius: const BorderRadius.only(
-                    bottomLeft: const Radius.circular(20.0),
-                    bottomRight: const Radius.circular(20.0))),
-            child: new Text(entry.text),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-// class IconWithText extends StatelessWidget {
-//   final IconData iconData;
-//   final String text;
-//   final Color iconColor;
-
-//   IconWithText(this.iconData, this.text, {required this.iconColor});
-//   @override
-//   Widget build(BuildContext context) {
-//     return new Container(
-//       child: new Row(
-//         children: <Widget>[
-//           new Icon(
-//             this.iconData,
-//             color: this.iconColor,
-//           ),
-//           new Padding(
-//             padding: const EdgeInsets.only(left: 8.0),
-//             child: new Text(this.text),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
