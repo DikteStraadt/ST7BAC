@@ -32,7 +32,7 @@ class _RegisterPageState extends State<RegisterPage> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Register'),
+          title: Text('Registrer'),
           backgroundColor: Colors.teal[600],
         ),
         body: Padding(
@@ -59,7 +59,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           name: value.toString(),
                         ),
                         decoration: InputDecoration(
-                          hintText: "Name",
+                          hintText: "Brugernavn",
                           errorBorder: UnderlineInputBorder(
                             borderRadius: BorderRadius.circular(6.0),
                             borderSide: BorderSide(
@@ -76,7 +76,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           email: value.toString(),
                         ),
                         decoration: InputDecoration(
-                          hintText: "Email",
+                          hintText: "E-mail",
                           errorBorder: UnderlineInputBorder(
                             borderRadius: BorderRadius.circular(6.0),
                             borderSide: BorderSide(
@@ -94,7 +94,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           password: value.toString(),
                         ),
                         decoration: InputDecoration(
-                          hintText: "Password",
+                          hintText: "Kodeord",
                           errorBorder: UnderlineInputBorder(
                             borderRadius: BorderRadius.circular(6.0),
                             borderSide: BorderSide(

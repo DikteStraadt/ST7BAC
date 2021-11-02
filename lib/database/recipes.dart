@@ -70,7 +70,7 @@ class Recipes {
         "10 min.",
         "25 min.",
         4,
-        24,
+        16,
         one_pot_pasta_i,
         "Helt enkelt som navnet antyder, så kom alle ingredienserne i en stor gryde på én gang.\n\nKog retten op, rør godt rundt i gryden og skru ned for varmen.\n\nLad det simrekoge under låg i 10-12 minutter, til spaghettien er perfekt kogt – al dente med lidt bid i.\n\nServer med revet parmesan og basilikum.\n");
     _recipes.add(one_pot_pasta);
@@ -110,7 +110,7 @@ class Recipes {
         "45 min.",
         "60 min.",
         4,
-        16,
+        24,
         vegetar_spaghetti_i,
         "Tomatsauce\nKom løg og hvidløg i gryden med smør og sauter, til løgene er klare og bløde. Tilsæt alle de andre ingredienser. Lad det simre uden låg, mens resten af retten tilberedes.\n\nBlend evt. saucen med en stavblender, hvis du ønsker en fin og ensartet konsistens.\n\nQuinoa- og linseboller\nSkyl quinoa og linser grundigt i en sigte og kom dem derefter i en gryde sammen med grøntsagsbouillon.\n\nLæg låg på, bring i kog og lad det simre i 20 minutter, til linserne er knap møre.\n\nKom de kogte linser og quinoa i en skål og rør grundigt sammen med champignoner, æg, rødløg, hvidløg, per­sille, krydderier, smuldret feta, salt og peber. Form en masse små boller af farsen.\n\nLæg dem på en bageplade med bagepapir og bag i ovnen ved 175 grader i 25­-30 minutter.\n\nKog imens pastaen al dente efter anvisning på pakken.\n\nServer quinoa og linsebollerne med spaghetti, varm tomatsauce og rigeligt revet parmesan og lidt timian til at drysse over.\n");
     _recipes.add(vegetar_spaghetti);

@@ -15,7 +15,7 @@ class NewForumPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Opret nyt forum"),
+        title: Text("Opret nyt indlæg"),
         backgroundColor: Colors.teal[600],
       ),
       body: Center(
@@ -38,7 +38,7 @@ class NewForumPage extends StatelessWidget {
                       child: TextField(
                         decoration: InputDecoration(
                           border: InputBorder.none,
-                          labelText: "Giv forummet et navn",
+                          labelText: "Giv indlægget en titel",
                         ),
                         controller: _textTitleController,
                       ),
@@ -83,7 +83,7 @@ class NewForumPage extends StatelessWidget {
                     Navigator.pop(context);
                   },
                   child: Text(
-                    'Opret forum',
+                    'Opret indlæg',
                     style: TextStyle(
                         fontFamily: 'Margarine',
                         fontSize: MediaQuery.of(context).size.width * 0.05),

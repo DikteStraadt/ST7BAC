@@ -117,6 +117,7 @@ Container _buildListView(Map<String, dynamic> entry, BuildContext context) {
     ),
     child: new ListTile(
       title: new Text(entry['title']),
+      subtitle: new Text(entry['question']),
       leading: new Icon(
         Icons.forum_rounded,
         size: MediaQuery.of(context).size.width * 0.08,

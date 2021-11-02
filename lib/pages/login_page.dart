@@ -77,7 +77,7 @@ class _LoginPageState extends State<LoginPage> {
                                 email: value.toString(),
                               ),
                               decoration: InputDecoration(
-                                hintText: "Email",
+                                hintText: "E-mail",
                                 errorBorder: UnderlineInputBorder(
                                   borderRadius: BorderRadius.circular(6.0),
                                   borderSide: BorderSide(

@@ -14,7 +14,7 @@ class NewPostPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Opret nyt forum"),
+        title: Text("Skriv svar til indlæg"),
         backgroundColor: Colors.teal[600],
       ),
       body: Center(
@@ -39,7 +39,7 @@ class NewPostPage extends StatelessWidget {
                         maxLines: null,
                         decoration: InputDecoration(
                           border: InputBorder.none,
-                          labelText: "Skriv et forumindlæg",
+                          labelText: "Skriv et svar",
                         ),
                         controller: _textAnswerController,
                       ),

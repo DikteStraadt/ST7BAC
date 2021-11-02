@@ -31,6 +31,15 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       body: Container(
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+          begin: Alignment.topRight,
+          end: Alignment.bottomLeft,
+          colors: [
+            Colors.tealAccent,
+            Colors.teal,
+          ],
+        )),
         child: Container(
           margin: const EdgeInsets.only(top: 40, bottom: 20),
           child: Column(
@@ -39,7 +48,9 @@ class _HomePageState extends State<HomePage> {
                 padding: const EdgeInsets.only(bottom: 2),
                 child: Text(
                   'Hånd i hånd',
-                  style: TextStyle(fontFamily: 'Margarine', fontSize: 50),
+                  style: TextStyle(
+                      fontFamily: 'Margarine',
+                      fontSize: MediaQuery.of(context).size.width * 0.12),
                 ),
               ),
               Expanded(
@@ -60,13 +71,12 @@ class _HomePageState extends State<HomePage> {
                               MaterialPageRoute(
                                   builder: (context) => PageViewController()));
                         //builder: (context) => Navigationbar()));
-                        else if(title == "Forum"){
-Navigator.push(
+                        else if (title == "Forum") {
+                          Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => ForumPage()));
-                        }
-                        else {
+                        } else {
                           MySnackbar snackbar = new MySnackbar();
                           snackbar.notImplementedSnackBar(context);
                         }
@@ -76,7 +86,7 @@ Navigator.push(
                 ),
               ),
               Container(
-                width: MediaQuery.of(context).size.width * 0.9,
+                width: MediaQuery.of(context).size.width * 0.4,
                 child: ElevatedButton(
                   onPressed: () async {
                     setState(() {
@@ -97,7 +107,7 @@ Navigator.push(
                     style: TextStyle(fontFamily: 'Margarine', fontSize: 25),
                   ),
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.teal[600],
+                    primary: Colors.black45,
                   ),
                 ),
               ),
