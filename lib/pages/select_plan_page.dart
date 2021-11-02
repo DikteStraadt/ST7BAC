@@ -10,9 +10,10 @@ import 'package:flutter_project_1_0/utilities/snack_bar.dart';
 class SelectPlanPage extends StatefulWidget {
   @override
   State<SelectPlanPage> createState() => _SelectPlanPageState();
-  const SelectPlanPage({Key? key, required this.recipe}) : super(key: key);
+  const SelectPlanPage({Key? key, required this.recipe, required this.route}) : super(key: key);
 
   final Recipe recipe;
+  final String route;
 }
 
 class _SelectPlanPageState extends State<SelectPlanPage> {
@@ -37,7 +38,7 @@ class _SelectPlanPageState extends State<SelectPlanPage> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => RecipePage(recipe: widget.recipe),
+                builder: (context) => RecipePage(recipe: widget.recipe, route: widget.route),
               ),
             );
           },
@@ -92,7 +93,7 @@ class _SelectPlanPageState extends State<SelectPlanPage> {
           Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (_) => RecipePage(recipe: widget.recipe)))
+                      builder: (_) => RecipePage(recipe: widget.recipe, route: widget.route)))
               .then((value) {});
         },
         child: Icon(

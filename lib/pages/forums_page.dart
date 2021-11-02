@@ -5,14 +5,12 @@ import 'package:flutter_project_1_0/pages/home_page.dart';
 import 'package:flutter_project_1_0/pages/new_forum_page.dart';
 import 'package:flutter_project_1_0/utilities/snack_bar.dart';
 
-
-class ForumPage extends StatefulWidget {
+class ForumsPage extends StatefulWidget {
   @override
-  _ForumPageState createState() => new _ForumPageState();
+  _ForumsPageState createState() => new _ForumsPageState();
 }
 
-class _ForumPageState extends State<ForumPage> {
-
+class _ForumsPageState extends State<ForumsPage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -22,13 +20,7 @@ class _ForumPageState extends State<ForumPage> {
         backgroundColor: Colors.teal[600],
         leading: GestureDetector(
           onTap: () {
-            Navigator.pushReplacement<void, void>(
-              context,
-              MaterialPageRoute<void>(
-                builder: (BuildContext context) => HomePage(),
-              ),
-            );
-            Navigator.of(context).pop(true);
+            Navigator.pushNamed(context, 'home');
           },
           child: Icon(
             Icons.home_outlined,
@@ -61,8 +53,8 @@ class _ForumPageState extends State<ForumPage> {
             child: Column(
               children: [
                 SizedBox(
-                        height: MediaQuery.of(context).size.width * 0.015,
-                      ),
+                  height: MediaQuery.of(context).size.width * 0.015,
+                ),
                 StreamBuilder(
                   stream: FirebaseDatabase.instance
                       .reference()
@@ -97,8 +89,7 @@ class _ForumPageState extends State<ForumPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => NewForumPage()));
+          Navigator.pushNamed(context, 'newforum');
         },
         child: const Icon(Icons.add),
         backgroundColor: Colors.teal[600],
@@ -134,8 +125,10 @@ Container _buildListView(Map<String, dynamic> entry, BuildContext context) {
       //   ),
       // ),
       onTap: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => ForumDetailPage(forum: entry)));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ForumDetailPage(forum: entry)));
       },
     ),
   );

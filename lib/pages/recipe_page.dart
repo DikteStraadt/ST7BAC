@@ -4,14 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_project_1_0/models/ingredient.dart';
 import 'package:flutter_project_1_0/models/recipe.dart';
 import 'package:flutter_project_1_0/pages/select_plan_page.dart';
+import 'package:flutter_project_1_0/utilities/navigation/page_view.dart';
 import 'package:flutter_project_1_0/utilities/snack_bar.dart';
 
 class RecipePage extends StatefulWidget {
   @override
   _RecipePageState createState() => _RecipePageState();
-  const RecipePage({Key? key, required this.recipe}) : super(key: key);
+  const RecipePage({Key? key, required this.recipe, required this.route})
+      : super(key: key);
 
   final Recipe recipe;
+  final String route;
 }
 
 class _RecipePageState extends State<RecipePage> {
@@ -23,17 +26,26 @@ class _RecipePageState extends State<RecipePage> {
       appBar: AppBar(
         title: Text(widget.recipe.name),
         backgroundColor: Colors.teal[600],
-        // leading: IconButton(
-        //   icon: Icon(Icons.arrow_back, color: Colors.black),
-        //   onPressed: () {
-        //     Navigator.push(
-        //       context,
-        //       MaterialPageRoute(
-        //         builder: (context) => RecipesPage(),
-        //       ),
-        //     );
-        //   },
-        // ),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () {
+            if (widget.route == "r") {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PageViewController(initpage: 0),
+                ),
+              );
+            } else {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PageViewController(initpage: 2),
+                ),
+              );
+            }
+          },
+        ),
       ),
       body: SingleChildScrollView(
         child: Center(
@@ -221,14 +233,11 @@ class _RecipePageState extends State<RecipePage> {
                 width: MediaQuery.of(context).size.width * 0.9,
                 child: ElevatedButton(
                   onPressed: () {
-                    // Repository.addRecipeToPlan(
-                    //     new Plan(_currentUser!.uid.toString(), "Uge 34", []),
-                    //     widget.recipe);
                     Navigator.pushReplacement<void, void>(
                       context,
                       MaterialPageRoute<void>(
                         builder: (BuildContext context) =>
-                            SelectPlanPage(recipe: widget.recipe),
+                            SelectPlanPage(recipe: widget.recipe, route: widget.route),
                       ),
                     );
                   },

@@ -27,20 +27,13 @@ class _FavoritesPageState extends State<FavoritesPage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Favoritter'),
         backgroundColor: Colors.teal[600],
         leading: GestureDetector(
           onTap: () {
-            Navigator.pushReplacement<void, void>(
-              context,
-              MaterialPageRoute<void>(
-                builder: (BuildContext context) => HomePage(),
-              ),
-            );
-            Navigator.of(context).pop(true);
+            Navigator.pushNamed(context, 'home');
           },
           child: Icon(
             Icons.home_outlined,
@@ -72,17 +65,17 @@ class _FavoritesPageState extends State<FavoritesPage> {
               context,
               MaterialPageRoute(
                 builder: (context) => RecipePage(
-                  recipe: new Recipe(
-                      favorite.id,
-                      favorite.name,
-                      favorite.picture,
-                      favorite.prepTime,
-                      favorite.totalTime,
-                      favorite.servings,
-                      favorite.numberOfingredients,
-                      favorite.ingredientList,
-                      favorite.method),
-                ),
+                    recipe: new Recipe(
+                        favorite.id,
+                        favorite.name,
+                        favorite.picture,
+                        favorite.prepTime,
+                        favorite.totalTime,
+                        favorite.servings,
+                        favorite.numberOfingredients,
+                        favorite.ingredientList,
+                        favorite.method),
+                    route: "f"),
               ),
             );
           },

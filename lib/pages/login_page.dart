@@ -28,11 +28,7 @@ class _LoginPageState extends State<LoginPage> {
     User? user = FirebaseAuth.instance.currentUser;
 
     if (user != null) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => HomePage(),
-        ),
-      );
+      Navigator.pushNamed(context, 'home');
     }
 
     return firebaseApp;
@@ -62,10 +58,10 @@ class _LoginPageState extends State<LoginPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Text(
-                          'Velkommen til Hånd i hånd',
-                          style:
-                              TextStyle(fontFamily: 'Margarine', fontSize: 50),
-                          textAlign: TextAlign.center,),
+                        'Velkommen til Hånd i hånd',
+                        style: TextStyle(fontFamily: 'Margarine', fontSize: 50),
+                        textAlign: TextAlign.center,
+                      ),
                       Form(
                         key: _formKey,
                         child: Column(
@@ -138,13 +134,8 @@ class _LoginPageState extends State<LoginPage> {
                                               });
 
                                               if (user != null) {
-                                                Navigator.of(context)
-                                                    .pushReplacement(
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        HomePage(),
-                                                  ),
-                                                );
+                                                Navigator.pushNamed(
+                                                    context, 'home');
                                               }
                                             }
                                           },
@@ -181,7 +172,7 @@ class _LoginPageState extends State<LoginPage> {
                                       ),
                                     ],
                                   ),
-                                  SizedBox(height: 50)
+                            SizedBox(height: 50)
                           ],
                         ),
                       )

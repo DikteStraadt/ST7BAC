@@ -130,13 +130,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                         });
 
                                         if (user != null) {
-                                          Navigator.of(context)
-                                              .pushAndRemoveUntil(
-                                            MaterialPageRoute(
-                                              builder: (context) => HomePage(),
-                                            ),
-                                            ModalRoute.withName('/'),
-                                          );
+                                          Navigator.pushNamed(context, 'home');
                                         }
                                       }
                                     },

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project_1_0/pages/blank_page.dart';
+import 'package:flutter_project_1_0/pages/home_page.dart';
 import 'package:flutter_project_1_0/pages/plans_page.dart';
 import 'package:flutter_project_1_0/pages/recipes_page.dart';
 
@@ -18,7 +18,7 @@ class TabNavigator extends StatelessWidget {
     else if(tabItem == "Madplaner")
       child = PlanPage();
     else
-      child = BlankPage();
+      child = HomePage();
     
     return Navigator(
       key: navigatorKey,

@@ -39,13 +39,7 @@ class _RecipesPageState extends State<RecipesPage> {
         backgroundColor: Colors.teal[600],
         leading: GestureDetector(
           onTap: () {
-            Navigator.pushReplacement<void, void>(
-              context,
-              MaterialPageRoute<void>(
-                builder: (BuildContext context) => HomePage(),
-              ),
-            );
-            Navigator.of(context).pop(true);
+            Navigator.pushNamed(context, 'home');
           },
           child: Icon(
             Icons.home_outlined,
@@ -101,7 +95,7 @@ class _RecipesPageState extends State<RecipesPage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => RecipePage(recipe: recipe),
+              builder: (context) => RecipePage(recipe: recipe, route: "r"),
             ),
           );
         },

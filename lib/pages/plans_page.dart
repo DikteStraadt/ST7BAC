@@ -25,20 +25,13 @@ class _PlanPageState extends State<PlanPage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Madplaner'),
         backgroundColor: Colors.teal[600],
         leading: GestureDetector(
           onTap: () {
-            Navigator.pushReplacement<void, void>(
-              context,
-              MaterialPageRoute<void>(
-                builder: (BuildContext context) => HomePage(),
-              ),
-            );
-            Navigator.of(context).pop(true);
+            Navigator.pushNamed(context, 'home');
           },
           child: Icon(
             Icons.home_outlined,
