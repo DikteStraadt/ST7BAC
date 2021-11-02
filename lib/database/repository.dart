@@ -8,7 +8,6 @@ import 'package:flutter_project_1_0/models/plan.dart';
 import 'package:flutter_project_1_0/models/recipe.dart';
 
 class Repository {
-
   // Set
   static Future<void> setRecipe(Recipe recipe) async {
     List<Map<String, dynamic>> result = [];
@@ -67,14 +66,10 @@ class Repository {
       'postEntries': [],
     };
 
-    FirebaseDatabase.instance
-        .reference()
-        .child('Forum')
-        .push()
-        .set(newForum);
+    FirebaseDatabase.instance.reference().child('Forum').push().set(newForum);
   }
 
-   static Future<void> setPost(ForumPostEntry post) async {
+  static Future<void> setPost(ForumPostEntry post) async {
     final newPost = <String, dynamic>{
       'listEntryId': post.listEntryId,
       'username': post.username,
@@ -84,11 +79,7 @@ class Repository {
       'dislikes': post.dislikes,
     };
 
-    FirebaseDatabase.instance
-        .reference()
-        .child('Posts')
-        .push()
-        .set(newPost);
+    FirebaseDatabase.instance.reference().child('Posts').push().set(newPost);
   }
 
   static Future<void> setPlan(Plan plan) async {
@@ -112,14 +103,18 @@ class Repository {
         .child("Recipe")
         .once()
         .then((DataSnapshot snapshot) {
-      Map<dynamic, dynamic> values = snapshot.value;
-      completer.complete(values);
+      if (snapshot.value == null) {
+        completer.complete({});
+      } else {
+        Map<dynamic, dynamic> values = snapshot.value;
+        completer.complete(values);
+      }
     });
 
     return completer.future;
   }
 
-  static Future<Map<dynamic, dynamic>> getFavorites(String userId) async {
+  static Future<Map<dynamic, dynamic>> getFavorites(String userId) {
     Completer<Map<dynamic, dynamic>> completer =
         new Completer<Map<dynamic, dynamic>>();
 
@@ -129,8 +124,12 @@ class Repository {
         .child(userId)
         .once()
         .then((DataSnapshot snapshot) {
-      Map<dynamic, dynamic> values = snapshot.value;
-      completer.complete(values);
+      if (snapshot.value == null) {
+        completer.complete({});
+      } else {
+        Map<dynamic, dynamic> values = snapshot.value;
+        completer.complete(values);
+      }
     });
 
     return completer.future;
@@ -147,8 +146,12 @@ class Repository {
         .orderByChild("recipeId")
         .once()
         .then((DataSnapshot snapshot) {
-      Map<dynamic, dynamic> values = snapshot.value;
-      completer.complete(values);
+      if (snapshot.value == null) {
+        completer.complete({});
+      } else {
+        Map<dynamic, dynamic> values = snapshot.value;
+        completer.complete(values);
+      }
     });
 
     return completer.future;

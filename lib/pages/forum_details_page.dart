@@ -101,7 +101,7 @@ class _ForumDetailPageState extends State<ForumDetailPage> {
             .onValue,
         builder: (context, snapshot) {
           final tilesList = <Container>[];
-          if (snapshot.hasData) {
+          if (snapshot.hasData && (snapshot.data! as Event).snapshot.value != null) {
             print(widget.forum['id']);
             final posts = Map<String, dynamic>.from(
                 (snapshot.data! as Event).snapshot.value);
