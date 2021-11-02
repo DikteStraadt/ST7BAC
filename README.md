@@ -45,3 +45,6 @@ https://blog.bajarangisoft.com/blog/how-to-change-icon-color-popup-menu-button-i
 ## Gemme værdi fra textfelt i variabel
 https://flutter.dev/docs/cookbook/forms/retrieve-input
 
+## Navigation
+https://stackoverflow.com/questions/61269906/flutter-bottom-navigation-bar-with-pageview
+
