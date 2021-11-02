@@ -1,8 +1,7 @@
 import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_project_1_0/pages/forums_page.dart';
-import 'package:flutter_project_1_0/utilities/navigation/page_view.dart';
+import 'package:flutter_project_1_0/utilities/navigation/navigation.dart';
 import 'package:flutter_project_1_0/pages/login_page.dart';
 import 'package:flutter_project_1_0/utilities/snack_bar.dart';
 
@@ -69,8 +68,7 @@ class _HomePageState extends State<HomePage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => PageViewController(initpage: 0)));
-                        //builder: (context) => Navigationbar()));
+                                  builder: (context) => NavigationController(initpage: 0)));
                         else if (title == "Forum") {
                           Navigator.pushNamed(context, 'forums');
                         } else {

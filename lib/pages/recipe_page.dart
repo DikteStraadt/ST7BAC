@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_project_1_0/models/ingredient.dart';
 import 'package:flutter_project_1_0/models/recipe.dart';
 import 'package:flutter_project_1_0/pages/select_plan_page.dart';
-import 'package:flutter_project_1_0/utilities/navigation/page_view.dart';
+import 'package:flutter_project_1_0/utilities/navigation/navigation.dart';
 import 'package:flutter_project_1_0/utilities/snack_bar.dart';
 
 class RecipePage extends StatefulWidget {
@@ -33,14 +33,14 @@ class _RecipePageState extends State<RecipePage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => PageViewController(initpage: 0),
+                  builder: (context) => NavigationController(initpage: 0),
                 ),
               );
             } else {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => PageViewController(initpage: 2),
+                  builder: (context) => NavigationController(initpage: 2),
                 ),
               );
             }

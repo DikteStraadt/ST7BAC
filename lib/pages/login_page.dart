@@ -126,7 +126,6 @@ class _LoginPageState extends State<LoginPage> {
                                                 password:
                                                     _passwordTextController
                                                         .text,
-                                                context: context,
                                               );
 
                                               setState(() {

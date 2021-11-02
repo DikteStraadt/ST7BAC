@@ -34,7 +34,6 @@ class FireAuth {
   static Future<User?> signInUsingEmailPassword({
     required String email,
     required String password,
-    required BuildContext context,
   }) async {
     FirebaseAuth auth = FirebaseAuth.instance;
     User? user;
