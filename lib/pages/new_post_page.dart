@@ -3,12 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_project_1_0/database/repository.dart';
 import 'package:flutter_project_1_0/models/form_post_entry.dart';
 
-class NewPostPage extends StatelessWidget {
+class NewPostPage extends StatefulWidget {
+  @override
+  _NewPostPageState createState() => _NewPostPageState();
   NewPostPage({Key? key, required this.id}) : super(key: key);
+  final String id;
+}
 
+class _NewPostPageState extends State<NewPostPage> {
   final _textAnswerController = TextEditingController();
   final User? _currentUser = FirebaseAuth.instance.currentUser;
-  final String id;
+  bool _validate = false;
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +51,8 @@ class NewPostPage extends StatelessWidget {
                           decoration: InputDecoration(
                             border: InputBorder.none,
                             labelText: "Skriv et svar",
+                            errorText:
+                                _validate ? 'Feltet må ikke være tomt' : null,
                           ),
                           controller: _textAnswerController,
                         ),
@@ -60,15 +67,22 @@ class NewPostPage extends StatelessWidget {
                   width: MediaQuery.of(context).size.width * 0.45,
                   child: ElevatedButton(
                     onPressed: () {
-                      Repository.setPost(
-                        new ForumPostEntry(
-                            id,
-                            _currentUser!.displayName,
-                            DateTime.now().toString(),
-                            0,
-                            _textAnswerController.text),
-                      ); // Writing new post to database
-                      Navigator.pop(context);
+                      setState(() {
+                        _textAnswerController.text.isEmpty
+                            ? _validate = true
+                            : _validate = false;
+                      });
+                      if (_validate == false) {
+                        Repository.setPost(
+                          new ForumPostEntry(
+                              widget.id,
+                              _currentUser!.displayName,
+                              DateTime.now().toString(),
+                              0,
+                              _textAnswerController.text),
+                        ); // Writing new post to database
+                        Navigator.pop(context);
+                      }
                     },
                     child: Text(
                       'Send svar',

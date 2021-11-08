@@ -4,12 +4,17 @@ import 'package:flutter_project_1_0/database/repository.dart';
 import 'package:flutter_project_1_0/models/list_entry.dart';
 import 'package:uuid/uuid.dart';
 
-class NewForumPage extends StatelessWidget {
-  NewForumPage({Key? key}) : super(key: key);
+class NewForumPage extends StatefulWidget {
+  @override
+  _NewForumPageState createState() => _NewForumPageState();
+}
 
+class _NewForumPageState extends State<NewForumPage> {
   final _textTitleController = TextEditingController();
   final _textQuestionController = TextEditingController();
   final User? _currentUser = FirebaseAuth.instance.currentUser;
+  bool _validate_title = false;
+  bool _validate_question = false;
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +49,9 @@ class NewForumPage extends StatelessWidget {
                           decoration: InputDecoration(
                             border: InputBorder.none,
                             labelText: "Giv indlægget en titel",
+                            errorText: _validate_title
+                                ? 'Feltet må ikke være tomt'
+                                : null,
                           ),
                           controller: _textTitleController,
                         ),
@@ -62,6 +70,9 @@ class NewForumPage extends StatelessWidget {
                           decoration: InputDecoration(
                             border: InputBorder.none,
                             labelText: "Skriv dit spørgsmål",
+                            errorText: _validate_question
+                                ? 'Feltet må ikke være tomt'
+                                : null,
                           ),
                           controller: _textQuestionController,
                         ),
@@ -76,17 +87,29 @@ class NewForumPage extends StatelessWidget {
                   width: MediaQuery.of(context).size.width * 0.45,
                   child: ElevatedButton(
                     onPressed: () {
-                      Repository.setForum(
-                        new ListEntry(
-                            Uuid().v4(),
-                            _textTitleController.text,
-                            _textQuestionController.text,
-                            DateTime.now().toString(),
-                            _currentUser!.displayName,
-                            0,
-                            0),
-                      ); // Writing new plan to database
-                      Navigator.pop(context);
+                      setState(() {
+                        _textTitleController.text.isEmpty
+                            ? _validate_title = true
+                            : _validate_title = false;
+
+                        _textQuestionController.text.isEmpty
+                            ? _validate_question = true
+                            : _validate_question = false;
+                      });
+                      if (_validate_title == false &&
+                          _validate_question == false) {
+                        Repository.setForum(
+                          new ListEntry(
+                              Uuid().v4(),
+                              _textTitleController.text,
+                              _textQuestionController.text,
+                              DateTime.now().toString(),
+                              _currentUser!.displayName,
+                              0,
+                              0),
+                        ); // Writing new plan to database
+                        Navigator.pop(context);
+                      }
                     },
                     child: Text(
                       'Opret indlæg',

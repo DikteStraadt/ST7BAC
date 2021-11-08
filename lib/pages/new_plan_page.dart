@@ -5,11 +5,15 @@ import 'package:flutter_project_1_0/models/ingredient.dart';
 import 'package:flutter_project_1_0/models/plan.dart';
 import 'package:flutter_project_1_0/models/recipe.dart';
 
-class NewPlanPage extends StatelessWidget {
-  NewPlanPage({Key? key}) : super(key: key);
+class NewPlanPage extends StatefulWidget {
+  @override
+  _NewPlanPageState createState() => _NewPlanPageState();
+}
 
+class _NewPlanPageState extends State<NewPlanPage> {
   final _textController = TextEditingController();
   final User? _currentUser = FirebaseAuth.instance.currentUser;
+  bool _validate = false;
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +46,8 @@ class NewPlanPage extends StatelessWidget {
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         labelText: "Giv din madplan et navn",
+                        errorText:
+                            _validate ? 'Feltet må ikke være tomt' : null,
                       ),
                       controller: _textController,
                     ),
@@ -54,15 +60,22 @@ class NewPlanPage extends StatelessWidget {
                   width: MediaQuery.of(context).size.width * 0.45,
                   child: ElevatedButton(
                     onPressed: () {
-                      List<Ingredient> l = [];
-                      List<Recipe> r = [];
-                      l.add(new Ingredient("", 0, ""));
-                      r.add(new Recipe("", "", "", "", "", 0, 0, l, ""));
-                      Repository.setPlan(
-                        new Plan(_currentUser!.uid.toString(),
-                            _textController.text, []),
-                      ); // Writing new plan to database
-                      Navigator.pop(context);
+                      setState(() {
+                        _textController.text.isEmpty
+                            ? _validate = true
+                            : _validate = false;
+                      });
+                      if (_validate == false) {
+                        List<Ingredient> l = [];
+                        List<Recipe> r = [];
+                        l.add(new Ingredient("", 0, ""));
+                        r.add(new Recipe("", "", "", "", "", 0, 0, l, ""));
+                        Repository.setPlan(
+                          new Plan(_currentUser!.uid.toString(),
+                              _textController.text, []),
+                        ); // Writing new plan to database
+                        Navigator.pop(context);
+                      }
                     },
                     child: Text(
                       'Opret madplan',
