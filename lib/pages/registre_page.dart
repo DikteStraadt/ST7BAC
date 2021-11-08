@@ -134,7 +134,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                         }
                                       }
                                     },
-                                    child: Text('Registrer',
+                                    child: Text('Opret bruger',
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 18,

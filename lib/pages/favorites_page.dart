@@ -20,7 +20,6 @@ class _FavoritesPageState extends State<FavoritesPage> {
 
   @override
   void initState() {
-    //Repository.favoritesNotNull(_currentUser!.uid.toString()).then(isListEmpty);
     Repository.getFavorites(_currentUser!.uid.toString()).then(updateFavorites);
     super.initState();
   }
@@ -133,7 +132,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
   updateFavorites(Map<dynamic, dynamic> favorites) {
     List<Favorite> favoriteList = [];
     int j = 0;
-
+    
     setState(
       () {
         favorites.forEach(

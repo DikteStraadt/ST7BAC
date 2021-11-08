@@ -4,7 +4,7 @@ class Plan {
   
   final String user;
   final String title;
-  late List<Recipe> recipesList;
+  late List<String> recipesList;
 
   Plan(this.user, this.title, this.recipesList);
 }

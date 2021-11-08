@@ -76,21 +76,18 @@ class Repository {
       'text': post.text,
       'hours': post.date,
       'likes': post.likes,
-      'dislikes': post.dislikes,
     };
 
     FirebaseDatabase.instance.reference().child('Posts').push().set(newPost);
   }
 
   static Future<void> setPlan(Plan plan) async {
-    //List<Map<String, dynamic>> result = [];
-
     return FirebaseDatabase.instance
         .reference()
         .child("Plan")
         .child(plan.user)
-        .push()
-        .set({"title": plan.title});
+        .child(plan.title)
+        .set({"title": plan.title, "date": DateTime.now().toString()});
   }
 
   // Get
@@ -143,16 +140,42 @@ class Repository {
         .reference()
         .child("Plan")
         .child(userId)
-        .orderByChild("recipeId")
         .once()
-        .then((DataSnapshot snapshot) {
-      if (snapshot.value == null) {
-        completer.complete({});
-      } else {
-        Map<dynamic, dynamic> values = snapshot.value;
-        completer.complete(values);
-      }
-    });
+        .then(
+      (DataSnapshot snapshot) {
+        if (snapshot.value == null) {
+          completer.complete({});
+        } else {
+          Map<dynamic, dynamic> values = snapshot.value;
+          completer.complete(values);
+        }
+      },
+    );
+
+    return completer.future;
+  }
+
+    static Future<Map<dynamic, dynamic>> getRecipesFromPlan(Plan plan) async {
+    Completer<Map<dynamic, dynamic>> completer =
+        new Completer<Map<dynamic, dynamic>>();
+
+    FirebaseDatabase.instance
+        .reference()
+        .child("Plan")
+        .child(plan.user)
+        .child(plan.title)
+        .child("recipes")
+        .once()
+        .then(
+      (DataSnapshot snapshot) {
+        if (snapshot.value == null) {
+          completer.complete({});
+        } else {
+          Map<dynamic, dynamic> values = snapshot.value;
+          completer.complete(values);
+        }
+      },
+    );
 
     return completer.future;
   }
@@ -164,8 +187,9 @@ class Repository {
         .child("Plan")
         .child(plan.user)
         .child(plan.title)
+        .child("recipes")
         .push()
-        .set({"recipeId": recipe.id});
+        .set({"title": recipe.name, "date": DateTime.now().toString()});
   }
 
   // Remove

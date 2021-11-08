@@ -10,7 +10,8 @@ import 'package:flutter_project_1_0/utilities/snack_bar.dart';
 class SelectPlanPage extends StatefulWidget {
   @override
   State<SelectPlanPage> createState() => _SelectPlanPageState();
-  const SelectPlanPage({Key? key, required this.recipe, required this.route}) : super(key: key);
+  const SelectPlanPage({Key? key, required this.recipe, required this.route})
+      : super(key: key);
 
   final Recipe recipe;
   final String route;
@@ -28,31 +29,44 @@ class _SelectPlanPageState extends State<SelectPlanPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Madplaner'),
-        backgroundColor: Colors.teal[600],
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => RecipePage(recipe: widget.recipe, route: widget.route),
-              ),
-            );
-          },
+    return new WillPopScope(
+      onWillPop: () async {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                RecipePage(recipe: widget.recipe, route: widget.route),
+          ),
+        );
+        return false;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Madplaner'),
+          backgroundColor: Colors.teal[600],
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: Colors.black),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      RecipePage(recipe: widget.recipe, route: widget.route),
+                ),
+              );
+            },
+          ),
         ),
-      ),
-      body: Container(
-        child: Column(
-          children: [
-            SingleChildScrollView(
-              child: Column(
-                children: <Widget>[for (var p in _plans) buildContainer(p)],
+        body: Container(
+          child: Column(
+            children: [
+              SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[for (var p in _plans) buildContainer(p)],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -80,8 +94,8 @@ class _SelectPlanPageState extends State<SelectPlanPage> {
     return ListTile(
       leading: Image.asset(
           plan.recipesList.isNotEmpty
-              ? plan.recipesList[0].picture
-              : "lib/assets/recipe/opskrifter.JPG",
+              ? "lib/assets/recipe/" + plan.recipesList[0] + ".jpg"
+              : "lib/assets/home/opskrifter.JPG",
           fit: BoxFit.fill),
       tileColor: Colors.teal[300],
       title: Text(plan.title),
@@ -91,10 +105,11 @@ class _SelectPlanPageState extends State<SelectPlanPage> {
           snackbar.addToPlanSnackBar(context);
           Repository.addRecipeToPlan(plan, widget.recipe);
           Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (_) => RecipePage(recipe: widget.recipe, route: widget.route)))
-              .then((value) {});
+              context,
+              MaterialPageRoute(
+                  builder: (_) => RecipePage(
+                      recipe: widget.recipe,
+                      route: widget.route))).then((value) {});
         },
         child: Icon(
           Icons.add_outlined,
@@ -109,16 +124,10 @@ class _SelectPlanPageState extends State<SelectPlanPage> {
   updatePlans(Map plans) {
     List<Plan> planList = [];
 
-    List<Ingredient> l = [];
-    List<Recipe> r = [];
-    l.add(new Ingredient("name", 3.0, "unit"));
-    r.add(new Recipe("Por-rer-r", "Mecikansk", "lib/assets/home/opskrifter.JPG",
-        "prep", "total", 2, 2, l, "rnelfnonero"));
-
     plans.forEach(
       (key, value) {
         planList.add(
-          new Plan(_currentUser!.uid.toString(), key, r),
+          new Plan(_currentUser!.uid.toString(), value['title'], []),
         );
       },
     );

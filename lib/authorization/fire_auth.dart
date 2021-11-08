@@ -16,7 +16,6 @@ class FireAuth {
       );
       user = userCredential.user;
       await user!.updateDisplayName(name);
-      //await user!.updateProfile(displayName: name);
       await user.reload();
       user = auth.currentUser;
     } on FirebaseAuthException catch (e) {
@@ -34,6 +33,7 @@ class FireAuth {
   static Future<User?> signInUsingEmailPassword({
     required String email,
     required String password,
+    required BuildContext context,
   }) async {
     FirebaseAuth auth = FirebaseAuth.instance;
     User? user;
