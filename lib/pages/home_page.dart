@@ -1,7 +1,7 @@
 import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_project_1_0/utilities/navigation/navigation.dart';
+import 'package:flutter_project_1_0/utilities/navigation.dart';
 import 'package:flutter_project_1_0/pages/login_page.dart';
 import 'package:flutter_project_1_0/utilities/snack_bar.dart';
 
@@ -27,86 +27,81 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     WidgetsBinding.instance!.addPostFrameCallback((_) =>
         _scrollController.jumpTo(_scrollController.position.maxScrollExtent));
-
-    return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-            gradient: LinearGradient(
-          begin: Alignment.topRight,
-          end: Alignment.bottomLeft,
-          colors: [
-            Colors.tealAccent,
-            Colors.teal,
-          ],
-        )),
-        child: Container(
-          margin: const EdgeInsets.only(top: 40, bottom: 20),
-          child: Column(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(bottom: 2),
-                child: Text(
-                  'Hånd i hånd',
-                  style: TextStyle(
-                      fontFamily: 'Margarine',
-                      fontSize: MediaQuery.of(context).size.width * 0.12),
-                ),
-              ),
-              Expanded(
-                child: GridView(
-                  controller: _scrollController,
-                  physics: NeverScrollableScrollPhysics(),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2),
-                  children: menuButtons.map((title) {
-                    return GestureDetector(
-                      child: Card(
-                          margin: const EdgeInsets.all(15.0),
-                          child: getCardByTitle(title)),
-                      onTap: () {
-                        if (title == "Opskrifter")
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => NavigationController(initpage: 0)));
-                        else if (title == "Forum") {
-                          Navigator.pushNamed(context, 'forums');
-                        } else {
-                          MySnackbar snackbar = new MySnackbar();
-                          snackbar.notImplementedSnackBar(context);
-                        }
-                      },
-                    );
-                  }).toList(),
-                ),
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width * 0.4,
-                child: ElevatedButton(
-                  onPressed: () async {
-                    setState(() {
-                      _isSigningOut = true;
-                    });
-                    await FirebaseAuth.instance.signOut();
-                    setState(() {
-                      _isSigningOut = false;
-                    });
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                        builder: (context) => LoginPage(),
-                      ),
-                    );
-                  },
-                  child: Text(
-                    'Log ud',
-                    style: TextStyle(fontFamily: 'Margarine', fontSize: 25),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.black45,
-                  ),
-                ),
-              ),
+    return new WillPopScope(
+      onWillPop: () async {
+        logout();
+        return false;
+      },
+      child: Scaffold(
+        body: Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            colors: [
+              Colors.tealAccent,
+              Colors.teal,
             ],
+          )),
+          child: Container(
+            margin: const EdgeInsets.only(top: 40, bottom: 20),
+            child: Column(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 2),
+                  child: Text(
+                    'Hånd i hånd',
+                    style: TextStyle(
+                        fontFamily: 'Margarine',
+                        fontSize: MediaQuery.of(context).size.width * 0.12),
+                  ),
+                ),
+                Expanded(
+                  child: GridView(
+                    controller: _scrollController,
+                    physics: NeverScrollableScrollPhysics(),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2),
+                    children: menuButtons.map((title) {
+                      return GestureDetector(
+                        child: Card(
+                            margin: const EdgeInsets.all(15.0),
+                            child: getCardByTitle(title)),
+                        onTap: () {
+                          if (title == "Opskrifter")
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        NavigationController(initpage: 0)));
+                          else if (title == "Forum") {
+                            Navigator.pushNamed(context, 'forums');
+                          } else {
+                            MySnackbar snackbar = new MySnackbar();
+                            snackbar.notImplementedSnackBar(context);
+                          }
+                        },
+                      );
+                    }).toList(),
+                  ),
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.4,
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      logout();
+                    },
+                    child: Text(
+                      'Log ud',
+                      style: TextStyle(fontFamily: 'Margarine', fontSize: 25),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.black45,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -154,6 +149,17 @@ class _HomePageState extends State<HomePage> {
         ),
       ],
     );
+  }
+
+  void logout() async {
+    setState(() {
+      _isSigningOut = true;
+    });
+    await FirebaseAuth.instance.signOut();
+    setState(() {
+      _isSigningOut = false;
+    });
+    Navigator.pushNamed(context, 'login');
   }
 
   // void setCurrentUser(user.User value) {

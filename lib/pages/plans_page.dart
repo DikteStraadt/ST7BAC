@@ -94,8 +94,8 @@ class _PlanPageState extends State<PlanPage> {
     return ListTile(
       leading: Image.asset(
           plan.recipesList.isNotEmpty
-              ? plan.recipesList[0].picture
-              : "lib/assets/recipe/opskrifter.JPG",
+              ? "lib/assets/recipe/" + plan.recipesList[0] + ".jpg"
+              : "lib/assets/home/opskrifter.JPG",
           fit: BoxFit.fill),
       tileColor: Colors.teal[300],
       title: Text(plan.title),
@@ -115,7 +115,6 @@ class _PlanPageState extends State<PlanPage> {
               MySnackbar snackbar = new MySnackbar();
               snackbar.notImplementedSnackBar(context);
             },
-            // value: 1,
           ),
           PopupMenuItem(
             child: Row(
@@ -131,7 +130,6 @@ class _PlanPageState extends State<PlanPage> {
               MySnackbar snackbar = new MySnackbar();
               snackbar.notImplementedSnackBar(context);
             },
-            // value: 2,
           ),
           PopupMenuItem(
             child: Row(
@@ -148,7 +146,6 @@ class _PlanPageState extends State<PlanPage> {
               Repository.getPlans(_currentUser!.uid.toString())
                   .then(updatePlans);
             },
-            // value: 3,
           ),
         ],
       ),
@@ -160,17 +157,13 @@ class _PlanPageState extends State<PlanPage> {
   updatePlans(Map plans) {
     List<Plan> planList = [];
 
-    List<Ingredient> l = [];
-    List<Recipe> r = [];
-    l.add(new Ingredient("name", 3.0, "unit"));
-    r.add(new Recipe("Por-rer-r", "Mecikansk", "lib/assets/home/opskrifter.JPG",
-        "prep", "total", 2, 2, l, "rnelfnonero"));
-
     plans.forEach(
       (key, value) {
-        planList.add(
-          new Plan(_currentUser!.uid.toString(), key, r),
-        );
+        // print("key:" + key);
+        // // print("value:" + value['title']['title']);
+        // planList.add(
+        //   new Plan(_currentUser!.uid.toString(), value['title'], ["mexicansk-risret", "one-pot-pasta"]),
+        // );
       },
     );
 
@@ -184,8 +177,8 @@ class _PlanPageState extends State<PlanPage> {
   String printContent(Plan plan) {
     String string = "";
 
-    for (Recipe r in plan.recipesList) {
-      string += r.name + "\n\n";
+    for (String r in plan.recipesList) {
+      string += r + "\n\n";
     }
 
     return string;

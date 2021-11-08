@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project_1_0/models/form_post_entry.dart';
+import 'package:flutter_project_1_0/pages/forums_page.dart';
 import 'package:flutter_project_1_0/pages/new_post_page.dart';
 import 'package:flutter_project_1_0/utilities/datetime_converter.dart';
 import 'package:flutter_project_1_0/utilities/snack_bar.dart';
@@ -101,7 +102,8 @@ class _ForumDetailPageState extends State<ForumDetailPage> {
             .onValue,
         builder: (context, snapshot) {
           final tilesList = <Container>[];
-          if (snapshot.hasData && (snapshot.data! as Event).snapshot.value != null) {
+          if (snapshot.hasData &&
+              (snapshot.data! as Event).snapshot.value != null) {
             print(widget.forum['id']);
             final posts = Map<String, dynamic>.from(
                 (snapshot.data! as Event).snapshot.value);
@@ -126,31 +128,37 @@ class _ForumDetailPageState extends State<ForumDetailPage> {
       ),
     );
 
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text("Forum"),
-        backgroundColor: Colors.teal[600],
-      ),
-      body: new Column(
-        children: <Widget>[
-          questionSection,
-          new Expanded(
-            child: new Padding(
-              padding: const EdgeInsets.only(bottom: 20.0),
-              child: responses,
+    return new WillPopScope(
+      onWillPop: () async {
+        Navigator.pushNamed(context, 'forums');
+        return false;
+      },
+      child: new Scaffold(
+        appBar: new AppBar(
+          title: new Text("Forum"),
+          backgroundColor: Colors.teal[600],
+        ),
+        body: new Column(
+          children: <Widget>[
+            questionSection,
+            new Expanded(
+              child: new Padding(
+                padding: const EdgeInsets.only(bottom: 20.0),
+                child: responses,
+              ),
             ),
-          ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => NewPostPage(id: widget.forum['id'])));
-        },
-        child: const Icon(Icons.add),
-        backgroundColor: Colors.teal[600],
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => NewPostPage(id: widget.forum['id'])));
+          },
+          child: const Icon(Icons.add),
+          backgroundColor: Colors.teal[600],
+        ),
       ),
     );
   }
@@ -207,19 +215,7 @@ Container _buildListView(Map<String, dynamic> entry, BuildContext context) {
                     padding: const EdgeInsets.all(2.0),
                     child: new Text(entry['likes'].toString()),
                   ),
-                  new GestureDetector(
-                    onTap: () {
-                      snackbar.notImplementedSnackBar(context);
-                    },
-                    child: new Padding(
-                      padding: const EdgeInsets.all(2.0),
-                      child: new Icon(Icons.thumb_down),
-                    ),
-                  ),
-                  new Padding(
-                    padding: const EdgeInsets.only(right: 8.0, left: 2.0),
-                    child: new Text(entry['dislikes'].toString()),
-                  ),
+                  new SizedBox(width: MediaQuery.of(context).size.width * 0.03)
                 ],
               )
             ],

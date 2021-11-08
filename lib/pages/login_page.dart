@@ -126,7 +126,10 @@ class _LoginPageState extends State<LoginPage> {
                                                 password:
                                                     _passwordTextController
                                                         .text,
+                                                context: context,
                                               );
+
+                                              // user!.updatePhotoURL("https://ibb.co/sq6KRxF");
 
                                               setState(() {
                                                 _isProcessing = false;
