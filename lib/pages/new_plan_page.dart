@@ -25,11 +25,9 @@ class _NewPlanPageState extends State<NewPlanPage> {
       child: Scaffold(
         appBar: AppBar(
           title: Text("Opret ny maplan"),
-          backgroundColor: Colors.teal[600],
         ),
         body: Center(
           child: Container(
-            decoration: BoxDecoration(color: Colors.teal[100]),
             child: Column(
               children: <Widget>[
                 Padding(
@@ -77,14 +75,17 @@ class _NewPlanPageState extends State<NewPlanPage> {
                         Navigator.pop(context);
                       }
                     },
-                    child: Text(
-                      'Opret madplan',
-                      style: TextStyle(
-                          fontFamily: 'Margarine',
-                          fontSize: MediaQuery.of(context).size.width * 0.05),
-                    ),
+                    child: Text('Opret madplan',
+                        style: TextStyle(
+                            color: Color(0xfff001c7c),
+                            fontSize: MediaQuery.of(context).size.width * 0.05,
+                            fontFamily: 'Margarine')),
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.teal[600],
+                      primary: Colors.white,
+                      side: BorderSide(
+                        width: 2.0,
+                        color: Color(0xfff001c7c),
+                      ),
                     ),
                   ),
                 ),

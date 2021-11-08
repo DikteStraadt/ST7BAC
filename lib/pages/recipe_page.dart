@@ -32,7 +32,6 @@ class _RecipePageState extends State<RecipePage> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(widget.recipe.name),
-          backgroundColor: Colors.teal[600],
           leading: IconButton(
             icon: Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () {
@@ -47,23 +46,13 @@ class _RecipePageState extends State<RecipePage> {
                 SizedBox(height: MediaQuery.of(context).size.width * 0.05),
                 FittedBox(
                   child: Container(
-                    color: Colors.teal[400],
+                    decoration: BoxDecoration(border: Border.all(color: Color(0xfff001c7c), width: 3), color: Colors.white),
                     width: MediaQuery.of(context).size.width * 0.9,
                     child: Center(
                       child: Column(
                         children: [
-                          Text(
-                            widget.recipe.name,
-                            style: TextStyle(
-                                fontFamily: 'Margarine',
-                                fontWeight: FontWeight.bold,
-                                fontSize:
-                                    MediaQuery.of(context).size.width * 0.08),
-                            textAlign: TextAlign.center,
-                          ),
                           SizedBox(
-                              height:
-                                  MediaQuery.of(context).size.width * 0.015),
+                              height: MediaQuery.of(context).size.width * 0.07),
                           SizedBox(
                             width: MediaQuery.of(context).size.width * 0.7,
                             child: Image.asset(widget.recipe.picture),
@@ -124,7 +113,7 @@ class _RecipePageState extends State<RecipePage> {
                 SizedBox(height: MediaQuery.of(context).size.width * 0.025),
                 FittedBox(
                   child: Container(
-                    color: Colors.teal[400],
+                    decoration: BoxDecoration(border: Border.all(color: Color(0xfff001c7c), width: 3), color: Colors.white),
                     width: MediaQuery.of(context).size.width * 0.9,
                     child: Center(
                       child: Column(
@@ -241,14 +230,17 @@ class _RecipePageState extends State<RecipePage> {
                         ),
                       );
                     },
-                    child: Text(
-                      'Tilføj til madplan',
-                      style: TextStyle(
-                          fontFamily: 'Margarine',
-                          fontSize: MediaQuery.of(context).size.width * 0.05),
-                    ),
+                    child: Text('Tilføj til madplan',
+                        style: TextStyle(
+                            color: Color(0xfff001c7c),
+                            fontSize: MediaQuery.of(context).size.width * 0.05,
+                            fontFamily: 'Margarine')),
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.teal[600],
+                      primary: Colors.white,
+                      side: BorderSide(
+                        width: 2.0,
+                        color: Color(0xfff001c7c),
+                      ),
                     ),
                   ),
                 ),
@@ -259,14 +251,17 @@ class _RecipePageState extends State<RecipePage> {
                       MySnackbar snackbar = new MySnackbar();
                       snackbar.notImplementedSnackBar(context);
                     },
-                    child: Text(
-                      'Udskriv indkøbsliste',
-                      style: TextStyle(
-                          fontFamily: 'Margarine',
-                          fontSize: MediaQuery.of(context).size.width * 0.05),
-                    ),
+                    child: Text('Udskriv indkøbsliste',
+                        style: TextStyle(
+                            color: Color(0xfff001c7c),
+                            fontSize: MediaQuery.of(context).size.width * 0.05,
+                            fontFamily: 'Margarine')),
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.teal[600],
+                      primary: Colors.white,
+                      side: BorderSide(
+                        width: 2.0,
+                        color: Color(0xfff001c7c),
+                      ),
                     ),
                   ),
                 ),
@@ -277,14 +272,17 @@ class _RecipePageState extends State<RecipePage> {
                       MySnackbar snackbar = new MySnackbar();
                       snackbar.notImplementedSnackBar(context);
                     },
-                    child: Text(
-                      'Tilføj til favoritter',
-                      style: TextStyle(
-                          fontFamily: 'Margarine',
-                          fontSize: MediaQuery.of(context).size.width * 0.05),
-                    ),
+                    child: Text('Tilføj til favoritter',
+                        style: TextStyle(
+                            color: Color(0xfff001c7c),
+                            fontSize: MediaQuery.of(context).size.width * 0.05,
+                            fontFamily: 'Margarine')),
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.teal[600],
+                      primary: Colors.white,
+                      side: BorderSide(
+                        width: 2.0,
+                        color: Color(0xfff001c7c),
+                      ),
                     ),
                   ),
                 ),

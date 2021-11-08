@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_project_1_0/database/recipes.dart';
 import 'package:flutter_project_1_0/database/repository.dart';
 import 'package:flutter_project_1_0/models/favorite.dart';
 import 'package:flutter_project_1_0/models/ingredient.dart';
@@ -16,27 +17,26 @@ class RecipesPage extends StatefulWidget {
 }
 
 class _RecipesPageState extends State<RecipesPage> {
-  //Recipes _r = new Recipes();     //For loading recipes from recipes class.
+  Recipes _r = new Recipes(); //For loading recipes from recipes class.
   late List<Recipe> _recipies = [];
   late List<Favorite> _favoriteRecipies = [];
   User? _currentUser = FirebaseAuth.instance.currentUser;
 
   @override
   void initState() {
-    //_recipies = _r.loadRecipes();     // Loading recipes from recipes class. Shall only be used the first time, to write data to database
-    Repository.getRecipes()
-        .then(updateRecipes); // Loading recipes from database
+    _recipies = _r
+        .loadRecipes(); // Loading recipes from recipes class. Shall only be used the first time, to write data to database
+    // Repository.getRecipes()
+    //     .then(updateRecipes); // Loading recipes from database
     Repository.getFavorites(_currentUser!.uid.toString()).then(updateFavorites);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Opskrifter'),
-        backgroundColor: Colors.teal[600],
         leading: GestureDetector(
           onTap: () {
             Navigator.pushNamed(context, 'home');
@@ -74,7 +74,6 @@ class _RecipesPageState extends State<RecipesPage> {
         ],
       ),
       body: Container(
-        decoration: BoxDecoration(color: Colors.teal[100]),
         child: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
           child: Column(children: <Widget>[
@@ -87,7 +86,7 @@ class _RecipesPageState extends State<RecipesPage> {
 
   Widget _buildCard(Recipe recipe) {
     bool alreadySaved = contains(recipe.id);
-    //Repository.setRecipe(recipe);    // Writing new recipes to database
+    Repository.setRecipe(recipe); // Writing new recipes to database
 
     return Card(
       child: InkWell(
@@ -108,47 +107,52 @@ class _RecipesPageState extends State<RecipesPage> {
             ),
             Align(
               alignment: Alignment.bottomLeft,
-              child: IconButton(
-                icon: new Icon(
-                  alreadySaved ? Icons.favorite : Icons.favorite_border,
-                  size: 80,
-                  color: Colors.red[900],
-                ),
-                onPressed: () {
-                  setState(
-                    () {
-                      Favorite favorite = new Favorite(
-                          _currentUser!.uid.toString(),
-                          recipe.id,
-                          recipe.name,
-                          recipe.picture,
-                          recipe.prepTime,
-                          recipe.totalTime,
-                          recipe.servings,
-                          recipe.numberOfingredients,
-                          recipe.ingredientList,
-                          recipe.method);
-                      if (alreadySaved) {
-                        setState(
-                          () {
-                            Repository.removeFavorite(
-                                favorite); // Remove recipe as favorite in database
-                            Repository.getFavorites(_currentUser!.uid.toString())
+              child: Container(
+                margin: EdgeInsets.all(10.0),
+                child: GestureDetector(
+                  child: new Icon(
+                    alreadySaved ? Icons.favorite : Icons.favorite_border,
+                    size: 60,
+                    color: Colors.red[900],
+                  ),
+                  onTap: () {
+                    setState(
+                      () {
+                        Favorite favorite = new Favorite(
+                            _currentUser!.uid.toString(),
+                            recipe.id,
+                            recipe.name,
+                            recipe.picture,
+                            recipe.prepTime,
+                            recipe.totalTime,
+                            recipe.servings,
+                            recipe.numberOfingredients,
+                            recipe.ingredientList,
+                            recipe.method);
+                        if (alreadySaved) {
+                          setState(
+                            () {
+                              Repository.removeFavorite(
+                                  favorite); // Remove recipe as favorite in database
+                              Repository.getFavorites(
+                                      _currentUser!.uid.toString())
+                                  .then(updateFavorites);
+                            },
+                          );
+                          _favoriteRecipies.remove(favorite);
+                        } else {
+                          setState(() {
+                            Repository.setFavorite(
+                                favorite); // Set recipe as favorite in database
+                            Repository.getFavorites(
+                                    _currentUser!.uid.toString())
                                 .then(updateFavorites);
-                          },
-                        );
-                        _favoriteRecipies.remove(favorite);
-                      } else {
-                        setState(() {
-                          Repository.setFavorite(
-                              favorite); // Set recipe as favorite in database
-                          Repository.getFavorites(_currentUser!.uid.toString())
-                              .then(updateFavorites);
-                        });
-                      }
-                    },
-                  );
-                },
+                          });
+                        }
+                      },
+                    );
+                  },
+                ),
               ),
             ),
           ],

@@ -19,10 +19,8 @@ class _ForumsPageState extends State<ForumsPage> {
         return false;
       },
       child: new Scaffold(
-        backgroundColor: Colors.white,
         appBar: new AppBar(
           title: const Text('Forum'),
-          backgroundColor: Colors.teal[600],
           leading: GestureDetector(
             onTap: () {
               Navigator.pushNamed(context, 'home');
@@ -98,7 +96,8 @@ class _ForumsPageState extends State<ForumsPage> {
             Navigator.pushNamed(context, 'newforum');
           },
           child: const Icon(Icons.add),
-          backgroundColor: Colors.teal[600],
+          backgroundColor: Colors.blue[900],
+          foregroundColor: Colors.white,
         ),
       ),
     );
@@ -110,8 +109,8 @@ Container _buildListView(Map<String, dynamic> entry, BuildContext context) {
     padding: const EdgeInsets.all(3.0),
     margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 3.0),
     decoration: new BoxDecoration(
-      borderRadius: new BorderRadius.all(new Radius.circular(1.0)),
-      color: Colors.teal[100],
+      borderRadius: new BorderRadius.all(new Radius.circular(10.0)),
+      color: Colors.white,
     ),
     child: new ListTile(
       title: new Text(entry['title']),
@@ -120,17 +119,6 @@ Container _buildListView(Map<String, dynamic> entry, BuildContext context) {
         Icons.forum_rounded,
         size: MediaQuery.of(context).size.width * 0.08,
       ),
-      // trailing: Container(
-      //   child: new Column(
-      //     children: <Widget>[
-      //       new IconButton(
-      //         icon: new Icon(Icons.comment),
-      //         onPressed: () {},
-      //       ),
-      //       new Text(entry['responses'].toString(), style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.01),),
-      //     ],
-      //   ),
-      // ),
       onTap: () {
         Navigator.push(
             context,

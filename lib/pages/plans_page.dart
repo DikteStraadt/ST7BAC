@@ -28,7 +28,6 @@ class _PlanPageState extends State<PlanPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Madplaner'),
-        backgroundColor: Colors.teal[600],
         leading: GestureDetector(
           onTap: () {
             Navigator.pushNamed(context, 'home');
@@ -94,10 +93,12 @@ class _PlanPageState extends State<PlanPage> {
     return ListTile(
       leading: Image.asset(
           plan.recipesList.isNotEmpty
-              ? "lib/assets/recipe/" + plan.recipesList[0] + ".jpg"
+              ? "lib/assets/recipe/" + plan.recipesList[0] + ".png"
               : "lib/assets/home/opskrifter.JPG",
           fit: BoxFit.fill),
-      tileColor: Colors.teal[300],
+      tileColor: Colors.white,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+      selectedTileColor: Color(0xfff001c7c),
       title: Text(plan.title),
       trailing: PopupMenuButton(
         itemBuilder: (context) => [

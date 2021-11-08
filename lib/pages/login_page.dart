@@ -44,10 +44,8 @@ class _LoginPageState extends State<LoginPage> {
       child: Scaffold(
         appBar: AppBar(
           title: Text('Hånd i hånd'),
-          backgroundColor: Colors.teal[600],
         ),
         body: Container(
-          decoration: BoxDecoration(color: Colors.teal[100]),
           child: FutureBuilder(
             future: _initializeFirebase(),
             builder: (context, snapshot) {
@@ -58,8 +56,11 @@ class _LoginPageState extends State<LoginPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Text(
-                        'Velkommen til Hånd i hånd',
-                        style: TextStyle(fontFamily: 'Margarine', fontSize: 50),
+                        'Hånd i hånd',
+                        style: TextStyle(
+                          color: Color(0xfff001c7c),
+                            fontFamily: 'Margarine',
+                            fontSize: MediaQuery.of(context).size.width * 0.13),
                         textAlign: TextAlign.center,
                       ),
                       Form(
@@ -143,11 +144,15 @@ class _LoginPageState extends State<LoginPage> {
                                           },
                                           child: Text('Log ind',
                                               style: TextStyle(
-                                                  color: Colors.white,
+                                                  color: Color(0xfff001c7c),
                                                   fontSize: 18,
                                                   fontFamily: 'Margarine')),
                                           style: ElevatedButton.styleFrom(
-                                            primary: Colors.teal[600],
+                                            primary: Colors.white,
+                                            side: BorderSide(
+                                              width: 2.0,
+                                              color: Color(0xfff001c7c),
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -164,11 +169,15 @@ class _LoginPageState extends State<LoginPage> {
                                           },
                                           child: Text('Registrer',
                                               style: TextStyle(
-                                                  color: Colors.white,
+                                                  color: Color(0xfff001c7c),
                                                   fontSize: 18,
                                                   fontFamily: 'Margarine')),
                                           style: ElevatedButton.styleFrom(
-                                            primary: Colors.teal[600],
+                                            primary: Colors.white,
+                                            side: BorderSide(
+                                              width: 2.0,
+                                              color: Color(0xfff001c7c),
+                                            ),
                                           ),
                                         ),
                                       ),

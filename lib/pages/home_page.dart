@@ -39,8 +39,8 @@ class _HomePageState extends State<HomePage> {
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
             colors: [
-              Colors.tealAccent,
-              Colors.teal,
+              Color(0xffff8f3e9),
+              Color(0xfffefe1c8),
             ],
           )),
           child: Container(
@@ -86,17 +86,22 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 Container(
-                  width: MediaQuery.of(context).size.width * 0.4,
+                  width: MediaQuery.of(context).size.width * 0.5,
                   child: ElevatedButton(
                     onPressed: () async {
                       logout();
                     },
-                    child: Text(
-                      'Log ud',
-                      style: TextStyle(fontFamily: 'Margarine', fontSize: 25),
-                    ),
+                    child: Text('Log ud',
+                        style: TextStyle(
+                            color: Color(0xfff001c7c),
+                            fontSize: 25,
+                            fontFamily: 'Margarine')),
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.black45,
+                      primary: Colors.white,
+                      side: BorderSide(
+                        width: 2.0,
+                        color: Color(0xfff001c7c),
+                      ),
                     ),
                   ),
                 ),

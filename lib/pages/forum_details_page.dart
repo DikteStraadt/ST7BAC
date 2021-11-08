@@ -41,7 +41,7 @@ class _ForumDetailPageState extends State<ForumDetailPage> {
                 SizedBox(height: MediaQuery.of(context).size.width * 0.03),
                 Container(
                   decoration: new BoxDecoration(
-                    color: Colors.blueGrey[500],
+                    color: Colors.blue[900],
                     borderRadius: const BorderRadius.only(
                       topLeft: const Radius.circular(20.0),
                       topRight: const Radius.circular(20.0),
@@ -58,10 +58,16 @@ class _ForumDetailPageState extends State<ForumDetailPage> {
                         child: new Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            new Text(widget.forum['user']),
-                            new Text(_converter
-                                .convertDateTimeToString(widget.forum['date'])
-                                .toString()),
+                            new Text(
+                              widget.forum['user'],
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            new Text(
+                                _converter
+                                    .convertDateTimeToString(
+                                        widget.forum['date'])
+                                    .toString(),
+                                style: TextStyle(color: Colors.white)),
                           ],
                         ),
                       ),
@@ -136,7 +142,6 @@ class _ForumDetailPageState extends State<ForumDetailPage> {
       child: new Scaffold(
         appBar: new AppBar(
           title: new Text("Forum"),
-          backgroundColor: Colors.teal[600],
         ),
         body: new Column(
           children: <Widget>[
@@ -157,7 +162,8 @@ class _ForumDetailPageState extends State<ForumDetailPage> {
                     builder: (context) => NewPostPage(id: widget.forum['id'])));
           },
           child: const Icon(Icons.add),
-          backgroundColor: Colors.teal[600],
+          backgroundColor: Colors.blue[900],
+          foregroundColor: Colors.white,
         ),
       ),
     );
@@ -177,7 +183,7 @@ Container _buildListView(Map<String, dynamic> entry, BuildContext context) {
       children: <Widget>[
         new Container(
           decoration: new BoxDecoration(
-            color: Colors.teal[300],
+            color: Colors.white,
             borderRadius: const BorderRadius.only(
                 topLeft: const Radius.circular(20.0),
                 topRight: const Radius.circular(20.0)),

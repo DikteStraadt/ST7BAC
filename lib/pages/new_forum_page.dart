@@ -20,17 +20,15 @@ class _NewForumPageState extends State<NewForumPage> {
   Widget build(BuildContext context) {
     return new WillPopScope(
       onWillPop: () async {
-        Navigator.maybePop(context);
+        Navigator.pop(context);
         return false;
       },
       child: Scaffold(
         appBar: AppBar(
           title: Text("Opret nyt indlæg"),
-          backgroundColor: Colors.teal[600],
         ),
         body: Center(
           child: Container(
-            decoration: BoxDecoration(color: Colors.teal[100]),
             child: Column(
               children: <Widget>[
                 Padding(
@@ -114,11 +112,16 @@ class _NewForumPageState extends State<NewForumPage> {
                     child: Text(
                       'Opret indlæg',
                       style: TextStyle(
-                          fontFamily: 'Margarine',
-                          fontSize: MediaQuery.of(context).size.width * 0.05),
+                          color: Color(0xfff001c7c),
+                          fontSize: MediaQuery.of(context).size.width * 0.05,
+                          fontFamily: 'Margarine'),
                     ),
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.teal[600],
+                      primary: Colors.white,
+                      side: BorderSide(
+                        width: 2.0,
+                        color: Color(0xfff001c7c),
+                      ),
                     ),
                   ),
                 ),

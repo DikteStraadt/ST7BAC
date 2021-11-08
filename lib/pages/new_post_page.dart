@@ -26,11 +26,9 @@ class _NewPostPageState extends State<NewPostPage> {
       child: Scaffold(
         appBar: AppBar(
           title: Text("Skriv svar til indlæg"),
-          backgroundColor: Colors.teal[600],
         ),
         body: Center(
           child: Container(
-            decoration: BoxDecoration(color: Colors.teal[100]),
             child: Column(
               children: <Widget>[
                 Padding(
@@ -84,14 +82,17 @@ class _NewPostPageState extends State<NewPostPage> {
                         Navigator.pop(context);
                       }
                     },
-                    child: Text(
-                      'Send svar',
-                      style: TextStyle(
-                          fontFamily: 'Margarine',
-                          fontSize: MediaQuery.of(context).size.width * 0.05),
-                    ),
+                    child: Text('Send svar',
+                        style: TextStyle(
+                            color: Color(0xfff001c7c),
+                            fontSize: MediaQuery.of(context).size.width * 0.05,
+                            fontFamily: 'Margarine')),
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.teal[600],
+                      primary: Colors.white,
+                      side: BorderSide(
+                        width: 2.0,
+                        color: Color(0xfff001c7c),
+                      ),
                     ),
                   ),
                 ),

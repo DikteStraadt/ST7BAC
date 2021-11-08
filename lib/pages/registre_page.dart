@@ -33,7 +33,6 @@ class _RegisterPageState extends State<RegisterPage> {
       child: Scaffold(
         appBar: AppBar(
           title: Text('Registrer'),
-          backgroundColor: Colors.teal[600],
         ),
         body: Padding(
           padding: const EdgeInsets.all(24.0),
@@ -44,6 +43,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 Text(
                   'Opret en ny bruger',
                   style: TextStyle(
+                    color: Color(0xfff001c7c),
                       fontFamily: 'Margarine',
                       fontSize: MediaQuery.of(context).size.width * 0.08),
                   textAlign: TextAlign.center,
@@ -136,11 +136,15 @@ class _RegisterPageState extends State<RegisterPage> {
                                     },
                                     child: Text('Opret bruger',
                                         style: TextStyle(
-                                            color: Colors.white,
+                                            color: Color(0xfff001c7c),
                                             fontSize: 18,
                                             fontFamily: 'Margarine')),
                                     style: ElevatedButton.styleFrom(
-                                      primary: Colors.teal[600],
+                                      primary: Colors.white,
+                                      side: BorderSide(
+                                        width: 2.0,
+                                        color: Color(0xfff001c7c),
+                                      ),
                                     ),
                                   ),
                                 ),

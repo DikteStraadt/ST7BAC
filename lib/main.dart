@@ -23,7 +23,9 @@ class MyApp extends StatelessWidget {
         title: 'Hånd i hånd',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-            fontFamily: 'Roboto', scaffoldBackgroundColor: Colors.teal[100]),
+            fontFamily: 'Roboto',
+            scaffoldBackgroundColor: Color(0xfffefe1c8),
+            appBarTheme: AppBarTheme(backgroundColor: Colors.blue[900])),
         home: LoginPage(),
         initialRoute: 'login',
         routes: {

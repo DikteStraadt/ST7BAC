@@ -29,7 +29,6 @@ class _FavoritesPageState extends State<FavoritesPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Favoritter'),
-        backgroundColor: Colors.teal[600],
         leading: GestureDetector(
           onTap: () {
             Navigator.pushNamed(context, 'home');
@@ -41,7 +40,6 @@ class _FavoritesPageState extends State<FavoritesPage> {
         ),
       ),
       body: Container(
-        decoration: BoxDecoration(color: Colors.teal[100]),
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
@@ -86,40 +84,42 @@ class _FavoritesPageState extends State<FavoritesPage> {
                 child: Image.asset(favorite.picture, fit: BoxFit.fill),
               ),
               Align(
-                alignment: Alignment.bottomLeft,
-                child: IconButton(
-                  icon: new Icon(
-                    alreadySaved ? Icons.favorite : Icons.favorite_border,
-                    size: 80,
-                    color: Colors.red[900],
-                  ),
-                  onPressed: () {
-                    setState(
-                      () {
-                        if (alreadySaved) {
-                          setState(
-                            () {
-                              Repository.removeFavorite(
-                                  favorite); // Remove recipe as favorite in database
-                              Repository.getFavorites(
-                                      _currentUser!.uid.toString())
-                                  .then(updateFavorites);
-                            },
-                          );
-                        } else {
-                          setState(() {
-                            Repository.setFavorite(
-                                favorite); // Set recipe as favorite in database
-                            Repository.getFavorites(
-                                    _currentUser!.uid.toString())
-                                .then(updateFavorites);
-                          });
-                        }
+                  alignment: Alignment.bottomLeft,
+                  child: Container(
+                    margin: EdgeInsets.all(10.0),
+                    child: GestureDetector(
+                      child: new Icon(
+                        alreadySaved ? Icons.favorite : Icons.favorite_border,
+                        size: 60,
+                        color: Colors.red[900],
+                      ),
+                      onTap: () {
+                        setState(
+                          () {
+                            if (alreadySaved) {
+                              setState(
+                                () {
+                                  Repository.removeFavorite(
+                                      favorite); // Remove recipe as favorite in database
+                                  Repository.getFavorites(
+                                          _currentUser!.uid.toString())
+                                      .then(updateFavorites);
+                                },
+                              );
+                            } else {
+                              setState(() {
+                                Repository.setFavorite(
+                                    favorite); // Set recipe as favorite in database
+                                Repository.getFavorites(
+                                        _currentUser!.uid.toString())
+                                    .then(updateFavorites);
+                              });
+                            }
+                          },
+                        );
                       },
-                    );
-                  },
-                ),
-              )
+                    ),
+                  )),
             ],
           ),
         ),
@@ -132,7 +132,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
   updateFavorites(Map<dynamic, dynamic> favorites) {
     List<Favorite> favoriteList = [];
     int j = 0;
-    
+
     setState(
       () {
         favorites.forEach(

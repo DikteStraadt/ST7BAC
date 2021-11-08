@@ -50,9 +50,13 @@ class _NavigationControllerState extends State<NavigationController> {
             ),
           ],
           onTap: _onTappedBar,
-          selectedItemColor: Colors.black,
+          selectedItemColor: Colors.blue[900],
           currentIndex: _selectedIndex,
+          iconSize: MediaQuery.of(context).size.width * 0.08,
+          selectedFontSize: MediaQuery.of(context).size.width * 0.04,
+          unselectedFontSize: MediaQuery.of(context).size.width * 0.03,
         ),
+        
         body: PageView(
           controller: _controller,
           children: [
