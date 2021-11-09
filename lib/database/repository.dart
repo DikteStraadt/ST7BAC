@@ -87,7 +87,7 @@ class Repository {
         .child("Plan")
         .child(plan.user)
         .child(plan.title)
-        .set({"title": plan.title, "date": DateTime.now().toString()});
+        .set({"title": plan.title});
   }
 
   // Get
@@ -132,7 +132,7 @@ class Repository {
     return completer.future;
   }
 
-  static Future<Map<dynamic, dynamic>> getPlans(String userId) async {
+  static Future<Map<dynamic, dynamic>> getPlanNames(String userId) async {
     Completer<Map<dynamic, dynamic>> completer =
         new Completer<Map<dynamic, dynamic>>();
 
@@ -140,6 +140,30 @@ class Repository {
         .reference()
         .child("Plan")
         .child(userId)
+        .once()
+        .then(
+      (DataSnapshot snapshot) {
+        if (snapshot.value == null) {
+          completer.complete({});
+        } else {
+          Map<dynamic, dynamic> values = snapshot.value;
+          completer.complete(values);
+        }
+      },
+    );
+
+    return completer.future;
+  }
+
+  static Future<Map<dynamic, dynamic>> getPlanRecipes(String userId, String plan) async {
+    Completer<Map<dynamic, dynamic>> completer =
+        new Completer<Map<dynamic, dynamic>>();
+
+    FirebaseDatabase.instance
+        .reference()
+        .child("Plan")
+        .child(userId)
+        .child(plan)
         .once()
         .then(
       (DataSnapshot snapshot) {
@@ -187,9 +211,8 @@ class Repository {
         .child("Plan")
         .child(plan.user)
         .child(plan.title)
-        .child("recipes")
         .push()
-        .set({"title": recipe.name, "date": DateTime.now().toString()});
+        .set({"name": recipe.name, "picture": recipe.picture});
   }
 
   // Remove

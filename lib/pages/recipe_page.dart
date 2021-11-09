@@ -46,7 +46,9 @@ class _RecipePageState extends State<RecipePage> {
                 SizedBox(height: MediaQuery.of(context).size.width * 0.05),
                 FittedBox(
                   child: Container(
-                    decoration: BoxDecoration(border: Border.all(color: Color(0xfff001c7c), width: 3), color: Colors.white),
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Color(0xfff001c7c), width: 3),
+                        color: Colors.white),
                     width: MediaQuery.of(context).size.width * 0.9,
                     child: Center(
                       child: Column(
@@ -113,7 +115,9 @@ class _RecipePageState extends State<RecipePage> {
                 SizedBox(height: MediaQuery.of(context).size.width * 0.025),
                 FittedBox(
                   child: Container(
-                    decoration: BoxDecoration(border: Border.all(color: Color(0xfff001c7c), width: 3), color: Colors.white),
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Color(0xfff001c7c), width: 3),
+                        color: Colors.white),
                     width: MediaQuery.of(context).size.width * 0.9,
                     child: Center(
                       child: Column(
@@ -204,6 +208,10 @@ class _RecipePageState extends State<RecipePage> {
                                               0.03),
                                       textAlign: TextAlign.start,
                                     ),
+                                                                        SizedBox(
+                                        height:
+                                            MediaQuery.of(context).size.width *
+                                                0.04)
                                   ],
                                 ),
                               ),

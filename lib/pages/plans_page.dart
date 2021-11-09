@@ -16,10 +16,11 @@ class PlanPage extends StatefulWidget {
 class _PlanPageState extends State<PlanPage> {
   List<Plan> _plans = [];
   User? _currentUser = FirebaseAuth.instance.currentUser;
+  String output = "";
 
   @override
   void initState() {
-    Repository.getPlans(_currentUser!.uid.toString()).then(updatePlans);
+    Repository.getPlanNames(_currentUser!.uid.toString()).then(getPlans);
     super.initState();
   }
 
@@ -45,8 +46,8 @@ class _PlanPageState extends State<PlanPage> {
                 Navigator.push(context,
                         MaterialPageRoute(builder: (_) => NewPlanPage()))
                     .then((value) {
-                  Repository.getPlans(_currentUser!.uid.toString())
-                      .then(updatePlans);
+                  Repository.getPlanNames(_currentUser!.uid.toString())
+                      .then(getPlans);
                 });
               },
               child: Icon(
@@ -91,11 +92,12 @@ class _PlanPageState extends State<PlanPage> {
 
   Widget _buildListTile(Plan plan) {
     return ListTile(
+      contentPadding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.05, MediaQuery.of(context).size.width * 0.02, 0, 0),
       leading: Image.asset(
           plan.recipesList.isNotEmpty
-              ? "lib/assets/recipe/" + plan.recipesList[0] + ".png"
+              ? plan.recipesList[0]["picture"].toString()
               : "lib/assets/home/opskrifter.JPG",
-          fit: BoxFit.fill),
+          fit: BoxFit.fitHeight),
       tileColor: Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
       selectedTileColor: Color(0xfff001c7c),
@@ -144,8 +146,8 @@ class _PlanPageState extends State<PlanPage> {
             ),
             onTap: () {
               Repository.removePlan(plan); // Removes plan from database
-              Repository.getPlans(_currentUser!.uid.toString())
-                  .then(updatePlans);
+              Repository.getPlanNames(_currentUser!.uid.toString())
+                  .then(getPlans);
             },
           ),
         ],
@@ -155,33 +157,54 @@ class _PlanPageState extends State<PlanPage> {
     );
   }
 
-  updatePlans(Map plans) {
-    List<Plan> planList = [];
-
-    plans.forEach(
+  getPlans(Map plansNames) {
+    plansNames.forEach(
+      //get all plans
       (key, value) {
-        // print("key:" + key);
-        // // print("value:" + value['title']['title']);
-        // planList.add(
-        //   new Plan(_currentUser!.uid.toString(), value['title'], ["mexicansk-risret", "one-pot-pasta"]),
-        // );
+        Repository.getPlanRecipes(_currentUser!.uid.toString(), key)
+            .then(getRecipes); //get all recipes
+      },
+    );
+  }
+
+  getRecipes(Map planRecipes) {
+    int i = planRecipes.length;
+    int j = 0;
+    String title = "";
+    List<Map<String, String>> recipes = [];
+
+    planRecipes.forEach(
+      (key, value) {
+        j++;
+        if (j < i) {
+          Map<String, String> map = {};
+          map["name"] = value['name'];
+          map["picture"] = value['picture'];
+          recipes.add(map);
+        } else {
+          title = value;
+        }
       },
     );
 
     setState(
       () {
-        _plans = planList;
+        _plans.add(new Plan(_currentUser!.uid.toString(), title, recipes));
       },
     );
   }
 
   String printContent(Plan plan) {
-    String string = "";
+    output = "";
 
-    for (String r in plan.recipesList) {
-      string += r + "\n\n";
-    }
+    plan.recipesList.forEach(
+      (element) {
+        if (element["name"].toString() != "null") {
+          output += element["name"].toString() + "\n";
+        }
+      },
+    );
 
-    return string;
+    return output;
   }
 }

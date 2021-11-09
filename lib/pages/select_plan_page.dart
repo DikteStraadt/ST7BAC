@@ -20,10 +20,12 @@ class SelectPlanPage extends StatefulWidget {
 class _SelectPlanPageState extends State<SelectPlanPage> {
   List<Plan> _plans = [];
   User? _currentUser = FirebaseAuth.instance.currentUser;
+  List<Map<String, String>> recipes = [];
+  String output = "";
 
   @override
   void initState() {
-    Repository.getPlans(_currentUser!.uid.toString()).then(updatePlans);
+    Repository.getPlanNames(_currentUser!.uid.toString()).then(getPlans);
     super.initState();
   }
 
@@ -91,11 +93,17 @@ class _SelectPlanPageState extends State<SelectPlanPage> {
 
   Widget _buildListTile(Plan plan) {
     return ListTile(
+      contentPadding: EdgeInsets.fromLTRB(
+          MediaQuery.of(context).size.width * 0.05,
+          MediaQuery.of(context).size.width * 0.02,
+          0,
+          0),
       leading: Image.asset(
           plan.recipesList.isNotEmpty
-              ? "lib/assets/recipe/" + plan.recipesList[0] + ".png"
+              ? plan.recipesList[0]["picture"].toString()
               : "lib/assets/home/opskrifter.JPG",
           fit: BoxFit.fill),
+      tileColor: Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
       selectedTileColor: Color(0xfff001c7c),
       title: Text(plan.title),
@@ -105,37 +113,71 @@ class _SelectPlanPageState extends State<SelectPlanPage> {
           snackbar.addToPlanSnackBar(context);
           Repository.addRecipeToPlan(plan, widget.recipe);
           Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (_) => RecipePage(
-                      recipe: widget.recipe,
-                      route: widget.route))).then((value) {});
+            context,
+            MaterialPageRoute(
+              builder: (_) =>
+                  RecipePage(recipe: widget.recipe, route: widget.route),
+            ),
+          ).then((value) {});
         },
         child: Icon(
           Icons.add_outlined,
           size: 50,
         ),
       ),
-      subtitle: Text(""),
+      subtitle: Text(printContent(plan)),
       isThreeLine: true,
     );
   }
 
-  updatePlans(Map plans) {
-    List<Plan> planList = [];
-
-    plans.forEach(
+  getPlans(Map plansNames) {
+    plansNames.forEach(
+      //get all plans
       (key, value) {
-        planList.add(
-          new Plan(_currentUser!.uid.toString(), value['title'], []),
-        );
+        Repository.getPlanRecipes(_currentUser!.uid.toString(), key)
+            .then(getRecipes); //get all recipes
+      },
+    );
+  }
+
+  getRecipes(Map planRecipes) {
+    int i = planRecipes.length;
+    int j = 0;
+    String title = "";
+    List<Map<String, String>> recipes = [];
+
+    planRecipes.forEach(
+      (key, value) {
+        j++;
+        if (j < i) {
+          Map<String, String> map = {};
+          map["name"] = value['name'];
+          map["picture"] = value['picture'];
+          recipes.add(map);
+        } else {
+          title = value;
+        }
       },
     );
 
     setState(
       () {
-        _plans = planList;
+        _plans.add(new Plan(_currentUser!.uid.toString(), title, recipes));
       },
     );
+  }
+
+  String printContent(Plan plan) {
+    output = "";
+
+    plan.recipesList.forEach(
+      (element) {
+        if (element["name"].toString() != "null") {
+          output += element["name"].toString() + "\n";
+        }
+      },
+    );
+
+    return output;
   }
 }

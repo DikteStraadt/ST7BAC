@@ -19,7 +19,7 @@ class _NewPostPageState extends State<NewPostPage> {
   Widget build(BuildContext context) {
     return new WillPopScope(
       onWillPop: () async {
-        Navigator.maybePop(context);
+        Navigator.pop(context);
 
         return false;
       },
