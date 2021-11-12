@@ -68,9 +68,12 @@ class _HomePageState extends State<HomePage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => NavigationController(initpage: 0)));
+                                  builder: (context) =>
+                                      NavigationController(initpage: 0)));
                         else if (title == "Forum") {
                           Navigator.pushNamed(context, 'forums');
+                        } else if (title == "Aktiviteter") {
+                          Navigator.pushNamed(context, 'activities');
                         } else {
                           MySnackbar snackbar = new MySnackbar();
                           snackbar.notImplementedSnackBar(context);
