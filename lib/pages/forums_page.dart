@@ -1,8 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project_1_0/pages/forum_details_page.dart';
-import 'package:flutter_project_1_0/pages/home_page.dart';
-import 'package:flutter_project_1_0/pages/new_forum_page.dart';
 import 'package:flutter_project_1_0/utilities/snack_bar.dart';
 
 class ForumsPage extends StatefulWidget {
@@ -45,51 +43,18 @@ class _ForumsPageState extends State<ForumsPage> {
                 )),
           ],
         ),
-        // body: ElevatedButton(
-        //     onPressed: () {
-        //       Repository.setForum(new ListEntry(Uuid().v4(), "HJælp", "nronfoe", FirebaseAuth.instance.currentUser!.displayName, 2, 2, []));
-        //     },
-        //     child: Text('Push')),
-        body: new Container(
-          child: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: MediaQuery.of(context).size.width * 0.015,
-                  ),
-                  StreamBuilder(
-                    stream: FirebaseDatabase.instance
-                        .reference()
-                        .child('Forum')
-                        .onValue,
-                    builder: (context, snapshot) {
-                      final tilesList = <Container>[];
-                      if (snapshot.hasData) {
-                        final myForums = Map<String, dynamic>.from(
-                            (snapshot.data! as Event).snapshot.value);
-                        myForums.forEach(
-                          (key, value) {
-                            final nextForum = Map<String, dynamic>.from(value);
-                            final forumTile =
-                                _buildListView(nextForum, context);
-                            tilesList.add(forumTile);
-                          },
-                        );
-                        return ListView(
-                          children: tilesList,
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                        );
-                      } else {
-                        return SizedBox(
-                          height: 0,
-                        );
-                      }
-                    },
-                  ),
-                ],
-              )),
+        body: new Column(
+          children: <Widget>[
+            SizedBox(
+              height: MediaQuery.of(context).size.width * 0.015,
+            ),
+            Expanded(
+              child: new Padding(
+                padding: const EdgeInsets.only(bottom: 20.0),
+                child: threads,
+              ),
+            ),
+          ],
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
@@ -102,6 +67,36 @@ class _ForumsPageState extends State<ForumsPage> {
       ),
     );
   }
+
+  var threads = new Container(
+    padding: const EdgeInsets.all(8.0),
+    child: StreamBuilder(
+      stream: FirebaseDatabase.instance.reference().child('Forum').onValue,
+      builder: (context, snapshot) {
+        final tilesList = <Container>[];
+        if (snapshot.hasData) {
+          final myForums = Map<String, dynamic>.from(
+              (snapshot.data! as Event).snapshot.value);
+          myForums.forEach(
+            (key, value) {
+              final nextForum = Map<String, dynamic>.from(value);
+              final forumTile = _buildListView(nextForum, context);
+              tilesList.add(forumTile);
+            },
+          );
+          return ListView(
+            children: tilesList,
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+          );
+        } else {
+          return SizedBox(
+            height: 0,
+          );
+        }
+      },
+    ),
+  );
 }
 
 Container _buildListView(Map<String, dynamic> entry, BuildContext context) {
