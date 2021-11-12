@@ -6,6 +6,7 @@ import 'package:flutter_project_1_0/models/recipe.dart';
 import 'package:flutter_project_1_0/models/plan.dart';
 import 'package:flutter_project_1_0/pages/recipe_page.dart';
 import 'package:flutter_project_1_0/utilities/snack_bar.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class ActivitiesPage extends StatefulWidget {
   @override
@@ -14,6 +15,14 @@ class ActivitiesPage extends StatefulWidget {
 }
 
 class _ActivitiesPageState extends State<ActivitiesPage> {
+  YoutubePlayerController _controller = YoutubePlayerController(
+    initialVideoId: '-0nhYjG9160',
+    flags: YoutubePlayerFlags(
+      autoPlay: true,
+      mute: true,
+    ),
+  );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,15 +43,21 @@ class _ActivitiesPageState extends State<ActivitiesPage> {
         child: Column(
           children: [
             SingleChildScrollView(
-              child: Column(children: [
-                new Text(
-                  'Dagens udvalgte familieaktivitet',
-                  style: TextStyle(
-                    fontFamily: 'Margarine',
-                    fontSize: MediaQuery.of(context).size.width * 1,
-                  ),
-                ),
-              ]),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    new Text(
+                      'Dagens udvalgte familieaktivitet',
+                      style: TextStyle(
+                        fontFamily: 'Margarine',
+                        fontSize: MediaQuery.of(context).size.width * 0.06,
+                      ),
+                    ),
+                    YoutubePlayer(
+                      controller: _controller,
+                      showVideoProgressIndicator: true,
+                    ),
+                  ]),
             ),
           ],
         ),
