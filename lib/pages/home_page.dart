@@ -56,6 +56,7 @@ class _HomePageState extends State<HomePage> {
                         fontSize: MediaQuery.of(context).size.width * 0.12),
                   ),
                 ),
+<<<<<<< HEAD
                 Expanded(
                   child: GridView(
                     controller: _scrollController,
@@ -86,6 +87,38 @@ class _HomePageState extends State<HomePage> {
                       );
                     }).toList(),
                   ),
+=======
+              ),
+              Expanded(
+                child: GridView(
+                  controller: _scrollController,
+                  physics: NeverScrollableScrollPhysics(),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2),
+                  children: menuButtons.map((title) {
+                    return GestureDetector(
+                      child: Card(
+                          margin: const EdgeInsets.all(15.0),
+                          child: getCardByTitle(title)),
+                      onTap: () {
+                        if (title == "Opskrifter")
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      NavigationController(initpage: 0)));
+                        else if (title == "Forum") {
+                          Navigator.pushNamed(context, 'forums');
+                        } else if (title == "Aktiviteter") {
+                          Navigator.pushNamed(context, 'activities');
+                        } else {
+                          MySnackbar snackbar = new MySnackbar();
+                          snackbar.notImplementedSnackBar(context);
+                        }
+                      },
+                    );
+                  }).toList(),
+>>>>>>> ec1d88493ef730dda0c662858a938b21b022ce51
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width * 0.5,
