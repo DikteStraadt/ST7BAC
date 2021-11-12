@@ -92,7 +92,11 @@ class _PlanPageState extends State<PlanPage> {
 
   Widget _buildListTile(Plan plan) {
     return ListTile(
-      contentPadding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.05, MediaQuery.of(context).size.width * 0.02, 0, 0),
+      contentPadding: EdgeInsets.fromLTRB(
+          MediaQuery.of(context).size.width * 0.05,
+          MediaQuery.of(context).size.width * 0.02,
+          0,
+          0),
       leading: Image.asset(
           plan.recipesList.isNotEmpty
               ? plan.recipesList[0]["picture"].toString()
@@ -158,6 +162,7 @@ class _PlanPageState extends State<PlanPage> {
   }
 
   getPlans(Map plansNames) {
+    _plans.clear();
     plansNames.forEach(
       //get all plans
       (key, value) {
