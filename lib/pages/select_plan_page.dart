@@ -5,6 +5,7 @@ import 'package:flutter_project_1_0/models/ingredient.dart';
 import 'package:flutter_project_1_0/models/recipe.dart';
 import 'package:flutter_project_1_0/models/plan.dart';
 import 'package:flutter_project_1_0/pages/recipe_page.dart';
+import 'package:flutter_project_1_0/utilities/navigation.dart';
 import 'package:flutter_project_1_0/utilities/snack_bar.dart';
 
 class SelectPlanPage extends StatefulWidget {
@@ -33,13 +34,7 @@ class _SelectPlanPageState extends State<SelectPlanPage> {
   Widget build(BuildContext context) {
     return new WillPopScope(
       onWillPop: () async {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) =>
-                RecipePage(recipe: widget.recipe, route: widget.route),
-          ),
-        );
+        goBack();
         return false;
       },
       child: Scaffold(
@@ -48,13 +43,7 @@ class _SelectPlanPageState extends State<SelectPlanPage> {
           leading: IconButton(
             icon: Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      RecipePage(recipe: widget.recipe, route: widget.route),
-                ),
-              );
+              goBack();
             },
           ),
         ),
@@ -112,13 +101,7 @@ class _SelectPlanPageState extends State<SelectPlanPage> {
           MySnackbar snackbar = new MySnackbar();
           snackbar.addToPlanSnackBar(context);
           Repository.addRecipeToPlan(plan, widget.recipe);
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (_) =>
-                  RecipePage(recipe: widget.recipe, route: widget.route),
-            ),
-          ).then((value) {});
+          goBack();
         },
         child: Icon(
           Icons.add_outlined,
@@ -179,5 +162,31 @@ class _SelectPlanPageState extends State<SelectPlanPage> {
     );
 
     return output;
+  }
+
+  void goBack() {
+    if (widget.route == "f" || widget.route == "r") {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) =>
+              RecipePage(recipe: widget.recipe, route: widget.route),
+        ),
+      );
+    } else if (widget.route == "rr") {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => NavigationController(initpage: 0),
+        ),
+      );
+    } else if (widget.route == "ff") {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => NavigationController(initpage: 2),
+        ),
+      );
+    }
   }
 }

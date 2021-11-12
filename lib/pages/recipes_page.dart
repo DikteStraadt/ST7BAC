@@ -7,6 +7,7 @@ import 'package:flutter_project_1_0/models/ingredient.dart';
 import 'package:flutter_project_1_0/models/recipe.dart';
 import 'package:flutter_project_1_0/pages/home_page.dart';
 import 'package:flutter_project_1_0/pages/recipe_page.dart';
+import 'package:flutter_project_1_0/pages/select_plan_page.dart';
 import 'package:flutter_project_1_0/utilities/snack_bar.dart';
 
 class RecipesPage extends StatefulWidget {
@@ -107,52 +108,88 @@ class _RecipesPageState extends State<RecipesPage> {
             ),
             Align(
               alignment: Alignment.bottomLeft,
-              child: Container(
-                margin: EdgeInsets.all(10.0),
-                child: GestureDetector(
-                  child: new Icon(
-                    alreadySaved ? Icons.favorite : Icons.favorite_border,
-                    size: 60,
-                    color: Colors.red[900],
-                  ),
-                  onTap: () {
-                    setState(
-                      () {
-                        Favorite favorite = new Favorite(
-                            _currentUser!.uid.toString(),
-                            recipe.id,
-                            recipe.name,
-                            recipe.picture,
-                            recipe.prepTime,
-                            recipe.totalTime,
-                            recipe.servings,
-                            recipe.numberOfingredients,
-                            recipe.ingredientList,
-                            recipe.method);
-                        if (alreadySaved) {
-                          setState(
-                            () {
-                              Repository.removeFavorite(
-                                  favorite); // Remove recipe as favorite in database
-                              Repository.getFavorites(
-                                      _currentUser!.uid.toString())
-                                  .then(updateFavorites);
-                            },
-                          );
-                          _favoriteRecipies.remove(favorite);
-                        } else {
-                          setState(() {
-                            Repository.setFavorite(
-                                favorite); // Set recipe as favorite in database
-                            Repository.getFavorites(
-                                    _currentUser!.uid.toString())
-                                .then(updateFavorites);
-                          });
-                        }
+              child: Row(
+                children: [
+                  Container(
+                    margin: EdgeInsets.all(10.0),
+                    child: GestureDetector(
+                      child: new Icon(
+                        alreadySaved ? Icons.favorite : Icons.favorite_border,
+                        size: MediaQuery.of(context).size.width * 0.15,
+                        color: Colors.red[900],
+                      ),
+                      onTap: () {
+                        setState(
+                          () {
+                            Favorite favorite = new Favorite(
+                                _currentUser!.uid.toString(),
+                                recipe.id,
+                                recipe.name,
+                                recipe.picture,
+                                recipe.prepTime,
+                                recipe.totalTime,
+                                recipe.servings,
+                                recipe.numberOfingredients,
+                                recipe.ingredientList,
+                                recipe.method);
+                            if (alreadySaved) {
+                              setState(
+                                () {
+                                  Repository.removeFavorite(
+                                      favorite); // Remove recipe as favorite in database
+                                  Repository.getFavorites(
+                                          _currentUser!.uid.toString())
+                                      .then(updateFavorites);
+                                },
+                              );
+                              _favoriteRecipies.remove(favorite);
+                            } else {
+                              setState(
+                                () {
+                                  Repository.setFavorite(
+                                      favorite); // Set recipe as favorite in database
+                                  Repository.getFavorites(
+                                          _currentUser!.uid.toString())
+                                      .then(updateFavorites);
+                                },
+                              );
+                            }
+                          },
+                        );
                       },
-                    );
-                  },
-                ),
+                    ),
+                  ),
+                  SizedBox(width: MediaQuery.of(context).size.width * 0.55),
+                  PopupMenuButton(
+                    icon: new Icon(Icons.more_horiz),
+                    iconSize: MediaQuery.of(context).size.width * 0.15,
+                    itemBuilder: (context) => [
+                      PopupMenuItem(
+                        child: Row(
+                          children: <Widget>[
+                            Icon(
+                              Icons.edit_rounded,
+                            ),
+                            SizedBox(
+                                width:
+                                    MediaQuery.of(context).size.width * 0.03),
+                            Text("Tilføj opskrift til madplan"),
+                          ],
+                        ),
+                        onTap: () async {
+                          await Future.delayed(Duration.zero);
+                          Navigator.pushReplacement<void, void>(
+                            context,
+                            MaterialPageRoute<void>(
+                              builder: (BuildContext context) =>
+                                  SelectPlanPage(recipe: recipe, route: "rr"),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
           ],
