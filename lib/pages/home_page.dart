@@ -25,8 +25,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance!.addPostFrameCallback((_) =>
-        _scrollController.jumpTo(_scrollController.position.maxScrollExtent));
+    // WidgetsBinding.instance!.addPostFrameCallback((_) =>
+    //     _scrollController.jumpTo(_scrollController.position.maxScrollExtent));
     return new WillPopScope(
       onWillPop: () async {
         logout();
@@ -47,20 +47,16 @@ class _HomePageState extends State<HomePage> {
             margin: const EdgeInsets.only(top: 40, bottom: 20),
             child: Column(
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 2),
-                  child: Text(
+                Text(
                     'Hånd i hånd',
                     style: TextStyle(
                         fontFamily: 'Margarine',
                         fontSize: MediaQuery.of(context).size.width * 0.12),
                   ),
-                ),
-<<<<<<< HEAD
                 Expanded(
                   child: GridView(
                     controller: _scrollController,
-                    physics: NeverScrollableScrollPhysics(),
+                    // physics: NeverScrollableScrollPhysics(),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2),
                     children: menuButtons.map((title) {
@@ -87,38 +83,6 @@ class _HomePageState extends State<HomePage> {
                       );
                     }).toList(),
                   ),
-=======
-              ),
-              Expanded(
-                child: GridView(
-                  controller: _scrollController,
-                  physics: NeverScrollableScrollPhysics(),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2),
-                  children: menuButtons.map((title) {
-                    return GestureDetector(
-                      child: Card(
-                          margin: const EdgeInsets.all(15.0),
-                          child: getCardByTitle(title)),
-                      onTap: () {
-                        if (title == "Opskrifter")
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      NavigationController(initpage: 0)));
-                        else if (title == "Forum") {
-                          Navigator.pushNamed(context, 'forums');
-                        } else if (title == "Aktiviteter") {
-                          Navigator.pushNamed(context, 'activities');
-                        } else {
-                          MySnackbar snackbar = new MySnackbar();
-                          snackbar.notImplementedSnackBar(context);
-                        }
-                      },
-                    );
-                  }).toList(),
->>>>>>> ec1d88493ef730dda0c662858a938b21b022ce51
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width * 0.5,
@@ -155,13 +119,13 @@ class _HomePageState extends State<HomePage> {
     else if (title == "Aktiviteter")
       img = "lib/assets/home/aktiviteter.JPG";
     else if (title == "Medier")
-      img = "lib/assets/home/medier.JPG";
+      img = "lib/assets/home/notImplemented.JPG";
     else if (title == "Forum")
       img = "lib/assets/home/forum.JPG";
     else if (title == "Vejledning")
-      img = "lib/assets/home/vejledning.JPG";
+      img = "lib/assets/home/notImplemented.JPG";
     else
-      img = "lib/assets/home/events.JPG";
+      img = "lib/assets/home/notImplemented.JPG";
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -172,8 +136,8 @@ class _HomePageState extends State<HomePage> {
               children: <Widget>[
                 new Image.asset(
                   img,
-                  width: MediaQuery.of(context).size.width * 0.35,
-                  height: MediaQuery.of(context).size.width * 0.35,
+                  width: MediaQuery.of(context).size.width * 0.3,
+                  height: MediaQuery.of(context).size.width * 0.3,
                 ),
               ],
             ),
@@ -187,6 +151,7 @@ class _HomePageState extends State<HomePage> {
               fontFamily: 'Margarine'),
           textAlign: TextAlign.center,
         ),
+        SizedBox(height:  MediaQuery.of(context).size.width * 0.01)
       ],
     );
   }

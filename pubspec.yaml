@@ -33,6 +33,7 @@ dependencies:
   fluttertoast: ^8.0.7
   uuid: ^3.0.5
   youtube_player_flutter: ^8.0.0
+  youtube_player_iframe: ^2.2.2
 
 
 
@@ -47,7 +48,7 @@ flutter_icons:
   image_path_ios: "lib/assets/launcher/icon.png"
   image_path_android: "lib/assets/launcher/icon.png"
   adaptive_icon_background: "lib/assets/launcher/background.png"
-  adaptive_icon_foreground: "lib/assets/launcher/foreground.png"
+  adaptive_icon_foreground: "lib/assets/launcher/logo.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -62,12 +63,10 @@ flutter:
     - lib/assets/recipes/vegansk_dhal.png
     - lib/assets/recipes/vegetarisk_lasange.png
 
-    - lib/assets/home/aktiviteter.JPG
-    - lib/assets/home/events.JPG
-    - lib/assets/home/forum.JPG
-    - lib/assets/home/medier.JPG
     - lib/assets/home/opskrifter.JPG
-    - lib/assets/home/vejledning.JPG
+    - lib/assets/home/aktiviteter.JPG
+    - lib/assets/home/forum.JPG
+    - lib/assets/home/notImplemented.JPG
 
   fonts:
     - family: Margarine
