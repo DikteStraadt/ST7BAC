@@ -18,17 +18,17 @@ class RecipesPage extends StatefulWidget {
 }
 
 class _RecipesPageState extends State<RecipesPage> {
-  Recipes _r = new Recipes(); //For loading recipes from recipes class.
+  // Recipes _r = new Recipes(); //For loading recipes from recipes class.
   late List<Recipe> _recipies = [];
   late List<Favorite> _favoriteRecipies = [];
   User? _currentUser = FirebaseAuth.instance.currentUser;
 
   @override
   void initState() {
-    _recipies = _r
-        .loadRecipes(); // Loading recipes from recipes class. Shall only be used the first time, to write data to database
-    // Repository.getRecipes()
-    //     .then(updateRecipes); // Loading recipes from database
+    // _recipies = _r
+    //     .loadRecipes(); // Loading recipes from recipes class. Shall only be used the first time, to write data to database
+    Repository.getRecipes()
+        .then(updateRecipes); // Loading recipes from database
     Repository.getFavorites(_currentUser!.uid.toString()).then(updateFavorites);
     super.initState();
   }
@@ -87,7 +87,7 @@ class _RecipesPageState extends State<RecipesPage> {
 
   Widget _buildCard(Recipe recipe) {
     bool alreadySaved = contains(recipe.id);
-    Repository.setRecipe(recipe); // Writing new recipes to database
+    // Repository.setRecipe(recipe); // Writing new recipes to database
 
     return Card(
       child: InkWell(
