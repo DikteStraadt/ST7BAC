@@ -25,8 +25,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // WidgetsBinding.instance!.addPostFrameCallback((_) =>
-    //     _scrollController.jumpTo(_scrollController.position.maxScrollExtent));
+    WidgetsBinding.instance!.addPostFrameCallback((_) =>
+        _scrollController.jumpTo(_scrollController.position.maxScrollExtent));
     return new WillPopScope(
       onWillPop: () async {
         logout();
@@ -56,7 +56,7 @@ class _HomePageState extends State<HomePage> {
                 Expanded(
                   child: GridView(
                     controller: _scrollController,
-                    // physics: NeverScrollableScrollPhysics(),
+                    physics: BouncingScrollPhysics(),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2),
                     children: menuButtons.map((title) {
