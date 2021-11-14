@@ -59,14 +59,14 @@ class _PlanPageState extends State<PlanPage> {
         ],
       ),
       body: Container(
-        child: Column(
-          children: [
-            SingleChildScrollView(
-              child: Column(
-                children: <Widget>[for (var p in _plans) buildContainer(p)],
-              ),
-            ),
-          ],
+        child: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
+          child: Column(
+            children: <Widget>[
+              for (var p in _plans) buildContainer(p),
+              SizedBox(height: MediaQuery.of(context).size.width * 0.04),
+            ],
+          ),
         ),
       ),
     );

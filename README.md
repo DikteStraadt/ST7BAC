@@ -51,3 +51,6 @@ https://stackoverflow.com/questions/61269906/flutter-bottom-navigation-bar-with-
 ## Icon
 https://www.kindpng.com/imgv/mobTRR_hands-clipart-hand-holding-hand-in-hand-symbol/
 https://www.wallpapertip.com/wpic/ToRJRb_blue-fade-background-wallpaper-background-image-clean/
+
+## YouTube video
+https://pub.dev/packages/youtube_player_iframe

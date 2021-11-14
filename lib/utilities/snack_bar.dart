@@ -9,11 +9,8 @@ class MySnackbar{
   }
 
     ScaffoldFeatureController<SnackBar, SnackBarClosedReason> addToPlanSnackBar(BuildContext c){
-    final snackBar = SnackBar(behavior: SnackBarBehavior.floating, content: Text('Opskriften er tilføjet til madplanen'), backgroundColor: Colors.blue[900], duration: Duration(seconds: 3));
+    final snackBar = SnackBar(behavior: SnackBarBehavior.floating, content: Text('Opskriften er tilføjet til madplanen'), backgroundColor: Colors.orange[800], duration: Duration(seconds: 3));
 
     return ScaffoldMessenger.of(c).showSnackBar(snackBar);
   }
-
-
-
 }
