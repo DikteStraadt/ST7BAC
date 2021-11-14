@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.flutter_project_1_0">
    <application
-        android:label="flutter_project_1_0"
-        android:icon="@mipmap/ic_launcher"
+        android:label="Hånd i hånd"
+        android:icon="@mipmap/launcher_icon"
         android:usesCleartextTraffic="true">
         <activity
             android:name=".MainActivity"
