@@ -37,124 +37,131 @@ class _RegisterPageState extends State<RegisterPage> {
         body: Padding(
           padding: const EdgeInsets.all(24.0),
           child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Text(
-                  'Opret en ny bruger',
-                  style: TextStyle(
-                    color: Color(0xfff001c7c),
-                      fontFamily: 'Margarine',
-                      fontSize: MediaQuery.of(context).size.width * 0.08),
-                  textAlign: TextAlign.center,
-                ),
-                Form(
-                  key: _registerFormKey,
-                  child: Column(
-                    children: <Widget>[
-                      TextFormField(
-                        controller: _nameTextController,
-                        focusNode: _focusName,
-                        validator: (value) => Validator.validateName(
-                          name: value.toString(),
-                        ),
-                        decoration: InputDecoration(
-                          hintText: "Brugernavn",
-                          errorBorder: UnderlineInputBorder(
-                            borderRadius: BorderRadius.circular(6.0),
-                            borderSide: BorderSide(
-                              color: Colors.red,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text(
+                    'Opret en ny bruger',
+                    style: TextStyle(
+                        color: Color(0xfff001c7c),
+                        fontFamily: 'Margarine',
+                        fontSize: MediaQuery.of(context).size.width * 0.08),
+                    textAlign: TextAlign.center,
+                  ),
+                  Form(
+                    key: _registerFormKey,
+                    child: Column(
+                      children: <Widget>[
+                        TextFormField(
+                          controller: _nameTextController,
+                          focusNode: _focusName,
+                          validator: (value) => Validator.validateName(
+                            name: value.toString(),
+                          ),
+                          decoration: InputDecoration(
+                            hintText: "Brugernavn",
+                            errorBorder: UnderlineInputBorder(
+                              borderRadius: BorderRadius.circular(6.0),
+                              borderSide: BorderSide(
+                                color: Colors.red,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      SizedBox(height: 16.0),
-                      TextFormField(
-                        controller: _emailTextController,
-                        focusNode: _focusEmail,
-                        validator: (value) => Validator.validateEmail(
-                          email: value.toString(),
-                        ),
-                        decoration: InputDecoration(
-                          hintText: "E-mail",
-                          errorBorder: UnderlineInputBorder(
-                            borderRadius: BorderRadius.circular(6.0),
-                            borderSide: BorderSide(
-                              color: Colors.red,
+                        SizedBox(height: 16.0),
+                        TextFormField(
+                          controller: _emailTextController,
+                          focusNode: _focusEmail,
+                          validator: (value) => Validator.validateEmail(
+                            email: value.toString(),
+                          ),
+                          decoration: InputDecoration(
+                            hintText: "E-mail",
+                            errorBorder: UnderlineInputBorder(
+                              borderRadius: BorderRadius.circular(6.0),
+                              borderSide: BorderSide(
+                                color: Colors.red,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      SizedBox(height: 16.0),
-                      TextFormField(
-                        controller: _passwordTextController,
-                        focusNode: _focusPassword,
-                        obscureText: true,
-                        validator: (value) => Validator.validatePassword(
-                          password: value.toString(),
-                        ),
-                        decoration: InputDecoration(
-                          hintText: "Kodeord",
-                          errorBorder: UnderlineInputBorder(
-                            borderRadius: BorderRadius.circular(6.0),
-                            borderSide: BorderSide(
-                              color: Colors.red,
+                        SizedBox(height: 16.0),
+                        TextFormField(
+                          controller: _passwordTextController,
+                          focusNode: _focusPassword,
+                          obscureText: true,
+                          validator: (value) => Validator.validatePassword(
+                            password: value.toString(),
+                          ),
+                          decoration: InputDecoration(
+                            hintText: "Kodeord",
+                            errorBorder: UnderlineInputBorder(
+                              borderRadius: BorderRadius.circular(6.0),
+                              borderSide: BorderSide(
+                                color: Colors.red,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      SizedBox(height: 32.0),
-                      _isProcessing
-                          ? CircularProgressIndicator()
-                          : Row(
-                              children: [
-                                Expanded(
-                                  child: ElevatedButton(
-                                    onPressed: () async {
-                                      setState(() {
-                                        _isProcessing = true;
-                                      });
-
-                                      if (_registerFormKey.currentState!
-                                          .validate()) {
-                                        User? user = await FireAuth
-                                            .registerUsingEmailPassword(
-                                          name: _nameTextController.text,
-                                          email: _emailTextController.text,
-                                          password:
-                                              _passwordTextController.text,
-                                        );
-
+                        SizedBox(height: 32.0),
+                        _isProcessing
+                            ? CircularProgressIndicator()
+                            : Row(
+                                children: [
+                                  Expanded(
+                                    child: ElevatedButton(
+                                      onPressed: () async {
                                         setState(() {
-                                          _isProcessing = false;
+                                          _isProcessing = true;
                                         });
 
-                                        if (user != null) {
-                                          Navigator.pushNamed(context, 'home');
+                                        if (_registerFormKey.currentState!
+                                            .validate()) {
+                                          User? user = await FireAuth
+                                              .registerUsingEmailPassword(
+                                            name: _nameTextController.text,
+                                            email: _emailTextController.text,
+                                            password:
+                                                _passwordTextController.text,
+                                          );
+
+                                          setState(() {
+                                            _isProcessing = false;
+                                          });
+
+                                          if (user != null) {
+                                            Navigator.pushNamed(
+                                                context, 'home');
+                                          }
+                                        } else {
+                                          setState(() {
+                                            _isProcessing = false;
+                                          });
                                         }
-                                      }
-                                    },
-                                    child: Text('Opret bruger',
-                                        style: TextStyle(
-                                            color: Color(0xfff001c7c),
-                                            fontSize: 18,
-                                            fontFamily: 'Margarine')),
-                                    style: ElevatedButton.styleFrom(
-                                      primary: Colors.white,
-                                      side: BorderSide(
-                                        width: 2.0,
-                                        color: Color(0xfff001c7c),
+                                      },
+                                      child: Text('Opret bruger',
+                                          style: TextStyle(
+                                              color: Color(0xfff001c7c),
+                                              fontSize: 18,
+                                              fontFamily: 'Margarine')),
+                                      style: ElevatedButton.styleFrom(
+                                        primary: Colors.white,
+                                        side: BorderSide(
+                                          width: 2.0,
+                                          color: Color(0xfff001c7c),
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                    ],
+                                ],
+                              ),
+                      ],
+                    ),
                   ),
-                ),
-                SizedBox(height: 50)
-              ],
+                  SizedBox(height: 50)
+                ],
+              ),
             ),
           ),
         ),
