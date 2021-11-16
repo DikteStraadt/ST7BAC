@@ -24,7 +24,7 @@ class _NewPlanPageState extends State<NewPlanPage> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Opret ny maplan"),
+          title: Text("Opret ny madplan"),
         ),
         body: Center(
           child: Container(
