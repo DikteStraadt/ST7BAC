@@ -163,13 +163,21 @@ class _PlanPageState extends State<PlanPage> {
 
   getPlans(Map plansNames) {
     _plans.clear();
-    plansNames.forEach(
-      //get all plans
-      (key, value) {
-        Repository.getPlanRecipes(_currentUser!.uid.toString(), key)
-            .then(getRecipes); //get all recipes
-      },
-    );
+    if (plansNames.length > 0) {
+      plansNames.forEach(
+        //get all plans
+        (key, value) {
+          Repository.getPlanRecipes(_currentUser!.uid.toString(), key)
+              .then(getRecipes); //get all recipes
+        },
+      );
+    } else {
+      setState(
+        () {
+          _plans = [];
+        },
+      );
+    }
   }
 
   getRecipes(Map planRecipes) {
