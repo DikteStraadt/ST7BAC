@@ -2,7 +2,6 @@ import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project_1_0/utilities/navigation.dart';
-import 'package:flutter_project_1_0/pages/login_page.dart';
 import 'package:flutter_project_1_0/utilities/snack_bar.dart';
 
 class HomePage extends StatefulWidget {

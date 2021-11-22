@@ -1,5 +1,3 @@
-import 'package:flutter_project_1_0/models/recipe.dart';
-
 class Plan {
   
   final String user;

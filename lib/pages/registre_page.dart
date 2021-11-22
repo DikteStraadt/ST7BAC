@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_project_1_0/pages/home_page.dart';
-import 'package:flutter_project_1_0/authorization/fire_auth.dart';
-import 'package:flutter_project_1_0/authorization/validator.dart';
+import 'package:flutter_project_1_0/login/fire_auth.dart';
+import 'package:flutter_project_1_0/login/validator.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -44,11 +43,12 @@ class _RegisterPageState extends State<RegisterPage> {
                   Text(
                     'Opret en ny bruger',
                     style: TextStyle(
-                        color: Color(0xfff001c7c),
                         fontFamily: 'Margarine',
                         fontSize: MediaQuery.of(context).size.width * 0.08),
                     textAlign: TextAlign.center,
+                    
                   ),
+                  SizedBox(height: MediaQuery.of(context).size.width * 0.2),
                   Form(
                     key: _registerFormKey,
                     child: Column(

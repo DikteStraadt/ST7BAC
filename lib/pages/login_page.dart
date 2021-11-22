@@ -1,38 +1,70 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_project_1_0/authorization/fire_auth.dart';
-import 'package:flutter_project_1_0/authorization/validator.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_project_1_0/pages/home_page.dart';
-import 'package:flutter_project_1_0/pages/registre_page.dart';
 
 class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
+
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final _formKey = GlobalKey<FormState>();
+  var loading = false;
 
-  final _emailTextController = TextEditingController();
-  final _passwordTextController = TextEditingController();
+  void _logInWithFacebook() async {
+    setState(() {
+      loading = true;
+    });
 
-  final _focusEmail = FocusNode();
-  final _focusPassword = FocusNode();
+    try {
+      final facebookLoginResult = await FacebookAuth.instance.login();
+      final facebookAuthCredential = FacebookAuthProvider.credential(
+          facebookLoginResult.accessToken!.token);
+      await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
 
-  bool _isProcessing = false;
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (_) => HomePage()), (route) => false);
+    } on FirebaseAuthException catch (e) {
+      var content = '';
+      switch (e.code) {
+        case 'account-exists-with-different-credential':
+          content = 'This account exists with a different sign in provider';
+          break;
+        case 'invalid-credential':
+          content = 'Unknown error has occurred';
+          break;
+        case 'operation-not-allowed':
+          content = 'This operation is not allowed';
+          break;
+        case 'user-disabled':
+          content = 'The user you tried to log into is disabled';
+          break;
+        case 'user-not-found':
+          content = 'The user you tried to log into was not found';
+          break;
+      }
 
-  Future<FirebaseApp> _initializeFirebase() async {
-    FirebaseApp firebaseApp = await Firebase.initializeApp();
-
-    User? user = FirebaseAuth.instance.currentUser;
-
-    if (user != null) {
-      Navigator.pushNamed(context, 'home');
+      showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+                title: Text('Log in with facebook failed'),
+                content: Text(content),
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text('Ok'))
+                ],
+              ));
+    } finally {
+      setState(() {
+        loading = false;
+      });
     }
-
-    return firebaseApp;
   }
 
   @override
@@ -42,173 +74,107 @@ class _LoginPageState extends State<LoginPage> {
         SystemNavigator.pop();
         return false;
       },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Hånd i hånd'),
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Hånd i hånd',
+                style: TextStyle(
+                    fontFamily: 'Margarine',
+                    fontSize: MediaQuery.of(context).size.width * 0.13),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: MediaQuery.of(context).size.width * 0.13),
+              if (loading) ...[
+                const SizedBox(height: 15),
+                const Center(child: const CircularProgressIndicator()),
+              ],
+              if (!loading) ...[
+                _Button(
+                  text: 'Log in with email',
+                  color: Color(0xfff001c7c),
+                  image:
+                      const AssetImage('lib/assets/authentication/email.png'),
+                  onPressed: () {
+                    Navigator.pushNamed(context, 'emaillogin');
+                  },
+                ),
+                _Button(
+                  text: 'Log in with Facebook',
+                  color: Color(0xfff001c7c),
+                  image: const AssetImage(
+                      'lib/assets/authentication/facebook.png'),
+                  onPressed: () {
+                    _logInWithFacebook();
+                  },
+                ),
+                _Button(
+                  text: 'Log in with Google',
+                  color: Color(0xfff001c7c),
+                  image:
+                      const AssetImage('lib/assets/authentication/google.png'),
+                  onPressed: () {},
+                ),
+              ],
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _Button extends StatelessWidget {
+  final Color color;
+  final ImageProvider image;
+  final String text;
+  final VoidCallback onPressed;
+
+  _Button(
+      {required this.color,
+      required this.image,
+      required this.text,
+      required this.onPressed});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
       child: GestureDetector(
         onTap: () {
-          _focusEmail.unfocus();
-          _focusPassword.unfocus();
+          if (onPressed != null) {
+            onPressed();
+          }
         },
-        child: Scaffold(
-          appBar: AppBar(
-            title: Text('Hånd i hånd'),
-          ),
-          body: Container(
-            child: SingleChildScrollView(
-              child: FutureBuilder(
-                future: _initializeFirebase(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    return Padding(
-                      padding: const EdgeInsets.only(left: 24.0, right: 24.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          SizedBox(
-                              height: MediaQuery.of(context).size.width * 0.1),
-                          Text(
-                            'Hånd i hånd',
-                            style: TextStyle(
-                                color: Color(0xfff001c7c),
-                                fontFamily: 'Margarine',
-                                fontSize:
-                                    MediaQuery.of(context).size.width * 0.13),
-                            textAlign: TextAlign.center,
-                          ),
-                          Form(
-                            key: _formKey,
-                            child: Column(
-                              children: <Widget>[
-                                SizedBox(
-                                    height: MediaQuery.of(context).size.width *
-                                        0.1),
-                                TextFormField(
-                                  controller: _emailTextController,
-                                  focusNode: _focusEmail,
-                                  validator: (value) => Validator.validateEmail(
-                                    email: value.toString(),
-                                  ),
-                                  decoration: InputDecoration(
-                                    hintText: "E-mail",
-                                    errorBorder: UnderlineInputBorder(
-                                      borderRadius: BorderRadius.circular(6.0),
-                                      borderSide: BorderSide(
-                                        color: Colors.red,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(height: 8.0),
-                                TextFormField(
-                                  controller: _passwordTextController,
-                                  focusNode: _focusPassword,
-                                  obscureText: true,
-                                  validator: (value) =>
-                                      Validator.validatePassword(
-                                    password: value.toString(),
-                                  ),
-                                  decoration: InputDecoration(
-                                    hintText: "Kodeord",
-                                    errorBorder: UnderlineInputBorder(
-                                      borderRadius: BorderRadius.circular(6.0),
-                                      borderSide: BorderSide(
-                                        color: Colors.red,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(height: 24.0),
-                                _isProcessing
-                                    ? CircularProgressIndicator()
-                                    : Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Expanded(
-                                            child: ElevatedButton(
-                                              onPressed: () async {
-                                                _focusEmail.unfocus();
-                                                _focusPassword.unfocus();
-
-                                                if (_formKey.currentState!
-                                                    .validate()) {
-                                                  setState(() {
-                                                    _isProcessing = true;
-                                                  });
-
-                                                  User? user = await FireAuth
-                                                      .signInUsingEmailPassword(
-                                                    email: _emailTextController
-                                                        .text,
-                                                    password:
-                                                        _passwordTextController
-                                                            .text,
-                                                    context: context,
-                                                  );
-
-                                                  setState(() {
-                                                    _isProcessing = false;
-                                                  });
-
-                                                  if (user != null) {
-                                                    Navigator.pushNamed(
-                                                        context, 'home');
-                                                  }
-                                                }
-                                              },
-                                              child: Text('Log ind',
-                                                  style: TextStyle(
-                                                      color: Color(0xfff001c7c),
-                                                      fontSize: 18,
-                                                      fontFamily: 'Margarine')),
-                                              style: ElevatedButton.styleFrom(
-                                                primary: Colors.white,
-                                                side: BorderSide(
-                                                  width: 2.0,
-                                                  color: Color(0xfff001c7c),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(width: 24.0),
-                                          Expanded(
-                                            child: ElevatedButton(
-                                              onPressed: () {
-                                                Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        RegisterPage(),
-                                                  ),
-                                                );
-                                              },
-                                              child: Text('Registrer',
-                                                  style: TextStyle(
-                                                      color: Color(0xfff001c7c),
-                                                      fontSize: 18,
-                                                      fontFamily: 'Margarine')),
-                                              style: ElevatedButton.styleFrom(
-                                                primary: Colors.white,
-                                                side: BorderSide(
-                                                  width: 2.0,
-                                                  color: Color(0xfff001c7c),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                    );
-                  }
-
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                },
+        child: Container(
+          height: 55,
+          decoration: BoxDecoration(
+              border: Border.all(color: color),
+              borderRadius: BorderRadius.circular(20)),
+          padding: EdgeInsets.all(10),
+          child: Row(
+            children: [
+              const SizedBox(width: 5),
+              Image(
+                image: image,
+                width: 25,
               ),
-            ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(text, style: TextStyle(color: color, fontSize: 18)),
+                    const SizedBox(width: 35),
+                  ],
+                ),
+              )
+            ],
           ),
         ),
       ),

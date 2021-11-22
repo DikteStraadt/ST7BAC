@@ -18,6 +18,8 @@ samples, guidance on mobile development, and a full API reference.
 # Kilder
 
 ## Login funktionalitet
+https://www.youtube.com/watch?v=PweQbVgR9iI
+https://support.appmachine.com/hc/en-us/articles/203645706-Create-a-Facebook-App-ID-App-Secret
 https://blog.logrocket.com/implementing-firebase-authentication-in-a-flutter-app/
 https://github.com/sbis04/flutter-authentication
 
