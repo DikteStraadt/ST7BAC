@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project_1_0/utilities/navigation.dart';
 import 'package:flutter_project_1_0/utilities/snack_bar.dart';
@@ -24,8 +25,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance!.addPostFrameCallback((_) =>
-        _scrollController.jumpTo(_scrollController.position.maxScrollExtent));
+    if (_scrollController.hasClients) {
+      _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+    }
     return new WillPopScope(
       onWillPop: () async {
         logout();
@@ -47,11 +49,11 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               children: <Widget>[
                 Text(
-                    'Hånd i hånd',
-                    style: TextStyle(
-                        fontFamily: 'Margarine',
-                        fontSize: MediaQuery.of(context).size.width * 0.12),
-                  ),
+                  'Hånd i hånd',
+                  style: TextStyle(
+                      fontFamily: 'Margarine',
+                      fontSize: MediaQuery.of(context).size.width * 0.12),
+                ),
                 Expanded(
                   child: GridView(
                     controller: _scrollController,
@@ -150,7 +152,7 @@ class _HomePageState extends State<HomePage> {
               fontFamily: 'Margarine'),
           textAlign: TextAlign.center,
         ),
-        SizedBox(height:  MediaQuery.of(context).size.width * 0.01)
+        SizedBox(height: MediaQuery.of(context).size.width * 0.01)
       ],
     );
   }
@@ -165,10 +167,4 @@ class _HomePageState extends State<HomePage> {
     });
     Navigator.pushNamed(context, 'login');
   }
-
-  // void setCurrentUser(user.User value) {
-  //   setState(() {
-  //     _currentUser = value.id;
-  //   });
-  // }
 }

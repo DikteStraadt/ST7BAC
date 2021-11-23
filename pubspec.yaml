@@ -35,6 +35,7 @@ dependencies:
   youtube_player_iframe: ^2.2.2
   flutter_facebook_auth: ^3.5.0
   google_sign_in: ^5.0.4
+  flutter_signin_button: ^2.0.0
 
 
 dev_dependencies:
@@ -65,9 +66,8 @@ flutter:
     - lib/assets/home/forum.JPG
     - lib/assets/home/notImplemented.JPG
 
-    - lib/assets/authentication/email.png
-    - lib/assets/authentication/facebook.png
     - lib/assets/authentication/google.png
+    - lib/assets/launcher/logo.png
 
   fonts:
     - family: Margarine

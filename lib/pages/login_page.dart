@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_project_1_0/pages/home_page.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -31,26 +33,87 @@ class _LoginPageState extends State<LoginPage> {
       var content = '';
       switch (e.code) {
         case 'account-exists-with-different-credential':
-          content = 'This account exists with a different sign in provider';
+          content = 'Denne konto eksisterer hos en anden login-udbyder';
           break;
         case 'invalid-credential':
-          content = 'Unknown error has occurred';
+          content = 'Der er opstået en ukendt fejl';
           break;
         case 'operation-not-allowed':
-          content = 'This operation is not allowed';
+          content = 'Denne handling er ikke tilladt';
           break;
         case 'user-disabled':
-          content = 'The user you tried to log into is disabled';
+          content = 'Den bruger, du forsøgte at logge på, er deaktiveret';
           break;
         case 'user-not-found':
-          content = 'The user you tried to log into was not found';
+          content = 'Den bruger, du forsøgte at logge på, blev ikke fundet';
           break;
       }
 
       showDialog(
           context: context,
           builder: (context) => AlertDialog(
-                title: Text('Log in with facebook failed'),
+                title: Text('Log ind med Facebook mislykkedes'),
+                content: Text(content),
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text('Ok'))
+                ],
+              ));
+    } finally {
+      setState(() {
+        loading = false;
+      });
+    }
+  }
+
+  void _logInWithGoogle() async {
+    setState(
+      () {
+        loading = true;
+      },
+    );
+
+    try {
+      final GoogleSignInAccount? googleLoginResult =
+          await GoogleSignIn().signIn();
+      final GoogleSignInAuthentication googleSignInAuthentication =
+          await googleLoginResult!.authentication;
+      final googleAuthCredential = GoogleAuthProvider.credential(
+        accessToken: googleSignInAuthentication.accessToken,
+        idToken: googleSignInAuthentication.idToken,
+      );
+
+      await FirebaseAuth.instance.signInWithCredential(googleAuthCredential);
+
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (_) => HomePage()), (route) => false);
+    } on FirebaseAuthException catch (e) {
+      var content = '';
+      switch (e.code) {
+        case 'account-exists-with-different-credential':
+          content = 'Denne konto eksisterer hos en anden login-udbyder';
+          break;
+        case 'invalid-credential':
+          content = 'Der er opstået en ukendt fejl';
+          break;
+        case 'operation-not-allowed':
+          content = 'Denne handling er ikke tilladt';
+          break;
+        case 'user-disabled':
+          content = 'Den bruger, du forsøgte at logge på, er deaktiveret';
+          break;
+        case 'user-not-found':
+          content = 'Den bruger, du forsøgte at logge på, blev ikke fundet';
+          break;
+      }
+
+      showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+                title: Text('Log ind med Google mislykkedes'),
                 content: Text(content),
                 actions: [
                   TextButton(
@@ -89,91 +152,51 @@ class _LoginPageState extends State<LoginPage> {
                     fontSize: MediaQuery.of(context).size.width * 0.13),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: MediaQuery.of(context).size.width * 0.13),
+              SizedBox(height: MediaQuery.of(context).size.width * 0.05),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.6,
+                child: Image(
+                  image: AssetImage('lib/assets/launcher/logo.png'),
+                ),
+              ),
+              SizedBox(height: MediaQuery.of(context).size.width * 0.1),
               if (loading) ...[
                 const SizedBox(height: 15),
                 const Center(child: const CircularProgressIndicator()),
               ],
               if (!loading) ...[
-                _Button(
-                  text: 'Log in with email',
-                  color: Color(0xfff001c7c),
-                  image:
-                      const AssetImage('lib/assets/authentication/email.png'),
+                SignInButtonBuilder(
+                  text: 'Log ind med E-mail',
+                  icon: Icons.email,
                   onPressed: () {
                     Navigator.pushNamed(context, 'emaillogin');
                   },
+                  backgroundColor: Colors.blueGrey[700]!,
+                  width: MediaQuery.of(context).size.width * 0.6,
                 ),
-                _Button(
-                  text: 'Log in with Facebook',
-                  color: Color(0xfff001c7c),
-                  image: const AssetImage(
-                      'lib/assets/authentication/facebook.png'),
+                SizedBox(height: MediaQuery.of(context).size.width * 0.01),
+                SignInButtonBuilder(
+                  text: 'Log ind med Facebook',
+                  icon: Icons.facebook,
                   onPressed: () {
                     _logInWithFacebook();
                   },
+                  backgroundColor: Colors.blue[900]!,
+                  width: MediaQuery.of(context).size.width * 0.6,
                 ),
-                _Button(
-                  text: 'Log in with Google',
-                  color: Color(0xfff001c7c),
-                  image:
-                      const AssetImage('lib/assets/authentication/google.png'),
-                  onPressed: () {},
+                SizedBox(height: MediaQuery.of(context).size.width * 0.01),
+                SignInButtonBuilder(
+                  text: 'Log ind med Google',
+                  image: Image.asset('lib/assets/authentication/google.png',
+                      width: MediaQuery.of(context).size.width * 0.06),
+                  icon: Icons.facebook,
+                  onPressed: () {
+                    _logInWithGoogle();
+                  },
+                  backgroundColor: Colors.red[900]!,
+                  width: MediaQuery.of(context).size.width * 0.6,
                 ),
               ],
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _Button extends StatelessWidget {
-  final Color color;
-  final ImageProvider image;
-  final String text;
-  final VoidCallback onPressed;
-
-  _Button(
-      {required this.color,
-      required this.image,
-      required this.text,
-      required this.onPressed});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
-      child: GestureDetector(
-        onTap: () {
-          if (onPressed != null) {
-            onPressed();
-          }
-        },
-        child: Container(
-          height: 55,
-          decoration: BoxDecoration(
-              border: Border.all(color: color),
-              borderRadius: BorderRadius.circular(20)),
-          padding: EdgeInsets.all(10),
-          child: Row(
-            children: [
-              const SizedBox(width: 5),
-              Image(
-                image: image,
-                width: 25,
-              ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(text, style: TextStyle(color: color, fontSize: 18)),
-                    const SizedBox(width: 35),
-                  ],
-                ),
-              )
             ],
           ),
         ),

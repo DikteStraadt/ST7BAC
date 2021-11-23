@@ -59,13 +59,20 @@ class _EmailLoginPageState extends State<EmailLoginPage> {
                         textAlign: TextAlign.center,
                       ),
                       SizedBox(height: MediaQuery.of(context).size.width * 0.05),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.5,
+                        child: Image(
+                          image: AssetImage('lib/assets/launcher/logo.png'),
+                        ),
+                      ),
+                      // SizedBox(height: MediaQuery.of(context).size.width * 0.1),
                       Form(
                         key: _formKey,
                         child: Column(
                           children: <Widget>[
-                            SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.width * 0.1),
+                            // SizedBox(
+                            //     height:
+                            //         MediaQuery.of(context).size.width * 0.1),
                             TextFormField(
                               controller: _emailTextController,
                               focusNode: _focusEmail,
