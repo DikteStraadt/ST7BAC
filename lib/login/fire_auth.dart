@@ -1,6 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+// Source
+// Inspiration for login funktionality:
+  // https://www.youtube.com/watch?v=PweQbVgR9iI
+  // https://support.appmachine.com/hc/en-us/articles/203645706-Create-a-Facebook-App-ID-App-Secret
+  // https://blog.logrocket.com/implementing-firebase-authentication-in-a-flutter-app/
+  // https://github.com/sbis04/flutter-authentication
+  // https://medium.com/firebase-tips-tricks/how-to-use-google-sign-in-with-firebase-in-flutter-bfc4d0e463e7
+
 class FireAuth {
   static Future<User?> registerUsingEmailPassword({
     required String name,

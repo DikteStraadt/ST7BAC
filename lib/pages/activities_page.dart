@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
+// Sources
+// Embedded YouTube video: https://pub.dev/packages/youtube_player_iframe
+
 class ActivitiesPage extends StatefulWidget {
   @override
   State<ActivitiesPage> createState() => _ActivitiesPageState();

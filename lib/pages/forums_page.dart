@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_project_1_0/pages/forum_details_page.dart';
 import 'package:flutter_project_1_0/utilities/snack_bar.dart';
 
+// Sources
+// Forum layout inspiration from https://flutterappworld.com/flutter-forum-application/ and https://github.com/ArunBalajiR/Flutter-Chat-Application
+
+
 class ForumsPage extends StatefulWidget {
   @override
   _ForumsPageState createState() => new _ForumsPageState();

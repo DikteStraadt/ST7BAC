@@ -7,6 +7,12 @@ import 'package:flutter_project_1_0/models/list_entry.dart';
 import 'package:flutter_project_1_0/models/plan.dart';
 import 'package:flutter_project_1_0/models/recipe.dart';
 
+// Souces:
+// Setting up Firebase Realtime Database: https://medium.com/firebase-tips-tricks/how-to-use-firebase-realtime-database-with-flutter-ebd98aba2c91
+// Reading and writing to Firebase Realtime Database: https://www.youtube.com/watch?v=Bper2K92bd8&ab_channel=BrandonDonnelson
+// How to read Firebase Realtime Datase child data: https://stackoverflow.com/questions/52072948/flutter-get-firebase-database-reference-child-all-data
+// Using StreamBuilders in Flutter: https://www.youtube.com/watch?v=sXBJZD0fBa4&t=2073s
+
 class DatabaseService {
   // Set
   static Future<void> setRecipe(Recipe recipe) async {

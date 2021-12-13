@@ -4,6 +4,9 @@ import 'package:flutter_project_1_0/pages/home_page.dart';
 import 'package:flutter_project_1_0/pages/plans_page.dart';
 import 'package:flutter_project_1_0/pages/recipes_page.dart';
 
+// Sources:
+// Inspiration for navigationbar: https://stackoverflow.com/questions/61269906/flutter-bottom-navigation-bar-with-pageview
+
 class NavigationController extends StatefulWidget {
   @override
   _NavigationControllerState createState() => _NavigationControllerState();

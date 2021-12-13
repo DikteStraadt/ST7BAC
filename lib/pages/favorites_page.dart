@@ -7,6 +7,9 @@ import 'package:flutter_project_1_0/models/recipe.dart';
 import 'package:flutter_project_1_0/pages/recipe_page.dart';
 import 'package:flutter_project_1_0/pages/select_plan_page.dart';
 
+// Souces:
+// Inspiration to adding element to favorite: https://codelabs.developers.google.com/codelabs/first-flutter-app-pt2#4
+
 class FavoritesPage extends StatefulWidget {
   const FavoritesPage({Key? key}) : super(key: key);
 

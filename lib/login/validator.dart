@@ -1,3 +1,11 @@
+// Source
+// Inspiration for login funktionality:
+  // https://www.youtube.com/watch?v=PweQbVgR9iI
+  // https://support.appmachine.com/hc/en-us/articles/203645706-Create-a-Facebook-App-ID-App-Secret
+  // https://blog.logrocket.com/implementing-firebase-authentication-in-a-flutter-app/
+  // https://github.com/sbis04/flutter-authentication
+  // https://medium.com/firebase-tips-tricks/how-to-use-google-sign-in-with-firebase-in-flutter-bfc4d0e463e7
+
 class Validator {
   static String? validateName({required String name}) {
     if (name == null) {

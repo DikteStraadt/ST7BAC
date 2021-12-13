@@ -5,6 +5,9 @@ import 'package:flutter_project_1_0/pages/new_plan_page.dart';
 import 'package:flutter_project_1_0/models/plan.dart';
 import 'package:flutter_project_1_0/utilities/snack_bar.dart';
 
+// Sources: 
+// Pop up menu in meal plans: https://blog.bajarangisoft.com/blog/how-to-change-icon-color-popup-menu-button-in-flutter-app
+
 class PlanPage extends StatefulWidget {
   @override
   State<PlanPage> createState() => _PlanPageState();

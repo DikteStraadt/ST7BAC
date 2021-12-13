@@ -12,6 +12,9 @@ import 'package:flutter_project_1_0/pages/new_plan_page.dart';
 import 'package:flutter_project_1_0/pages/plans_page.dart';
 import 'package:flutter_project_1_0/pages/registre_page.dart';
 
+// Souces:
+// Returning data from a screen: https://docs.flutter.dev/cookbook/navigation/returning-data
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();

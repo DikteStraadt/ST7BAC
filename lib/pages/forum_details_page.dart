@@ -5,6 +5,9 @@ import 'package:flutter_project_1_0/pages/new_post_page.dart';
 import 'package:flutter_project_1_0/utilities/datetime_converter.dart';
 import 'package:flutter_project_1_0/utilities/snack_bar.dart';
 
+// Sources
+// Forum layout inspiration from https://flutterappworld.com/flutter-forum-application/ and https://github.com/ArunBalajiR/Flutter-Chat-Application
+
 class ForumDetailPage extends StatefulWidget {
   @override
   _ForumDetailPageState createState() => new _ForumDetailPageState();
