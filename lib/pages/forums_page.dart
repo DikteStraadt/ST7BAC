@@ -33,7 +33,7 @@ class _ForumsPageState extends State<ForumsPage> {
                 padding: EdgeInsets.only(right: 20.0),
                 child: GestureDetector(
                   onTap: () {
-                    MySnackbar snackbar = new MySnackbar();
+                    Snackbar snackbar = new Snackbar();
                     snackbar.notImplementedSnackBar(context);
                   },
                   child: Icon(

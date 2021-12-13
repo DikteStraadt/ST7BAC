@@ -7,7 +7,7 @@ import 'package:flutter_project_1_0/models/list_entry.dart';
 import 'package:flutter_project_1_0/models/plan.dart';
 import 'package:flutter_project_1_0/models/recipe.dart';
 
-class Repository {
+class DatabaseService {
   // Set
   static Future<void> setRecipe(Recipe recipe) async {
     List<Map<String, dynamic>> result = [];

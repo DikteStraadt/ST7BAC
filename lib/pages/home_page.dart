@@ -77,7 +77,7 @@ class _HomePageState extends State<HomePage> {
                           } else if (title == "Aktiviteter") {
                             Navigator.pushNamed(context, 'activities');
                           } else {
-                            MySnackbar snackbar = new MySnackbar();
+                            Snackbar snackbar = new Snackbar();
                             snackbar.notImplementedSnackBar(context);
                           }
                         },

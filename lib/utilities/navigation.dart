@@ -81,10 +81,3 @@ class _NavigationControllerState extends State<NavigationController> {
     _controller.jumpToPage(value);
   }
 }
-
-  // @override
-  // void dispose() {
-  //   _controller.dispose();
-  //   super.dispose();
-  // }
-// }

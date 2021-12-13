@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_project_1_0/database/repository.dart';
+import 'package:flutter_project_1_0/database/databaseService.dart';
 import 'package:flutter_project_1_0/models/ingredient.dart';
 import 'package:flutter_project_1_0/models/plan.dart';
 import 'package:flutter_project_1_0/models/recipe.dart';
@@ -68,7 +68,7 @@ class _NewPlanPageState extends State<NewPlanPage> {
                         List<Recipe> r = [];
                         l.add(new Ingredient("", 0, ""));
                         r.add(new Recipe("", "", "", "", "", 0, 0, l, ""));
-                        Repository.setPlan(
+                        DatabaseService.setPlan(
                           new Plan(_currentUser!.uid.toString(),
                               _textController.text, []),
                         ); // Writing new plan to database

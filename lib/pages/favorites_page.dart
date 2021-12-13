@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_project_1_0/database/repository.dart';
+import 'package:flutter_project_1_0/database/databaseService.dart';
 import 'package:flutter_project_1_0/models/favorite.dart';
 import 'package:flutter_project_1_0/models/ingredient.dart';
 import 'package:flutter_project_1_0/models/recipe.dart';
@@ -20,7 +20,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
 
   @override
   void initState() {
-    Repository.getFavorites(_currentUser!.uid.toString()).then(updateFavorites);
+    DatabaseService.getFavorites(_currentUser!.uid.toString()).then(updateFavorites);
     super.initState();
   }
 
@@ -101,9 +101,9 @@ class _FavoritesPageState extends State<FavoritesPage> {
                               if (alreadySaved) {
                                 setState(
                                   () {
-                                    Repository.removeFavorite(
+                                    DatabaseService.removeFavorite(
                                         favorite); // Remove recipe as favorite in database
-                                    Repository.getFavorites(
+                                    DatabaseService.getFavorites(
                                             _currentUser!.uid.toString())
                                         .then(updateFavorites);
                                   },
@@ -111,9 +111,9 @@ class _FavoritesPageState extends State<FavoritesPage> {
                               } else {
                                 setState(
                                   () {
-                                    Repository.setFavorite(
+                                    DatabaseService.setFavorite(
                                         favorite); // Set recipe as favorite in database
-                                    Repository.getFavorites(
+                                    DatabaseService.getFavorites(
                                             _currentUser!.uid.toString())
                                         .then(updateFavorites);
                                   },
@@ -221,7 +221,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
 
   isListEmpty(bool exists) {
     if (exists == true) {
-      Repository.getFavorites(_currentUser!.uid.toString())
+      DatabaseService.getFavorites(_currentUser!.uid.toString())
           .then(updateFavorites);
     }
   }

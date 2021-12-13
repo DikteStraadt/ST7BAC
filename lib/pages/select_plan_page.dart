@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_project_1_0/database/repository.dart';
+import 'package:flutter_project_1_0/database/databaseService.dart';
 import 'package:flutter_project_1_0/models/recipe.dart';
 import 'package:flutter_project_1_0/models/plan.dart';
 import 'package:flutter_project_1_0/pages/recipe_page.dart';
@@ -25,7 +25,7 @@ class _SelectPlanPageState extends State<SelectPlanPage> {
 
   @override
   void initState() {
-    Repository.getPlanNames(_currentUser!.uid.toString()).then(getPlans);
+    DatabaseService.getPlanNames(_currentUser!.uid.toString()).then(getPlans);
     super.initState();
   }
 
@@ -97,9 +97,9 @@ class _SelectPlanPageState extends State<SelectPlanPage> {
       title: Text(plan.title),
       trailing: GestureDetector(
         onTap: () {
-          MySnackbar snackbar = new MySnackbar();
+          Snackbar snackbar = new Snackbar();
           snackbar.addToPlanSnackBar(context);
-          Repository.addRecipeToPlan(plan, widget.recipe);
+          DatabaseService.addRecipeToPlan(plan, widget.recipe);
           goBack();
         },
         child: Icon(
@@ -116,7 +116,7 @@ class _SelectPlanPageState extends State<SelectPlanPage> {
     plansNames.forEach(
       //get all plans
       (key, value) {
-        Repository.getPlanRecipes(_currentUser!.uid.toString(), key)
+        DatabaseService.getPlanRecipes(_currentUser!.uid.toString(), key)
             .then(getRecipes); //get all recipes
       },
     );

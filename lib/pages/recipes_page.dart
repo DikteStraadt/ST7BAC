@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_project_1_0/database/repository.dart';
+import 'package:flutter_project_1_0/database/databaseService.dart';
 import 'package:flutter_project_1_0/models/favorite.dart';
 import 'package:flutter_project_1_0/models/ingredient.dart';
 import 'package:flutter_project_1_0/models/recipe.dart';
@@ -25,9 +25,9 @@ class _RecipesPageState extends State<RecipesPage> {
   void initState() {
     // _recipies = _r
     //     .loadRecipes(); // Loading recipes from recipes class. Shall only be used the first time, to write data to database
-    Repository.getRecipes()
+    DatabaseService.getRecipes()
         .then(updateRecipes); // Loading recipes from database
-    Repository.getFavorites(_currentUser!.uid.toString()).then(updateFavorites);
+    DatabaseService.getFavorites(_currentUser!.uid.toString()).then(updateFavorites);
     super.initState();
   }
 
@@ -50,7 +50,7 @@ class _RecipesPageState extends State<RecipesPage> {
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(
                 onTap: () {
-                  MySnackbar snackbar = new MySnackbar();
+                  Snackbar snackbar = new Snackbar();
                   snackbar.notImplementedSnackBar(context);
                 },
                 child: Icon(
@@ -62,7 +62,7 @@ class _RecipesPageState extends State<RecipesPage> {
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(
                 onTap: () {
-                  MySnackbar snackbar = new MySnackbar();
+                  Snackbar snackbar = new Snackbar();
                   snackbar.notImplementedSnackBar(context);
                 },
                 child: Icon(
@@ -85,7 +85,7 @@ class _RecipesPageState extends State<RecipesPage> {
 
   Widget _buildCard(Recipe recipe) {
     bool alreadySaved = contains(recipe.id);
-    // Repository.setRecipe(recipe); // Writing new recipes to database
+    // DatabaseService.setRecipe(recipe); // Writing new recipes to database
 
     return Card(
       child: InkWell(
@@ -133,9 +133,9 @@ class _RecipesPageState extends State<RecipesPage> {
                             if (alreadySaved) {
                               setState(
                                 () {
-                                  Repository.removeFavorite(
+                                  DatabaseService.removeFavorite(
                                       favorite); // Remove recipe as favorite in database
-                                  Repository.getFavorites(
+                                  DatabaseService.getFavorites(
                                           _currentUser!.uid.toString())
                                       .then(updateFavorites);
                                 },
@@ -144,9 +144,9 @@ class _RecipesPageState extends State<RecipesPage> {
                             } else {
                               setState(
                                 () {
-                                  Repository.setFavorite(
+                                  DatabaseService.setFavorite(
                                       favorite); // Set recipe as favorite in database
-                                  Repository.getFavorites(
+                                  DatabaseService.getFavorites(
                                           _currentUser!.uid.toString())
                                       .then(updateFavorites);
                                 },

@@ -251,7 +251,7 @@ class _RecipePageState extends State<RecipePage> {
                   width: MediaQuery.of(context).size.width * 0.9,
                   child: ElevatedButton(
                     onPressed: () {
-                      MySnackbar snackbar = new MySnackbar();
+                      Snackbar snackbar = new Snackbar();
                       snackbar.notImplementedSnackBar(context);
                     },
                     child: Text('Udskriv indkøbsliste',
@@ -272,7 +272,7 @@ class _RecipePageState extends State<RecipePage> {
                   width: MediaQuery.of(context).size.width * 0.9,
                   child: ElevatedButton(
                     onPressed: () {
-                      MySnackbar snackbar = new MySnackbar();
+                      Snackbar snackbar = new Snackbar();
                       snackbar.notImplementedSnackBar(context);
                     },
                     child: Text('Tilføj til favoritter',

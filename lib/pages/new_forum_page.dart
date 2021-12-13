@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_project_1_0/database/repository.dart';
+import 'package:flutter_project_1_0/database/databaseService.dart';
 import 'package:flutter_project_1_0/models/list_entry.dart';
 import 'package:uuid/uuid.dart';
 
@@ -96,7 +96,7 @@ class _NewForumPageState extends State<NewForumPage> {
                       });
                       if (_validate_title == false &&
                           _validate_question == false) {
-                        Repository.setForum(
+                        DatabaseService.setForum(
                           new ListEntry(
                               Uuid().v4(),
                               _textTitleController.text,

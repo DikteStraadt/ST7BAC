@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_project_1_0/database/repository.dart';
+import 'package:flutter_project_1_0/database/databaseService.dart';
 import 'package:flutter_project_1_0/pages/new_plan_page.dart';
 import 'package:flutter_project_1_0/models/plan.dart';
 import 'package:flutter_project_1_0/utilities/snack_bar.dart';
@@ -17,7 +17,7 @@ class _PlanPageState extends State<PlanPage> {
 
   @override
   void initState() {
-    Repository.getPlanNames(_currentUser!.uid.toString()).then(getPlans);
+    DatabaseService.getPlanNames(_currentUser!.uid.toString()).then(getPlans);
     super.initState();
   }
 
@@ -43,7 +43,7 @@ class _PlanPageState extends State<PlanPage> {
                 Navigator.push(context,
                         MaterialPageRoute(builder: (_) => NewPlanPage()))
                     .then((value) {
-                  Repository.getPlanNames(_currentUser!.uid.toString())
+                  DatabaseService.getPlanNames(_currentUser!.uid.toString())
                       .then(getPlans);
                 });
               },
@@ -116,7 +116,7 @@ class _PlanPageState extends State<PlanPage> {
               ],
             ),
             onTap: () {
-              MySnackbar snackbar = new MySnackbar();
+              Snackbar snackbar = new Snackbar();
               snackbar.notImplementedSnackBar(context);
             },
           ),
@@ -131,7 +131,7 @@ class _PlanPageState extends State<PlanPage> {
               ],
             ),
             onTap: () {
-              MySnackbar snackbar = new MySnackbar();
+              Snackbar snackbar = new Snackbar();
               snackbar.notImplementedSnackBar(context);
             },
           ),
@@ -146,8 +146,8 @@ class _PlanPageState extends State<PlanPage> {
               ],
             ),
             onTap: () {
-              Repository.removePlan(plan); // Removes plan from database
-              Repository.getPlanNames(_currentUser!.uid.toString())
+              DatabaseService.removePlan(plan); // Removes plan from database
+              DatabaseService.getPlanNames(_currentUser!.uid.toString())
                   .then(getPlans);
             },
           ),
@@ -164,7 +164,7 @@ class _PlanPageState extends State<PlanPage> {
       plansNames.forEach(
         //get all plans
         (key, value) {
-          Repository.getPlanRecipes(_currentUser!.uid.toString(), key)
+          DatabaseService.getPlanRecipes(_currentUser!.uid.toString(), key)
               .then(getRecipes); //get all recipes
         },
       );

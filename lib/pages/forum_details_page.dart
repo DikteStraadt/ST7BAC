@@ -170,7 +170,7 @@ class _ForumDetailPageState extends State<ForumDetailPage> {
 
 Container _buildListView(Map<String, dynamic> entry, BuildContext context) {
   DateTimeConverter _converter = new DateTimeConverter();
-  MySnackbar snackbar = new MySnackbar();
+  Snackbar snackbar = new Snackbar();
 
   return new Container(
     margin: const EdgeInsets.all(5.0),

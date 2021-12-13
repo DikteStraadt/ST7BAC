@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_project_1_0/database/repository.dart';
+import 'package:flutter_project_1_0/database/databaseService.dart';
 import 'package:flutter_project_1_0/models/form_post_entry.dart';
 
 class NewPostPage extends StatefulWidget {
@@ -71,7 +71,7 @@ class _NewPostPageState extends State<NewPostPage> {
                             : _validate = false;
                       });
                       if (_validate == false) {
-                        Repository.setPost(
+                        DatabaseService.setPost(
                           new ForumPostEntry(
                               widget.id,
                               _currentUser!.displayName,
